@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="KAKARROT">
+
+
+    <meta name="subtitle" content="自救者、人恒久之。">
+
+
+    <meta name="description" content="我只想事情是它本来该有的那个样子！">
+
+
+    <meta name="keywords" content="产品,哲学,历史,魔兽,音乐">
+
+
+<title>用户转化那些事 | KAKARROT&#39;S BLOG</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">KAKARROT&#39;S BLOG</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">POSTS</a>
+                
+                    <a class="menu-item" href="/about">ABOUT</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">KAKARROT&#39;S BLOG</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">POSTS</a>
+                
+                    <a class="menu-item" href="/about">ABOUT</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">展开全部</a>
+        <a onclick="go_top()">返回顶部</a>
+        <a onclick="go_bottom()">滚动底部</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "收起全部"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "展开全部"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>  
+  <article class="post-wrap">
+    <header class="post-header">
+      <h1 class="post-title">用户转化那些事</h1>
+      
+      <div class="post-meta">
+         作者:&nbsp;
+        <a itemprop="author" rel="author" href="/">KAKARROT</a>
+         
+        <span class="post-time">
+          &nbsp;&nbsp;&nbsp;日期:&nbsp;
+          <a href="#"
+            >七月 09, 2019
+            <!-- &nbsp;&nbsp;0:00:00 -->
+          </a>
+        </span>
+         
+        <span class="post-category">
+          &nbsp;&nbsp;&nbsp;分类: &nbsp;
+          <a href="/categories/%E4%BA%A7%E5%93%81/">产品</a>
+          
+        </span>
+        
+      </div>
+      
+    </header>
+
+    <div class="post-content"><p>转化，顾名思义，就是某件事物从一个阶段到另一阶段的过程。</p>
+<p>用户注册转化我们在”用户注册”那篇文章已经简单阐述过，普通用户通过某种渠道了解产品，并且注册成功，这一过程就是”注册转化”。</p>
+<p>在不同的产品中，注册转化是最基本也是开始，在用户使用产品的周期中，往往会经历不同的转化阶段，”注册转化”、”付费转化”等。</p>
+<h2 id="分析方法"><a href="#分析方法" class="headerlink" title="分析方法"></a>分析方法</h2><p>MECE分析法，ME是Mutually Exclusive的简程，即相互独立；CE是Collectively Exhaustive的简称，即完全穷尽。MECE分析法就是对一个议题能够做到不重叠不遗漏的分类，借此把握问题的核心，并解决问题的方法。</p>
+<p><img src="https://i.loli.net/2019/07/09/5d23f428e5b4111118.png" alt="MECE分析法.png"></p>
+<h2 id="什么是转化？"><a href="#什么是转化？" class="headerlink" title="什么是转化？"></a>什么是转化？</h2><p>不同的业务逻辑，有不同的转化率。</p>
+<p>一般情况下，实现某种目标人数&#x2F;总人数 &#x3D; 实现某种目标率。这个公式可以套用到任意的用户模型中。</p>
+<h2 id="转化的原因？"><a href="#转化的原因？" class="headerlink" title="转化的原因？"></a>转化的原因？</h2><p>用户转化成功的原因是什么？没有转化成功的原因是什么？</p>
+<p><img src="https://i.loli.net/2019/07/09/5d23f3cbba76463967.png" alt="未转化成功原因.png"></p>
+<p>按照 MECE 分析法，我们将客户离开分成主动离开和被动离开两种。被动离开，可能是因为突然断网、电脑死机等客观原因，不可掌控；所以不是我们关注的要点。</p>
+<p>客户主动离开的情况，有两种可能。一是产品和用户需求不匹配，导致客户没有完成支付意愿。二是产品需求和用户匹配，但是客户最终也没有完成支付，这是我们需要优先关注的。为什么产品和客户需求是匹配的，最后客户还是没有完成支付呢？</p>
+<h2 id="转化的证据？"><a href="#转化的证据？" class="headerlink" title="转化的证据？"></a>转化的证据？</h2><p>根据以上的判断大致可以分析出来一个结论，但是怎么印证这一结论呢？</p>
+<p>根据用户行为分析，特别是产品初期，对于第一批新用户的行为要着重观察。</p>
+<p>观察用户在产品关键的节点上的行为，比如注册、下载、充值等。</p>
+<p>转化成功的用户他们的共性，未转化成功的用户他们的共性。</p>
+<p>如果转化率低那么他们实在哪个阶段步骤导致不往下个流程&#x2F;页面继续进行了？针对经常”卡住”用户的页面是不是要进行分析，是页面内容不够吸引，还是页面交互出现问题？</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这篇只是主要讨论分析模型和方法，可以结合”用户注册”文章一起看，只要用户注册转化高，那么产品后续的一些转化就不会低，有的往往会只看重付费转化，从而忽视了注册转化。</p>
+<p>不管什么情况，都要思路清晰，知道目标，以及实现目标的方法。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a target="_blank" rel="noopener" href="https://blog.growingio.com/courses/22">https://blog.growingio.com/courses/22</a></p>
+</div>
+
+    <section class="post-tags">
+      <div>
+        <span>标签:</span>
+        <span class="tag">
+           
+          <a href="/tags/%E4%BA%A7%E5%93%81%E7%BB%8F%E7%90%86/"
+            >&nbsp; # &nbsp;产品经理</a
+          >
+          
+          <a href="/tags/%E4%BA%A7%E5%93%81/"
+            >&nbsp; # &nbsp;产品</a
+          >
+          
+          <a href="/tags/%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1/"
+            >&nbsp; # &nbsp;产品设计</a
+          >
+           
+        </span>
+      </div>
+    </section>
+    <section class="post-nav">
+      
+      <a class="prev" rel="prev" href="/posts/9421aeee/"
+        >产品企业那些事</a
+      >
+       
+      <a class="next" rel="next" href="/posts/99cab120/"
+        >用户留存那些事</a
+      >
+      
+    </section>
+  </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© KAKARROT | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>
