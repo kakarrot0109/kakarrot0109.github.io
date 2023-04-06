@@ -229,11 +229,11 @@
 <h2 id="搭建方法"><a href="#搭建方法" class="headerlink" title="搭建方法"></a>搭建方法</h2><p><strong>新建 GitHub repository</strong></p>
 <p>登录 GitHub 账号，新建 respository，名字为：username.github.io</p>
 <p><strong>Hexo 安装</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">node -v <span class="comment"># 查看node版本</span></span><br><span class="line">npm -v <span class="comment"># 查看npm版本</span></span><br><span class="line">npm install -g hexo-cli <span class="comment">#-g表示全局安装，npm默认为当前项目安装</span></span><br><span class="line">npm install hexo-server --save <span class="comment">#安装server模块 hexo3.0更新</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">node -v <span class="comment"># 查看node版本</span></span><br><span class="line">npm -v <span class="comment"># 查看npm版本</span></span><br><span class="line">npm install -g hexo-cli <span class="comment">#-g表示全局安装，npm默认为当前项目安装</span></span><br><span class="line">npm install hexo-server --save <span class="comment">#安装server模块 hexo3.0更新</span></span><br></pre></td></tr></table></figure>
 
 <p>环境变量添加值<code>C:\Users\KAKARROT\AppData\Roaming\npm\hexo.cmd</code></p>
 <p><strong>Hexo 部署</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">hexo init WebSite <span class="comment">#新建博客文件夹</span></span><br><span class="line"><span class="built_in">cd</span> WebSite <span class="comment">#进入博客文件夹</span></span><br><span class="line">npm install <span class="comment">#安装npm服务</span></span><br><span class="line">hexo g <span class="comment">#生成静态页面</span></span><br><span class="line">hexo s <span class="comment">#启动服务</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo init WebSite <span class="comment">#新建博客文件夹</span></span><br><span class="line"><span class="built_in">cd</span> WebSite <span class="comment">#进入博客文件夹</span></span><br><span class="line">npm install <span class="comment">#安装npm服务</span></span><br><span class="line">hexo g <span class="comment">#生成静态页面</span></span><br><span class="line">hexo s <span class="comment">#启动服务</span></span><br></pre></td></tr></table></figure>
 
 <p>现在就可以在 localhost:4000 查看网页了</p>
 <p><strong>文件目录概览</strong></p>
@@ -248,10 +248,10 @@
 <li>package.json：应用程序数据，指明 hexo 的版本等信息，类似于一般软件中的关于按钮</li>
 </ul>
 <p><strong>Hexo 部署到 GitHub</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br><span class="line">git config --global user.name <span class="string">&quot;xxx&quot;</span> <span class="comment"># 配置用户名</span></span><br><span class="line">git config --global user.email <span class="string">&quot;xxx@xxx.com&quot;</span> <span class="comment"># 配置邮箱</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br><span class="line">git config --global user.name <span class="string">&quot;xxx&quot;</span> <span class="comment"># 配置用户名</span></span><br><span class="line">git config --global user.email <span class="string">&quot;xxx@xxx.com&quot;</span> <span class="comment"># 配置邮箱</span></span><br></pre></td></tr></table></figure>
 
 <p>在<code>Website\source</code>下新建文件<code>CNAME</code></p>
-<figure class="highlight md"><figcaption><span>CNAME</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kakarrot.com</span><br></pre></td></tr></table></figure>
+<figure class="highlight md"><figcaption><span>CNAME</span></figcaption><table><tr><td class="code"><pre><span class="line">kakarrot.com</span><br></pre></td></tr></table></figure>
 
 <h2 id="域名解析"><a href="#域名解析" class="headerlink" title="域名解析"></a>域名解析</h2><p>登录阿里云域名管理 添加 2 条解析记录</p>
 <table>
