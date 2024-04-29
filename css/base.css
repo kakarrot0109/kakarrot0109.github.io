@@ -1,5 +1,5 @@
 html {
-  font-family: 'PingFang SC';
+  font-family: 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', 'Helvetica,Arial', sans-serif, Segoe UI;
 }
 html::-webkit-scrollbar {
   width: 8px;
