@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="KAKARROT">
+
+
+    <meta name="subtitle" content="自救者、人恒久之。">
+
+
+    <meta name="description" content="我只是希望事情是它该有的那个样子！">
+
+
+    <meta name="keywords" content="产品,哲学,历史,魔兽,音乐">
+
+
+<title>暗黑4终局BOSS召唤材料计算器 | KAKARROT&#39;S BLOG</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 7.1.1"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">KAKARROT&#39;S BLOG</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">POSTS</a>
+                
+                    <a class="menu-item" href="/about">ABOUT</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">KAKARROT&#39;S BLOG</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">POSTS</a>
+                
+                    <a class="menu-item" href="/about">ABOUT</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+  <article class="post-wrap">
+    <header class="post-header">
+      <h1 class="post-title">暗黑4终局BOSS召唤材料计算器</h1>
+      
+      <div class="post-meta">
+         作者:&nbsp;
+        <a itemprop="author" rel="author" href="/">KAKARROT</a>
+         
+        <span class="post-time">
+          &nbsp;&nbsp;&nbsp;日期:&nbsp;
+          <a href="#"
+            >五月 24, 2024
+            <!-- &nbsp;&nbsp;0:00:00 -->
+          </a>
+        </span>
+         
+        <span class="post-category">
+          &nbsp;&nbsp;&nbsp;分类: &nbsp;
+          <a href="/categories/%E6%B8%B8%E6%88%8F/">游戏</a>
+          
+        </span>
+        
+      </div>
+      
+    </header>
+
+    <div class="post-content"><p><img src="https://img.nga.178.com/attachments/mon_202405/24/j1Q8zcw-5btyK1pT3cSsg-65.png" alt="暗黑4 终局BOSS"></p>
+<p>根据表格整理出召唤Boss计算器，使用<code>Python</code>+<code>ChatGPT‑4o</code></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># !/usr/bin/python3</span></span><br><span class="line"><span class="comment"># encoding=utf-8</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">calculate_summons_and_rewards</span>(<span class="params">resource_quantity, resource_per_summon</span>):</span><br><span class="line">    summons = resource_quantity // resource_per_summon</span><br><span class="line">    rewards = summons</span><br><span class="line">    <span class="keyword">return</span> summons, rewards</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    bosses = &#123;</span><br><span class="line">        <span class="number">1</span>: &#123;<span class="string">&quot;name&quot;</span>: <span class="string">&quot;齐尔领主暗黑boss&quot;</span>, <span class="string">&quot;resource&quot;</span>: <span class="string">&quot;精纯鲜血&quot;</span>, <span class="string">&quot;amount&quot;</span>: <span class="number">9</span>, <span class="string">&quot;reward&quot;</span>: <span class="string">&quot;炙沙枷锁&quot;</span>&#125;,</span><br><span class="line">        <span class="number">2</span>: &#123;<span class="string">&quot;name&quot;</span>: <span class="string">&quot;冰中巨兽&quot;</span>, <span class="string">&quot;resource&quot;</span>: <span class="string">&quot;提纯的恐惧&quot;</span>, <span class="string">&quot;amount&quot;</span>: <span class="number">27</span>, <span class="string">&quot;reward&quot;</span>: <span class="string">&quot;针垫玩偶&quot;</span>&#125;,</span><br><span class="line">        <span class="number">3</span>: &#123;<span class="string">&quot;name&quot;</span>: <span class="string">&quot;格里高列&quot;</span>, <span class="string">&quot;resource&quot;</span>: <span class="string">&quot;活体钢铁&quot;</span>, <span class="string">&quot;amount&quot;</span>: <span class="number">5</span>, <span class="string">&quot;reward&quot;</span>: <span class="string">&quot;苦痛碎片&quot;</span>&#125;,</span><br><span class="line">        <span class="number">4</span>: &#123;<span class="string">&quot;name&quot;</span>: <span class="string">&quot;瓦尔申&quot;</span>, <span class="string">&quot;resource&quot;</span>: [<span class="string">&quot;颤栗之手&quot;</span>, <span class="string">&quot;咕噜头颅&quot;</span>, <span class="string">&quot;恶念之心&quot;</span>, <span class="string">&quot;发黑的股骨&quot;</span>], <span class="string">&quot;amount&quot;</span>: <span class="number">1</span>, <span class="string">&quot;reward&quot;</span>: <span class="string">&quot;粘液覆盖的蛋&quot;</span>&#125;,</span><br><span class="line">        <span class="number">5</span>: &#123;<span class="string">&quot;name&quot;</span>: <span class="string">&quot;普通督瑞尔&quot;</span>, <span class="string">&quot;resource&quot;</span>: [<span class="string">&quot;苦痛碎片&quot;</span>, <span class="string">&quot;粘液覆盖的蛋&quot;</span>], <span class="string">&quot;amount&quot;</span>: <span class="number">2</span>, <span class="string">&quot;reward&quot;</span>: <span class="string">&quot;普通督瑞尔召唤&quot;</span>&#125;,</span><br><span class="line">        <span class="number">6</span>: &#123;<span class="string">&quot;name&quot;</span>: <span class="string">&quot;普通安达莉尔&quot;</span>, <span class="string">&quot;resource&quot;</span>: [<span class="string">&quot;针垫玩偶&quot;</span>, <span class="string">&quot;炙沙枷锁&quot;</span>], <span class="string">&quot;amount&quot;</span>: <span class="number">2</span>, <span class="string">&quot;reward&quot;</span>: <span class="string">&quot;普通安达莉尔召唤&quot;</span>&#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;请选择你要召唤的BOSS:&quot;</span>)</span><br><span class="line">    <span class="keyword">for</span> key, boss <span class="keyword">in</span> bosses.items():</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">isinstance</span>(boss[<span class="string">&quot;resource&quot;</span>], <span class="built_in">list</span>):</span><br><span class="line">            resources = <span class="string">&quot;和&quot;</span>.join(boss[<span class="string">&quot;resource&quot;</span>])</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;key&#125;</span>. <span class="subst">&#123;boss[<span class="string">&#x27;name&#x27;</span>]&#125;</span>(需要每种各<span class="subst">&#123;boss[<span class="string">&#x27;amount&#x27;</span>]&#125;</span>个：<span class="subst">&#123;resources&#125;</span>)&quot;</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;key&#125;</span>. <span class="subst">&#123;boss[<span class="string">&#x27;name&#x27;</span>]&#125;</span>(需要 <span class="subst">&#123;boss[<span class="string">&#x27;amount&#x27;</span>]&#125;</span> 个 <span class="subst">&#123;boss[<span class="string">&#x27;resource&#x27;</span>]&#125;</span>)&quot;</span>)</span><br><span class="line"></span><br><span class="line">    choice = <span class="built_in">int</span>(<span class="built_in">input</span>(<span class="string">&quot;请输入选择的数字 (1-6): &quot;</span>))</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> choice <span class="keyword">in</span> bosses:</span><br><span class="line">        boss = bosses[choice]</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">isinstance</span>(boss[<span class="string">&quot;resource&quot;</span>], <span class="built_in">list</span>):</span><br><span class="line">            quantities = []</span><br><span class="line">            <span class="keyword">for</span> resource <span class="keyword">in</span> boss[<span class="string">&quot;resource&quot;</span>]:</span><br><span class="line">                quantity = <span class="built_in">int</span>(<span class="built_in">input</span>(<span class="string">f&quot;请输入你拥有的 <span class="subst">&#123;resource&#125;</span> 数量: &quot;</span>))</span><br><span class="line">                quantities.append(quantity)</span><br><span class="line">            summons = <span class="built_in">min</span>(quantities) // boss[<span class="string">&quot;amount&quot;</span>]</span><br><span class="line">            rewards = summons</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            resource_quantity = <span class="built_in">int</span>(<span class="built_in">input</span>(<span class="string">f&quot;请输入你拥有的 <span class="subst">&#123;boss[<span class="string">&#x27;resource&#x27;</span>]&#125;</span> 数量: &quot;</span>))</span><br><span class="line">            summons, rewards = calculate_summons_and_rewards(resource_quantity, boss[<span class="string">&quot;amount&quot;</span>])</span><br><span class="line">        </span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;你可以召唤 <span class="subst">&#123;summons&#125;</span> 次 <span class="subst">&#123;boss[<span class="string">&#x27;name&#x27;</span>]&#125;</span>。&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;你将得到 <span class="subst">&#123;rewards&#125;</span> 个 <span class="subst">&#123;boss[<span class="string">&#x27;reward&#x27;</span>]&#125;</span>。&quot;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;无效的选择，请重新运行程序并选择1到6。&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure></div>
+
+    <section class="post-tags">
+      <div>
+        <span>标签:</span>
+        <span class="tag">
+           
+          <a href="/tags/%E7%BD%91%E7%BB%9C%E6%B8%B8%E6%88%8F/"
+            >&nbsp; # &nbsp;网络游戏</a
+          >
+          
+          <a href="/tags/%E6%9A%97%E9%BB%91%E7%A0%B4%E5%9D%8F%E7%A5%9E/"
+            >&nbsp; # &nbsp;暗黑破坏神</a
+          >
+          
+          <a href="/tags/Python/"
+            >&nbsp; # &nbsp;Python</a
+          >
+           
+        </span>
+      </div>
+    </section>
+    <section class="post-nav">
+       
+      <a class="next" rel="next" href="/posts/efab4cb0/"
+        >Hexo更新升级</a
+      >
+      
+    </section>
+  </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© KAKARROT | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>
