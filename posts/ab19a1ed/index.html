@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="KAKARROT">
+
+
+    <meta name="subtitle" content="自救者、人恒久之。">
+
+
+    <meta name="description" content="我只是希望事情是它该有的那个样子！">
+
+
+    <meta name="keywords" content="产品,哲学,历史,魔兽,音乐">
+
+
+<title>Windows系统配置+软件 | KAKARROT&#39;S BLOG</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 7.1.1"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">KAKARROT&#39;S BLOG</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">POSTS</a>
+                
+                    <a class="menu-item" href="/about">ABOUT</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">KAKARROT&#39;S BLOG</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">POSTS</a>
+                
+                    <a class="menu-item" href="/about">ABOUT</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">展开全部</a>
+        <a onclick="go_top()">返回顶部</a>
+        <a onclick="go_bottom()">滚动底部</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "收起全部"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "展开全部"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>  
+  <article class="post-wrap">
+    <header class="post-header">
+      <h1 class="post-title">Windows系统配置+软件</h1>
+      
+      <div class="post-meta">
+         作者:&nbsp;
+        <a itemprop="author" rel="author" href="/">KAKARROT</a>
+         
+        <span class="post-time">
+          &nbsp;&nbsp;&nbsp;日期:&nbsp;
+          <a href="#"
+            >六月 06, 2024
+            <!-- &nbsp;&nbsp;0:00:00 -->
+          </a>
+        </span>
+         
+        <span class="post-category">
+          &nbsp;&nbsp;&nbsp;分类: &nbsp;
+          <a href="/categories/Windows/">Windows</a>
+          
+        </span>
+        
+      </div>
+      
+    </header>
+
+    <div class="post-content"><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>老电脑服役7年终于退休，新电脑配置已经确定，稍后在<a href="kakarrot.com/about/">About</a>页面更新配置信息。</p>
+<p>作为重度电脑使用者，梳理下常用的系统配置+常用软件备份，方便己用。</p>
+<h2 id="系统配置"><a href="#系统配置" class="headerlink" title="系统配置"></a>系统配置</h2><blockquote>
+<p>操作系统：windows11</p>
+</blockquote>
+<p><strong>桌面设置</strong></p>
+<ul>
+<li><p>系统名称：设置-主页更改电脑名称</p>
+</li>
+<li><p>个性化：主题颜色+壁纸</p>
+</li>
+<li><p>任务栏：关闭&#x2F;隐藏任务项、托盘图标关闭、其他系统托盘图标打开、任务栏行为全部关闭、从不合并</p>
+</li>
+<li><p>更新：Windows系统更新至最新，打开更新提醒</p>
+</li>
+<li><p>文件夹选项：打开资源管理器时打开此电脑、文件夹视图、显示隐藏文件、显示文件后缀</p>
+</li>
+</ul>
+<p><strong>系统设置</strong></p>
+<ul>
+<li>开机启动</li>
+<li>磁盘清理</li>
+</ul>
+<h2 id="软件列表"><a href="#软件列表" class="headerlink" title="软件列表"></a>软件列表</h2><p><strong>系统工具</strong></p>
+<ul>
+<li>Clash\UU加速器</li>
+<li>Chrome\Edge</li>
+<li>MacType</li>
+<li>Logitech Options</li>
+<li>GeekUninstaller</li>
+</ul>
+<hr>
+<p><strong>生产力工具</strong></p>
+<ul>
+<li>Office：Office 365家庭版 + Visio LTSC 专业版 2021</li>
+<li>Axure RP 9</li>
+<li>Xmind</li>
+<li>Typora</li>
+<li>Vscode</li>
+<li>GIt\Node.js\Hexo</li>
+</ul>
+<hr>
+<p><strong>生活软件</strong></p>
+<ul>
+<li><p>微信\QQ\钉钉\腾讯会议：聊天软件</p>
+</li>
+<li><p>Spotify\QQ音乐：听歌软件</p>
+</li>
+<li><p>115网盘\百度网盘：网盘软件</p>
+</li>
+<li><p>Eagle：图片软件</p>
+</li>
+<li><p>NeatReader：读书软件</p>
+</li>
+<li><p>PotPlayer：视频软件</p>
+</li>
+<li><p>High-Logic FontCreator 13：字体软件</p>
+</li>
+<li><p>Internet Download Manager：下载软件</p>
+</li>
+<li><p>Battle\Steam\完美世界对战平台\5E对战平台：游戏平台</p>
+</li>
+</ul>
+</div>
+
+    <section class="post-tags">
+      <div>
+        <span>标签:</span>
+        <span class="tag">
+           
+          <a href="/tags/%E7%94%B5%E8%84%91/"
+            >&nbsp; # &nbsp;电脑</a
+          >
+          
+          <a href="/tags/%E9%85%8D%E7%BD%AE/"
+            >&nbsp; # &nbsp;配置</a
+          >
+          
+          <a href="/tags/%E8%BD%AF%E4%BB%B6/"
+            >&nbsp; # &nbsp;软件</a
+          >
+           
+        </span>
+      </div>
+    </section>
+    <section class="post-nav">
+       
+      <a class="next" rel="next" href="/posts/ee858bfb/"
+        >暗黑4终局BOSS召唤材料计算器</a
+      >
+      
+    </section>
+  </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© KAKARROT | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>
