@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="KAKARROT">
+
+
+    <meta name="subtitle" content="自救者、人恒久之。">
+
+
+    <meta name="description" content="我只是希望事情是它该有的那个样子！">
+
+
+    <meta name="keywords" content="产品,哲学,历史,魔兽,音乐">
+
+
+<title>Python+Selenium爬虫教程 | KAKARROT&#39;S BLOG</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">KAKARROT&#39;S BLOG</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">POSTS</a>
+                
+                    <a class="menu-item" href="/about">ABOUT</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">KAKARROT&#39;S BLOG</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">POSTS</a>
+                
+                    <a class="menu-item" href="/about">ABOUT</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">展开全部</a>
+        <a onclick="go_top()">返回顶部</a>
+        <a onclick="go_bottom()">滚动底部</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "收起全部"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "展开全部"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>  
+  <article class="post-wrap">
+    <header class="post-header">
+      <h1 class="post-title">Python+Selenium爬虫教程</h1>
+      
+      <div class="post-meta">
+         作者:&nbsp;
+        <a itemprop="author" rel="author" href="/">KAKARROT</a>
+         
+        <span class="post-time">
+          &nbsp;&nbsp;&nbsp;日期:&nbsp;
+          <a href="#"
+            >七月 05, 2024
+            <!-- &nbsp;&nbsp;0:00:00 -->
+          </a>
+        </span>
+         
+        <span class="post-category">
+          &nbsp;&nbsp;&nbsp;分类: &nbsp;
+          <a href="/categories/Python/">Python</a>
+          
+        </span>
+        
+      </div>
+      
+    </header>
+
+    <div class="post-content"><p>先说一句 “面向ChatGPT编程牛逼！！！”</p>
+<blockquote>
+<p>Selenium 是一个用于自动化 Web 浏览器的工具，广泛用于 Web 爬虫和 Web 应用测试。以下是一个详细的 Selenium 中文教程，帮助你快速上手并使用它来进行网页爬虫。</p>
+</blockquote>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><ol>
+<li><p><strong>安装 Python</strong>：<br>确保你的系统上已经安装了 Python，可以通过以下命令检查：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">python --version</span><br></pre></td></tr></table></figure>
+
+<p>如果没有安装，可以从 <a target="_blank" rel="noopener" href="https://www.python.org/">Python 官网</a> 下载并安装。</p>
+</li>
+<li><p><strong>安装 Selenium</strong>：<br>使用 <code>pip</code> 安装 Selenium：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pip install selenium</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>下载 WebDriver</strong>：<br>Selenium 需要使用 WebDriver 来控制浏览器。根据你使用的浏览器下载相应的 WebDriver：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://sites.google.com/chromium.org/driver/">ChromeDriver</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/mozilla/geckodriver/releases">GeckoDriver (Firefox)</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/">EdgeDriver</a></li>
+</ul>
+<p>下载后，将 WebDriver 可执行文件添加到系统的 PATH 中。</p>
+</li>
+</ol>
+<h2 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h2><p>以下是一个简单的示例，使用 Selenium 访问百度首页并获取页面标题。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> selenium <span class="keyword">import</span> webdriver</span><br><span class="line"><span class="keyword">from</span> selenium.webdriver.common.by <span class="keyword">import</span> By</span><br><span class="line"><span class="keyword">from</span> selenium.webdriver.common.keys <span class="keyword">import</span> Keys</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置 WebDriver 路径（假设你使用的是 Chrome）</span></span><br><span class="line">driver_path = <span class="string">&#x27;path/to/chromedriver&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建一个新的 Chrome 会话</span></span><br><span class="line">driver = webdriver.Chrome(executable_path=driver_path)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 访问百度首页</span></span><br><span class="line">driver.get(<span class="string">&quot;https://www.baidu.com&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取页面标题</span></span><br><span class="line"><span class="built_in">print</span>(driver.title)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在搜索框中输入关键字并提交</span></span><br><span class="line">search_box = driver.find_element(By.NAME, <span class="string">&quot;wd&quot;</span>)</span><br><span class="line">search_box.send_keys(<span class="string">&quot;Selenium&quot;</span>)</span><br><span class="line">search_box.send_keys(Keys.RETURN)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 等待搜索结果加载</span></span><br><span class="line">driver.implicitly_wait(<span class="number">10</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取并打印搜索结果的标题</span></span><br><span class="line">titles = driver.find_elements(By.XPATH, <span class="string">&quot;//h3/a&quot;</span>)</span><br><span class="line"><span class="keyword">for</span> title <span class="keyword">in</span> titles:</span><br><span class="line">    <span class="built_in">print</span>(title.text)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 关闭浏览器</span></span><br><span class="line">driver.quit()</span><br></pre></td></tr></table></figure>
+
+<h2 id="详细教程"><a href="#详细教程" class="headerlink" title="详细教程"></a>详细教程</h2><h3 id="1-初始化-WebDriver"><a href="#1-初始化-WebDriver" class="headerlink" title="1. 初始化 WebDriver"></a>1. 初始化 WebDriver</h3><p>首先，初始化 WebDriver 并启动浏览器。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> selenium <span class="keyword">import</span> webdriver</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置 WebDriver 路径（假设你使用的是 Chrome）</span></span><br><span class="line">driver_path = <span class="string">&#x27;path/to/chromedriver&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建一个新的 Chrome 会话</span></span><br><span class="line">driver = webdriver.Chrome(executable_path=driver_path)</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-打开网页"><a href="#2-打开网页" class="headerlink" title="2. 打开网页"></a>2. 打开网页</h3><p>使用 <code>get</code> 方法打开指定的网页。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">driver.get(<span class="string">&quot;https://www.baidu.com&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-查找元素"><a href="#3-查找元素" class="headerlink" title="3. 查找元素"></a>3. 查找元素</h3><p>可以使用多种方法查找页面元素，如 <code>find_element</code> 和 <code>find_elements</code>。常见的查找方式有：</p>
+<ul>
+<li>按 ID：<code>driver.find_element(By.ID, &quot;element_id&quot;)</code></li>
+<li>按名称：<code>driver.find_element(By.NAME, &quot;element_name&quot;)</code></li>
+<li>按 XPath：<code>driver.find_element(By.XPATH, &quot;element_xpath&quot;)</code></li>
+<li>按 CSS 选择器：<code>driver.find_element(By.CSS_SELECTOR, &quot;element_css&quot;)</code></li>
+</ul>
+<p>例如：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">search_box = driver.find_element(By.NAME, <span class="string">&quot;wd&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-交互操作"><a href="#4-交互操作" class="headerlink" title="4. 交互操作"></a>4. 交互操作</h3><p>与页面元素交互，如输入文本和点击按钮。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">search_box.send_keys(<span class="string">&quot;Selenium&quot;</span>)</span><br><span class="line">search_box.send_keys(Keys.RETURN)</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-获取页面信息"><a href="#5-获取页面信息" class="headerlink" title="5. 获取页面信息"></a>5. 获取页面信息</h3><p>可以获取元素的属性、文本等信息。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">titles = driver.find_elements(By.XPATH, <span class="string">&quot;//h3/a&quot;</span>)</span><br><span class="line"><span class="keyword">for</span> title <span class="keyword">in</span> titles:</span><br><span class="line">    <span class="built_in">print</span>(title.text)</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-等待页面加载"><a href="#6-等待页面加载" class="headerlink" title="6. 等待页面加载"></a>6. 等待页面加载</h3><p>在抓取动态加载内容时，可能需要等待页面加载。可以使用显式等待和隐式等待。</p>
+<ul>
+<li><p><strong>隐式等待</strong>：设置一个全局等待时间。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">driver.implicitly_wait(<span class="number">10</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>显式等待</strong>：等待特定条件满足。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> selenium.webdriver.common.by <span class="keyword">import</span> By</span><br><span class="line"><span class="keyword">from</span> selenium.webdriver.support.ui <span class="keyword">import</span> WebDriverWait</span><br><span class="line"><span class="keyword">from</span> selenium.webdriver.support <span class="keyword">import</span> expected_conditions <span class="keyword">as</span> EC</span><br><span class="line"></span><br><span class="line">wait = WebDriverWait(driver, <span class="number">10</span>)</span><br><span class="line">element = wait.until(EC.presence_of_element_located((By.ID, <span class="string">&quot;element_id&quot;</span>)))</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="7-关闭浏览器"><a href="#7-关闭浏览器" class="headerlink" title="7. 关闭浏览器"></a>7. 关闭浏览器</h3><p>操作完成后，关闭浏览器。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">driver.quit()</span><br></pre></td></tr></table></figure>
+
+<h2 id="完整示例代码"><a href="#完整示例代码" class="headerlink" title="完整示例代码"></a>完整示例代码</h2><p>以下是一个完整的示例代码，将上述步骤结合在一起。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> selenium <span class="keyword">import</span> webdriver</span><br><span class="line"><span class="keyword">from</span> selenium.webdriver.common.by <span class="keyword">import</span> By</span><br><span class="line"><span class="keyword">from</span> selenium.webdriver.common.keys <span class="keyword">import</span> Keys</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置 WebDriver 路径（假设你使用的是 Chrome）</span></span><br><span class="line">driver_path = <span class="string">&#x27;path/to/chromedriver&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建一个新的 Chrome 会话</span></span><br><span class="line">driver = webdriver.Chrome(executable_path=driver_path)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 访问百度首页</span></span><br><span class="line">driver.get(<span class="string">&quot;https://www.baidu.com&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取页面标题</span></span><br><span class="line"><span class="built_in">print</span>(driver.title)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在搜索框中输入关键字并提交</span></span><br><span class="line">search_box = driver.find_element(By.NAME, <span class="string">&quot;wd&quot;</span>)</span><br><span class="line">search_box.send_keys(<span class="string">&quot;Selenium&quot;</span>)</span><br><span class="line">search_box.send_keys(Keys.RETURN)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 等待搜索结果加载</span></span><br><span class="line">driver.implicitly_wait(<span class="number">10</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取并打印搜索结果的标题</span></span><br><span class="line">titles = driver.find_elements(By.XPATH, <span class="string">&quot;//h3/a&quot;</span>)</span><br><span class="line"><span class="keyword">for</span> title <span class="keyword">in</span> titles:</span><br><span class="line">    <span class="built_in">print</span>(title.text)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 关闭浏览器</span></span><br><span class="line">driver.quit()</span><br></pre></td></tr></table></figure>
+
+<p>通过以上步骤，你已经掌握了使用 Selenium 进行基本网页爬虫操作的技能。可以根据实际需求进行扩展和修改。</p>
+</div>
+
+    <section class="post-tags">
+      <div>
+        <span>标签:</span>
+        <span class="tag">
+           
+          <a href="/tags/Python/"
+            >&nbsp; # &nbsp;Python</a
+          >
+          
+          <a href="/tags/Selenium/"
+            >&nbsp; # &nbsp;Selenium</a
+          >
+          
+          <a href="/tags/%E7%88%AC%E8%99%AB/"
+            >&nbsp; # &nbsp;爬虫</a
+          >
+           
+        </span>
+      </div>
+    </section>
+    <section class="post-nav">
+       
+      <a class="next" rel="next" href="/posts/4cfa5911/"
+        >西方哲学史</a
+      >
+      
+    </section>
+  </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© KAKARROT | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>
