@@ -50,11 +50,17 @@ document.ready(
             if (isDark) {
                 pagebody.classList.add('dark-theme');
                 // mobile
-                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+                const mobileToggleElement = document.getElementById("mobile-toggle-theme");
+                if (mobileToggleElement) {
+                    mobileToggleElement.innerText = "· Dark";
+                }
             } else {
                 pagebody.classList.remove('dark-theme');
                 // mobile
-                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+                const mobileToggleElement = document.getElementById("mobile-toggle-theme");
+                if (mobileToggleElement) {
+                    mobileToggleElement.innerText = "· Light";
+                }
             }
             document.getElementsByClassName('toggleBtn')[0].addEventListener('click', () => {
                 if (pagebody.classList.contains('dark-theme')) {
