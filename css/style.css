@@ -1337,14 +1337,6 @@ header label {
 .highlight .code .meta {
   color: #75715e;
 }
-.highlight {
-  background: #f6f8fa;
-  padding: 0.8em 0.8em 0.4em;
-  color: #4d4d4c;
-  overflow: auto;
-  margin: 2em 0;
-  position: relative;
-}
 .post-content figure.highlight figcaption {
   text-align: left;
 }
