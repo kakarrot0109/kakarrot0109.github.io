@@ -1018,6 +1018,8 @@ header label {
 }
 .post-content figure.highlight .code pre {
   margin: 0 10px;
+  padding: 20px;
+  line-height: 2em;
 }
 .post-content figure.highlight .gutter {
   width: 10px;
@@ -1337,14 +1339,6 @@ header label {
 .highlight .code .meta {
   color: #75715e;
 }
-.highlight {
-  display: block;
-  overflow: auto;
-  position: relative;
-  margin: 20px;
-  font-size: 13px;
-  line-height: 2em;
-}
 .post-content figure.highlight figcaption {
   text-align: left;
 }
@@ -1376,59 +1370,4 @@ header label {
 }
 .highlight .line {
   height: 22px;
-}
-.highlight.bash .code:after,
-.highlight.ini .code:after,
-.highlight.markdown .code:after,
-.highlight.yml .code:after,
-.highlight.lua .code:after,
-.highlight.python .code:after,
-.highlight.php .code:after,
-.highlight.html .code:after,
-.highlight.css .code:after,
-.highlight.javascript .code:after,
-.highlight.json .code:after {
-  position: absolute;
-  top: -30px;
-  right: 0;
-  color: #ccc;
-  text-align: right;
-  font-size: 0.75em;
-  padding: 5px 10px 0;
-  line-height: 15px;
-  height: 15px;
-  font-weight: 600;
-}
-.highlight.bash .code:after {
-  content: 'Shell';
-}
-.highlight.ini .code:after {
-  content: 'Shell';
-}
-.highlight.markdown .code:after {
-  content: 'Markdown';
-}
-.highlight.yml .code:after {
-  content: 'YML';
-}
-.highlight.lua .code:after {
-  content: 'Lua';
-}
-.highlight.python .code:after {
-  content: 'Python';
-}
-.highlight.php .code:after {
-  content: 'PHP';
-}
-.highlight.html .code:after {
-  content: 'HTML';
-}
-.highlight.css .code:after {
-  content: 'CSS';
-}
-.highlight.javascript .code:after {
-  content: 'JavaScript';
-}
-.highlight.json .code:after {
-  content: 'Json';
 }
