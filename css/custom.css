@@ -1,3 +1,11 @@
+.highlight {
+  display: block;
+  overflow: auto;
+  position: relative;
+  margin: 20px;
+  font-size: 13px;
+  line-height: 2em;
+}
 .post-content figure.highlight figcaption {
   text-align: left;
 }
