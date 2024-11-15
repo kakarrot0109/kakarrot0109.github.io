@@ -210,19 +210,22 @@
       
     </header>
 
-    <div class="post-content"><p>先说一句 “面向ChatGPT编程牛逼！！！”</p>
+    <div class="post-content"><p>先说一句 “面向 ChatGPT 编程牛逼！！！”</p>
 <blockquote>
 <p>Selenium 是一个用于自动化 Web 浏览器的工具，广泛用于 Web 爬虫和 Web 应用测试。以下是一个详细的 Selenium 中文教程，帮助你快速上手并使用它来进行网页爬虫。</p>
 </blockquote>
 <h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><ol>
-<li><p><strong>安装 Python</strong>：<br>确保你的系统上已经安装了 Python，可以通过以下命令检查：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">python --version</span><br></pre></td></tr></table></figure>
+<li><strong>安装 Python</strong>：<br>确保你的系统上已经安装了 Python，可以通过以下命令检查：</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">python --version</span><br></pre></td></tr></table></figure>
 
 <p>如果没有安装，可以从 <a target="_blank" rel="noopener" href="https://www.python.org/">Python 官网</a> 下载并安装。</p>
-</li>
-<li><p><strong>安装 Selenium</strong>：<br>使用 <code>pip</code> 安装 Selenium：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pip install selenium</span><br></pre></td></tr></table></figure>
-</li>
+<ol start="2">
+<li><strong>安装 Selenium</strong>：<br>使用 <code>pip</code> 安装 Selenium：</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pip install selenium</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
 <li><p><strong>下载 WebDriver</strong>：<br>Selenium 需要使用 WebDriver 来控制浏览器。根据你使用的浏览器下载相应的 WebDriver：</p>
 <ul>
 <li><a target="_blank" rel="noopener" href="https://sites.google.com/chromium.org/driver/">ChromeDriver</a></li>
@@ -256,12 +259,15 @@
 
 <h3 id="6-等待页面加载"><a href="#6-等待页面加载" class="headerlink" title="6. 等待页面加载"></a>6. 等待页面加载</h3><p>在抓取动态加载内容时，可能需要等待页面加载。可以使用显式等待和隐式等待。</p>
 <ul>
-<li><p><strong>隐式等待</strong>：设置一个全局等待时间。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">driver.implicitly_wait(<span class="number">10</span>)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><strong>显式等待</strong>：等待特定条件满足。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> selenium.webdriver.common.by <span class="keyword">import</span> By</span><br><span class="line"><span class="keyword">from</span> selenium.webdriver.support.ui <span class="keyword">import</span> WebDriverWait</span><br><span class="line"><span class="keyword">from</span> selenium.webdriver.support <span class="keyword">import</span> expected_conditions <span class="keyword">as</span> EC</span><br><span class="line"></span><br><span class="line">wait = WebDriverWait(driver, <span class="number">10</span>)</span><br><span class="line">element = wait.until(EC.presence_of_element_located((By.ID, <span class="string">&quot;element_id&quot;</span>)))</span><br></pre></td></tr></table></figure></li>
+<li><strong>隐式等待</strong>：设置一个全局等待时间。</li>
 </ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">driver.implicitly_wait(<span class="number">10</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>显式等待</strong>：等待特定条件满足。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> selenium.webdriver.common.by <span class="keyword">import</span> By</span><br><span class="line"><span class="keyword">from</span> selenium.webdriver.support.ui <span class="keyword">import</span> WebDriverWait</span><br><span class="line"><span class="keyword">from</span> selenium.webdriver.support <span class="keyword">import</span> expected_conditions <span class="keyword">as</span> EC</span><br><span class="line"></span><br><span class="line">wait = WebDriverWait(driver, <span class="number">10</span>)</span><br><span class="line">element = wait.until(EC.presence_of_element_located((By.ID, <span class="string">&quot;element_id&quot;</span>)))</span><br></pre></td></tr></table></figure>
+
 <h3 id="7-关闭浏览器"><a href="#7-关闭浏览器" class="headerlink" title="7. 关闭浏览器"></a>7. 关闭浏览器</h3><p>操作完成后，关闭浏览器。</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">driver.quit()</span><br></pre></td></tr></table></figure>
 
