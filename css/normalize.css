@@ -41,7 +41,7 @@ hr {
  * 2. Correct the odd `em` font sizing in all browsers.
  */
 pre {
-  font-family: 'JetBrains Mono' /* 1 */;
+  font-family: monospace, monospace /* 1 */;
   font-size: 1em /* 2 */;
 }
 /* Text-level semantics
@@ -75,7 +75,7 @@ strong {
 code,
 kbd,
 samp {
-  font-family: 'JetBrains Mono' /* 1 */;
+  font-family: monospace, monospace /* 1 */;
   font-size: 1em /* 2 */;
 }
 /**
@@ -120,7 +120,7 @@ input,
 optgroup,
 select,
 textarea {
-  font-family: 'JetBrains Mono' /* 1 */;
+  font-family: inherit /* 1 */;
   font-size: 100% /* 1 */;
   line-height: 1.15 /* 1 */;
   margin: 0 /* 2 */;
