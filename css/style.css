@@ -1377,6 +1377,6 @@ header label {
   color: #f8f8f2;
 }
 .dark-theme .post-content figure.highlight .gutter pre {
-  background-color: #3e3e3e;
+  background-color: #23241f;
   color: $dark-mode-pre-line-number-foreground-color;
 }

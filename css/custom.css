@@ -4,6 +4,6 @@
   color: #f8f8f2;
 }
 .dark-theme .post-content figure.highlight .gutter pre {
-  background-color: $dark-post-blockquote-background-color;
+  background-color: #23241f;
   color: $dark-mode-pre-line-number-foreground-color;
 }
