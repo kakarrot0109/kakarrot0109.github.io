@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8" />
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+/>
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+<meta name="author" content="KAKARROT" />
+ 
+<meta name="subtitle" content="自救者、人恒久之。" />
+ 
+<meta name="description" content="我只是希望事情是它该有的那个样子！" />
+ 
+<meta name="keywords" content="产品,哲学,历史,魔兽,音乐" />
+ 
+<title>Prompt的CO-STAR框架 | KAKARROT&#39;S BLOG</title>
+
+ 
+<link rel="icon" href="/favicon.ico" />
+  
+<!-- stylesheets list from _config.yml -->
+
+<link rel="stylesheet" href="/css/style.css" />
+   
+<!-- scripts list from _config.yml -->
+
+<script src="/js/script.js"></script>
+
+<script src="/js/tocbot.min.js"></script>
+        
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Kakarrot&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">归档</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Kakarrot&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">归档</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+  <article class="post-wrap">
+    <header class="post-header">
+      <h1 class="post-title">Prompt的CO-STAR框架</h1>
+      
+      <div class="post-meta">
+         作者:
+        <a itemprop="author" rel="author" href="/"
+          >KAKARROT&nbsp;&nbsp;</a
+        >
+         
+        <span class="post-time">
+          日期:
+          <a href="#">2024年12月23日&nbsp;&nbsp;</a>
+        </span>
+         
+        <span class="post-category">
+          分类: 
+          <a href="/categories/AI/">AI</a>
+          
+        </span>
+        
+      </div>
+      
+    </header>
+
+    <div class="post-content"><div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
+  <script id="hbeData" type="hbeData" data-hmacdigest="a1959f179f6ff384b794399ad63b214b7f70624102ac18a74c8d8501de9ba8f5">1a3f2e235fe9c989a529da1c779b756e6dd14110260860f9bb2eae142e8b79a273f080c8ef0d6d5e062936f96760231a2d69e8911e9f489669cc7057ded1b12d12de3ad704cccefb0b1ab0864b8f4b5a548ed31655b39cc6ca5d520db0ab60172f5d6fcb11b03eac989b64256f80c381843b04fa2fbc465e560a7f23439fe1fa0364c7f409c60e0ed46a91ee3dbb0096db3ca4805e5ca03518c1ef7a5c0eea4599f924bba2e74877c70a7ab6b87ef4c860736ca90de25ef06e3950271d5025964970a5fc581a1493fcc5fe82a71e7dce446575e0b0bc0f5aad0f6ecd87384fecdb4e3f8b8895829c0dd377b81f24243035fb094008eac2c1683e0940623bcbf6b88c91c0d3ac466b9291b4294beae80a0c6fff876fb89865036fcee91088fc7ad6be296731058e06a34ea1093d2cc4cd46d6ea6d66df1d250dea71a57238adf9446155709c3547c0b117438eb478f35a8aa2c4527b4cd3f353e47dba45ae4e127b1277e69cb18f839e86711118465eb19b60cb5847826b552587dda2d062a94b2d56b5160ec89c2491057edf60ef2cf5a4f0e8f9b77b46fccbc7de1f73c17d8160c5f69fa175cbd203b3c14db81ad3a0eecb0cb5c7f0d95151c57a9c90ea1096a7c8f9c02dd91219f8df2d0bebd0cf750b9e2ea775df17165efa536dbdd8d7c73d38c35a12c54d67d37e9ca93a8c541098374ccc6579fe7247d3a3d9a1503e8bdb04bfd78813d2dc4c9d76eb0de353ced2a020df9950f60ede92ac60caad60601ec6749da4d3edd52a42e988adb9cd2cb23685012e630342e1890fa3554e69ca3e3a4853a8d1fe19853d13900c89746227800fe71ff6de53ebe5d8f95fdb1aa1c9aad28b80f0b309f8f6163276ddf55d2343a6957a967dcae76b28b9abc014afcf38695277f4ba262821bd7343720ac5e39dc23f90d1a68789faf5492c2eb2908ad7d27405d8885870ec3baa14e1a151807c574730b1c62e8599af1d1f4379ec438b804cf90ce70631ecdc9cd050226cad8ee06343d261b7ceb47a8c5c5055189ba024250b41e85d7a3745a1fc00cf88657c0fe1eb47572d2b6acef330f9d2ace062237c9a6f8800b5857697ee4fe429c6c3b23dea6bdaa26261c41b370dfe1b5cb77e0cf531f5f2f22a1daa99c5f05591ecb689b8316476e396d406026149ba83e4e494efd7148fea8661701e4143b09163249dc41bb9ff499594a2e5bec308d3eb7e6f00b0b5382113042f9d14bf53a2712103034514a77bff4d0b70b96bba30395d9467a57b04881828a3488b1690e247b3ff85b6000f2f3d8931999ce04ef5600658a43b824b4c15de18ba5514606b6bd831f5a194ee4f7befd14b001f6c00a34a882655ee9d599e2c78c89c2b8517bca57bf980579dabe12eb3372b0ca3588cacc5f0923d1db896e758cdc0d8ef6dbf1fbc38023c9220d09519429f5b4e34334f29eafed99a6a6bb2e451c5f26fc3ca03c56e5bb60dc09b704c2434b694f074545be6e47920206e7a0aca64a3a0097b84769bf64e8fcca70ee835d4b7e5a497affa829c333edfd9a1d2c452edd3e40700d4944e93c1cd1053dd6af694fed80074634fe34ec84a65b252820b3478c6e5c80c4482dff380ee18f014f012c16a979261427f927823b92b4d719c1e33b039f637c421ed38dee3ad817c0415989573be21f2b6786195f8c6d645c5d0c6b47a5acc769a4708060fab4956663dcb1cca06e5f72f6b62149240c62157d4d6f67ad4dd283087b426902cc3435ce37bff1b04b458572e1bb4d3df91bd2be8341fc4531212b0ae1b99e9f4074c11b4e7d0735c2cf56956fd2da6ddb44d694649d936136eb77a41589b84a83b923b20b666aef9cb56a02dee9714c88a6854a3fb6fead845052599e4d39e5fe53718a7de3526e67e74b77618bb0d762f7df98f7baca338d2296e93107a176dc895d4000984942389020e1b9d17c0b3747fc179811624db365b47cf5b5e2f60062fb22980a00ec2e0cc501e66d59c3a323167bd5182fa31ae4b6ba31be3333e6361332cb2746e0e4a1d3e98badc3ad3282d455cd93f08a7b72bcfdd014e5f592c11222d3850706ce98ded1e5b0fe2adad6b0678385b12f1c46df875065c2418ff888486ef4cd2e7c3c542a160140fc9353c81d13a3c6d1b8f404fb779d8b7d02f7b81bd67d72ce3884749ab9b79e2e50c6a896ea4bde8c1d8d999dccd9fd89a58ada4fedac9e36b72a98e8438ffe7f6a939476edae395302249d8810ffda91ccfe659d1dbd8e3531e2a9dbb8d2abc2f30af745425eca3b1398d0f4071650b97c40c776ed974bcad1d75eb25b803558e39601f067e4f50b463b5d21ecf7bff2eb3a4faffc37fe2d1757b20550703f1cad0cb5cf251e92bdd702c0a98b1dad019af80d0604c42a77919db8c165eb6d1a0fe654cee65d37ea71d878a7f6e55e0c0000dce1d6b54f026dd9525e5d86140c60299739bb72b64374eac85e0e2dbad662feba9130686f9f78af2d86bdab09305d37153306d19008f040fb8075c58e70cae9996e2cbe4c5e25b87ed540752013ac462fd262b8af9d07dc56fdfce2bf5412df4a9b4b96950b51ea0836ae61ce7c39d19298d5af0a900658ad3799e964d52c7fada638d7cd92bdec6de7fa8d692105489fc16e5c1d33d5bff1fdaabe3811c7255d79499cedbdedcfc0a22935c09960202608f7763bb15df3ecb2338a30ebd89c45471008ae983e0e26d7c425de6e769acc26676637e2cb2eacb44c98f8c0a8fbfffc7f37b3c510b5293c9827e8646bee0a8b9ad52e06e43f2d3cd25d406c4d390a7655438cb36e7c43335a351f1053bf7e29a16461a2149b32307dceea340b7fc3adf9482c229ecc3a11f5cffaf8f4f1cdd4d6404406efec72af6294fdf37a94680fc3d8a778112571350d99f3795f43a4b5b0e6bd9f9389294423e0c54e9bae24be2405695343a54bff4e13c4ec38feec9fb80e716a5428526a5ff396dd3d70035df2f4417270c14b4ccdbe8443acbebb846a2ab50a6a13c86273744b4895de6ab6954ad1a722110252b379cf8025f95d4cb6ee800caea3757c30b028f3736d4e4b0dfd4aeba4ac038eda50faef2003288ef72d892d7b035c3b6268c8c8e3a3da9b7ff141bd6efc5baba8669d80051f62f3af7adc2af08596443834770b6772c591e0e0af845a59c8ad6bcbafd8748c77c2e38c51e5f5cabd7f0c4ea13e6cf14517f01d33904e414006f12161eb650a54dd8fe277cc0f1ed9dbe12d1998b7a3a07e719a677dcafc3218fd6b5e2d65467edc7ebde6d8d7294c6afdb7f62b42d12c97004436a643b5c4b1cefcd2fc1feca0620d140f5dca0a0681346d25c3dade5899f53dabbfaa3abdf26c7ee7c1d0666a8a80e0858c0ea28d2589ba8e00d53403e05aef1a9f0402d691fdbcbf5b4d085f0aa6e40987183c8398cd572c72c7bb0c5037bb03e19e9e9deb2a772908deca5451b9961dcb44299cabe268e7b8e042a229b1e9e03c670922fa67555e97c392324a4b9b330b6bb54336754b922d1b0280b14c41d499802ebeb7688d8866d8db99ae0591710ebcc8e6bad07c8c7750e022ce54f3e2d7723aa2f50573af8da8a87e07304c2c8f749da049fc1d37b194ddb9672fa06d5844ce1bef9fc39085f475c8267db2456a70c9f659b6bf55f75f3ab14f90a462e62b118fd33c3d8e0af24b0eefac3ac87f0ce88f7a7ff0a4ac513069b22798232a79bb516c565cf7160eed469edbe72cc1b0a4a775ea15fa1eda32529709dfd5d6b6ad977476cba165d70ed02ae3e07c89ad68b7158c325dbc45d0003b1370ad25057c73bc6258055c9f5204ada2ca9e77f3b43ba0a9652530c3f6346359d5352176987984f7fea4e4058c332f2fa0fbde6d61f8b4528af8b1c692350e01850f8063b2a0156d264b50885fcedd97eb9d545c487d94314c54ed1e78ea2dc0f1173675fd6068ba0223929879811b118101c2355c6e46b79028fb160b0cbda8ebea3789fc5c74da405a674eae5f5bab1fdaf9d17e006ba8ca6c2a5bb2bbd74f4cf086d6205512b2b43add31459dc8dbd1efe7de97d70dab4a3c665bf6afc16edd70878df530e034126a211e497db33f42c88166d838569bf730220f33a1be983e9bf4bfa924c5b725783daeea10bf124e1a56d6881ecff2e4302b6327d204e73323418651003b7db21d86ef03447b7266d0810c5cc0fa3581eb0e47cf0daa0968f6ba645b550b1ea8965a04aeb952c3e034e2af6a6ac33a51f614c46cb3aab3e8da86c7cf8787823cb724732b38aa4f9f3fc6434a1ad094f24b6652898bbfbb26f5fd159e5a82482f7ce0373ba2b7475f2759e2df6df50607b2a330696c32f565086144b12a606c99fabf7b6a2db718a09386850a1c052d954a709a6518639db3f67c4462a67fabec446b9b3a5d879847231d0a4f4b70b2935e17d5c6ec7d8988ee2eb93e1cbf16ba2a065119f14359371b4e526713bb97c5fb6395a069489c1cb322c3f9a6aaa967f27c3f8f32f370742071109d058945e05662524984a19de22cbee7f5b16763b4a6cbd797cfdc560ee5f51a58d2c249764c10197bc52ac7e431ebcbe5496b6812673a1f5ed0bfbe58eb7c7f34b70defb77561e61e7c104ee69a6c2654e719912e6b0bdd9a6b600a4336e4e1f84fa54240c6da1ad426681063439c19f8d60ddc59d737b303bb01482ea10ab0c81220ccc4e8b8750c4d4d1b7229c894a0df38162315056d22179dfde15a0a9b95a8abe8a9ecfa62a31e51183389ac13049e2578219635f8172963698fb1552c830012d056d0d8539c039a99797e5b7619b4f3cedb968d4bdc1b9b749bd4cdf738dd688bb2bb9af56a6b851448970f8240be50cd26000e4e708da9e000fa42e1eb850253cb425bbfcaa8610a3c4789d4b4325616eedaa681df5d84c78d7bed1c3f840c678e4a9c9af5b1b9c4673ca736b1e6f55c589b64e891a4753583c2f0d03d825560b231203eb630a9626539774e68a6489e5c510f8c8432927a4761bf31b32e046980bd42f1967173ca26e720a476a69e7287d9f85f50cfc06763cd3b6bd656a86e37a737da33572150a1b3921ff8e6d851216717897080b567cb37c65f84787a0d18616782856d4fcd846fcaf16a0b551703895b095242989501b52f1c9970cf669d367896ab2d6ed20a90ef9c9d7e552fca1e5434698e7ae64c637d19cba76d25851ca3ad156c4f86f20b2016f42940f33574c9bd5d7f1ca8953fd77f07b84a550caa6b319b229280f33504cac770bcb3c3004e989e831771c184e66993bb8759d0467b22f717f6c25b5307c8e50834588520b15a34c2729486a90c3657d86c53bb0074c8c3c3ae3d00c35f79b66f2368513d0899d4af75ed16937f2fdaf0af47f9076678a9a10a4e636f58e9ddd5202d947e02550534eace266aa369a7726010fe54d31408a8348f2cc866867bbb674aaa71553f96c04462043dbf81ac901cab9d5c729beb0fda0906af5701d9473746236deca7450192e924927a57c2e405cd024fbd51ac4becf240e119bb8d5ae975c6f8f4931c484d97dcab51b693ba7579445a9c8b56b4ca1f1320bb53797da8a5cbfb40540f026a055</script>
+  <div class="hbe hbe-content">
+    <div class="hbe hbe-input hbe-input-default">
+      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
+      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
+        <span class="hbe hbe-input-label-content hbe-input-label-content-default">Hey, password is required here.</span>
+      </label>
+    </div>
+  </div>
+</div>
+<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css"></div>
+
+    
+    <!-- <section class="post-tags">
+      <div>
+        <span>Tag(s):</span>
+        <span class="tag">
+           
+          <a href="/tags/AI/"># AI</a>
+          
+          <a href="/tags/Prompt/"># Prompt</a>
+           
+        </span>
+      </div>
+      <div>
+        <a href="javascript:window.history.back();">back</a>
+        <span>· </span>
+        <a href="/">home</a>
+      </div>
+    </section> -->
+    <section class="post-nav">
+      
+      <a class="prev" rel="prev" href="/posts/e860cc2d/"
+        >个人简历</a
+      >
+       
+      <a class="next" rel="next" href="/posts/be10087/"
+        >魔兽世界WotLK备份</a
+      >
+      
+    </section>
+  </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© KAKARROT | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>
