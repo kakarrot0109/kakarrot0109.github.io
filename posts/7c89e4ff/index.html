@@ -2,36 +2,53 @@
 <html lang="zh-CN">
 
 <head>
-    <meta charset="UTF-8" />
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
-/>
-<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-<meta name="author" content="KAKARROT" />
- 
-<meta name="subtitle" content="Heaven helps those who help themselves." />
- 
-<meta name="description" content="I just want things to be what they are supposed to be." />
- 
-<meta name="keywords" content="产品,哲学,历史,魔兽,音乐" />
- 
+    <meta name="author" content="KAKARROT">
+
+
+    <meta name="subtitle" content="Heaven helps those who help themselves.">
+
+
+    <meta name="description" content="I just want things to be what they are supposed to be.">
+
+
+    <meta name="keywords" content="产品,哲学,历史,魔兽,音乐">
+
+
 <title>魔兽世界插件-KUI | KAKARROT&#39;S BLOG</title>
 
- 
-<link rel="icon" href="/favicon.ico" />
-  
-<!-- stylesheets list from _config.yml -->
 
-<link rel="stylesheet" href="/css/style.css" />
-   
-<!-- scripts list from _config.yml -->
 
-<script src="/js/script.js"></script>
+    <link rel="icon" href="/favicon.ico">
 
-<script src="/js/tocbot.min.js"></script>
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
         
+    
+
 
 <meta name="generator" content="Hexo 7.3.0"></head>
 
@@ -58,7 +75,7 @@
         <header>
     <nav class="navbar">
         <div class="container">
-            <div class="navbar-header header-logo"><a href="/">Kakarrot&#39;s Blog</a></div>
+            <div class="navbar-header header-logo"><a href="/">Bentham&#39;s Blog</a></div>
             <div class="menu navbar-right">
                 
                     <a class="menu-item" href="/archives">Posts</a>
@@ -80,7 +97,7 @@
         <div class="container">
             <div class="navbar-header">
                 <div>
-                    <a href="/">Kakarrot&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                    <a href="/">Bentham&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
                 </div>
                 <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
             </div>
@@ -114,104 +131,84 @@
 </script>
             <div class="main">
                 <div class="container">
-    <div class="post-toc">
-  <div class="tocbot-list"></div>
-  <div class="tocbot-list-menu">
-    <a class="tocbot-toc-expand" onclick="expand_toc()">展开全部</a>
-    <a onclick="go_top()">返回顶部</a>
-    <a onclick="go_bottom()">降至底部</a>
-  </div>
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">展开全部</a>
+        <a onclick="go_top()">回到顶部</a>
+        <a onclick="go_bottom()">回到底部</a>
+    </div>
 </div>
 
 <script>
-  var tocbot_timer;
-  var DEPTH_MAX = 6; // 为 6 时展开所有
-  var tocbot_default_config = {
-    tocSelector: ".tocbot-list",
-    contentSelector: ".post-content",
-    headingSelector: "h1, h2, h3, h4, h5",
-    orderedList: false,
-    scrollSmooth: true,
-    onClick: extend_click,
-  };
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
 
-  function extend_click() {
-    clearTimeout(tocbot_timer);
-    tocbot_timer = setTimeout(function () {
-      tocbot.refresh(
-        obj_merge(tocbot_default_config, {
-          hasInnerContainers: true,
-        })
-      );
-    }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
-  }
-
-  document.ready(function () {
-    tocbot.init(
-      obj_merge(tocbot_default_config, {
-        collapseDepth: 1,
-      })
-    );
-  });
-
-  function expand_toc() {
-    var b = document.querySelector(".tocbot-toc-expand");
-    var expanded = b.getAttribute("data-expanded");
-    expanded
-      ? b.removeAttribute("data-expanded")
-      : b.setAttribute("data-expanded", true);
-    tocbot.refresh(
-      obj_merge(tocbot_default_config, {
-        collapseDepth: expanded ? 1 : DEPTH_MAX,
-      })
-    );
-    b.innerText = expanded ? "展开全部" : "收起全部";
-  }
-
-  function go_top() {
-    window.scrollTo(0, 0);
-  }
-
-  function go_bottom() {
-    window.scrollTo(0, document.body.scrollHeight);
-  }
-
-  function obj_merge(target, source) {
-    for (var item in source) {
-      if (source.hasOwnProperty(item)) {
-        target[item] = source[item];
-      }
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
     }
-    return target;
-  }
-</script>
-  
-  <article class="post-wrap">
-    <header class="post-header">
-      <h1 class="post-title">魔兽世界插件-KUI</h1>
-      
-      <div class="post-meta">
-         作者:
-        <a itemprop="author" rel="author" href="/"
-          >KAKARROT&nbsp;&nbsp;</a
-        >
-         
-        <span class="post-time">
-          日期:
-          <a href="#">2025年01月01日&nbsp;&nbsp;</a>
-        </span>
-         
-        <span class="post-category">
-          分类: 
-          <a href="/categories/%E6%B8%B8%E6%88%8F/">游戏</a>
-          
-        </span>
-        
-      </div>
-      
-    </header>
 
-    <div class="post-content"><h2 id="插件背景"><a href="#插件背景" class="headerlink" title="插件背景"></a>插件背景</h2><p>一直就喜欢暴雪默认风格，配合几个简单第三方功能插件，就可以实现非常满意的魔兽世界 UI 布局。</p>
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? '展开全部' : '收起全部';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">魔兽世界插件-KUI</h1>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="插件背景"><a href="#插件背景" class="headerlink" title="插件背景"></a>插件背景</h2><p>一直就喜欢暴雪默认风格，配合几个简单第三方功能插件，就可以实现非常满意的魔兽世界 UI 布局。</p>
 <p>常年混迹于 NGA 插件板块，对于”暴雪风格”情有独钟，经常使用论坛网友的插件包，基于自己的特殊需求，面向”ChatGPT”开始写插件！</p>
 <p>在尝试多个暴雪风格插件后，觉得使用”SUI”作为基础插件，因为其材质和布局对于我来说非常友好，基本上满足 80%+的布局需求。</p>
 <p><a target="_blank" rel="noopener" href="https://www.curseforge.com/wow/addons/sui">SUI</a></p>
@@ -257,38 +254,21 @@
 <li>其他设置</li>
 </ul>
 <figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">local</span> addonName, addon = ...</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 插件初始化函数</span></span><br><span class="line"><span class="keyword">local</span> <span class="function"><span class="keyword">function</span> <span class="title">InitializeAddon</span><span class="params">()</span></span></span><br><span class="line">    <span class="comment">-- 姓名板相关设置</span></span><br><span class="line">    SetCVar(<span class="string">&quot;ShowClassColorInFriendlyNameplate&quot;</span>, <span class="number">1</span>) <span class="comment">-- 显示友方姓名板职业颜色</span></span><br><span class="line">    SetCVar(<span class="string">&quot;nameplateShowOnlyNames&quot;</span>, <span class="number">0</span>)            <span class="comment">-- 姓名板显示完整信息（不仅仅是名字）</span></span><br><span class="line">    SetCVar(<span class="string">&quot;nameplateMaxDistance&quot;</span>, <span class="number">40</span>)             <span class="comment">-- 调整姓名板的最大可视距离（默认是20，可以调到40）</span></span><br><span class="line">    SetCVar(<span class="string">&quot;nameplateShowFriends&quot;</span>, <span class="number">0</span>)              <span class="comment">-- 禁用友方单位姓名板（仅显示敌对单位）</span></span><br><span class="line">    SetCVar(<span class="string">&quot;nameplateShowEnemies&quot;</span>, <span class="number">1</span>)              <span class="comment">-- 启用敌对姓名板</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">-- 战斗和目标设置</span></span><br><span class="line">    SetCVar(<span class="string">&quot;autoAttack&quot;</span>, <span class="number">1</span>)                <span class="comment">-- 自动攻击开始时自动切换目标</span></span><br><span class="line">    SetCVar(<span class="string">&quot;ShowClassColorInNameplate&quot;</span>, <span class="number">1</span>) <span class="comment">-- 显示敌方玩家职业颜色</span></span><br><span class="line">    SetCVar(<span class="string">&quot;threatShowNumeric&quot;</span>, <span class="number">1</span>)         <span class="comment">-- 显示目标的仇恨状态</span></span><br><span class="line">    SetCVar(<span class="string">&quot;assistAttack&quot;</span>, <span class="number">0</span>)              <span class="comment">-- 禁用目标框架上的 &quot;点击自动攻击&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">-- 界面优化</span></span><br><span class="line">    SetCVar(<span class="string">&quot;enableFloatingCombatText&quot;</span>, <span class="number">1</span>)        <span class="comment">-- 显示界面上数值</span></span><br><span class="line">    SetCVar(<span class="string">&quot;statusTextDisplay&quot;</span>, <span class="string">&quot;NUMERIC&quot;</span>)       <span class="comment">-- 显示状态文本百分比（可选值：NONE / NUMERIC / PERCENT / BOTH）</span></span><br><span class="line">    SetCVar(<span class="string">&quot;ffx&quot;</span>, <span class="number">0</span>)                             <span class="comment">-- 禁用画面模糊（例如传送门特效）</span></span><br><span class="line">    SetCVar(<span class="string">&quot;uiscale&quot;</span>, <span class="number">1</span>)                         <span class="comment">-- 增加界面缩放范围（可在系统设置中进一步调整）</span></span><br><span class="line">    SetCVar(<span class="string">&quot;floatingCombatTextCombatDamage&quot;</span>, <span class="number">1</span>)  <span class="comment">-- 禁用浮动文本动画（如法术治疗、伤害数值）</span></span><br><span class="line">    SetCVar(<span class="string">&quot;floatingCombatTextCombatHealing&quot;</span>, <span class="number">1</span>) <span class="comment">-- 禁用浮动文本动画（如法术治疗、伤害数值）</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">-- 聊天与社交</span></span><br><span class="line">    SetCVar(<span class="string">&quot;profanityFilter&quot;</span>, <span class="number">0</span>)     <span class="comment">-- 禁用聊天过滤器</span></span><br><span class="line">    SetCVar(<span class="string">&quot;showTimestamps&quot;</span>, <span class="string">&quot;none&quot;</span>) <span class="comment">-- 始终显示聊天时间戳</span></span><br><span class="line">    SetCVar(<span class="string">&quot;CombatLogRetention&quot;</span>, <span class="number">30</span>) <span class="comment">-- 设置战斗日志保存时间</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">-- 镜头和视角</span></span><br><span class="line">    SetCVar(<span class="string">&quot;cameraSmoothStyle&quot;</span>, <span class="number">0</span>)             <span class="comment">-- 禁用镜头缩放动画</span></span><br><span class="line">    SetCVar(<span class="string">&quot;cameraDistanceMaxZoomFactor&quot;</span>, <span class="number">2.6</span>) <span class="comment">-- 设置镜头最大视距</span></span><br><span class="line">    SetCVar(<span class="string">&quot;cameraBobbing&quot;</span>, <span class="number">0</span>)                 <span class="comment">-- 禁用镜头晃动效果（如骑马时）</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">-- 图形和性能优化</span></span><br><span class="line">    SetCVar(<span class="string">&quot;weatherDensity&quot;</span>, <span class="number">0</span>)    <span class="comment">-- 禁用天气密度</span></span><br><span class="line">    SetCVar(<span class="string">&quot;graphicsSunshafts&quot;</span>, <span class="number">0</span>) <span class="comment">-- 禁用阳光射线</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">-- 其他设置</span></span><br><span class="line">    SetCVar(<span class="string">&quot;chatClassColorOverride&quot;</span>, <span class="number">0</span>) <span class="comment">-- 禁用聊天职业颜色覆盖</span></span><br><span class="line">    SetCVar(<span class="string">&quot;audioLocale&quot;</span>, <span class="string">&quot;zhCN&quot;</span>)       <span class="comment">-- 设置音频语言为简体中文</span></span><br><span class="line">    SetCVar(<span class="string">&quot;textLocale&quot;</span>, <span class="string">&quot;zhCN&quot;</span>)        <span class="comment">-- 设置文本语言为简体中文</span></span><br><span class="line">    SetCVar(<span class="string">&quot;mouseSpeed&quot;</span>, <span class="number">1</span>)             <span class="comment">-- 设置鼠标速度</span></span><br><span class="line">    SetCVar(<span class="string">&quot;ffxGlow&quot;</span>, <span class="number">0</span>)                <span class="comment">-- 禁用发光效果</span></span><br><span class="line">    SetCVar(<span class="string">&quot;ffxDeath&quot;</span>, <span class="number">0</span>)               <span class="comment">-- 禁用死亡效果</span></span><br><span class="line">    SetCVar(<span class="string">&quot;ffxNether&quot;</span>, <span class="number">0</span>)              <span class="comment">-- 禁用虚空效果</span></span><br><span class="line">    SetCVar(<span class="string">&quot;overrideArchive&quot;</span>, <span class="number">0</span>)        <span class="comment">-- 反骷髅和谐</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 注册事件，在玩家登录时初始化插件</span></span><br><span class="line"><span class="keyword">local</span> eventFrame = CreateFrame(<span class="string">&quot;Frame&quot;</span>)</span><br><span class="line">eventFrame:RegisterEvent(<span class="string">&quot;PLAYER_LOGIN&quot;</span>) <span class="comment">-- 注册 PLAYER_LOGIN 事件</span></span><br><span class="line">eventFrame:SetScript(<span class="string">&quot;OnEvent&quot;</span>, <span class="function"><span class="keyword">function</span><span class="params">(self, event, ...)</span></span></span><br><span class="line">    <span class="keyword">if</span> event == <span class="string">&quot;PLAYER_LOGIN&quot;</span> <span class="keyword">then</span></span><br><span class="line">        InitializeAddon() <span class="comment">-- 玩家登录后执行初始化</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span>)</span><br></pre></td></tr></table></figure>
-</div>
 
-    
-    <!-- <section class="post-tags">
-      <div>
-        <span>Tag(s):</span>
-        <span class="tag">
-           
-          <a href="/tags/%E7%BD%91%E7%BB%9C%E6%B8%B8%E6%88%8F/"># 网络游戏</a>
-          
-          <a href="/tags/%E9%AD%94%E5%85%BD%E4%B8%96%E7%95%8C/"># 魔兽世界</a>
-           
-        </span>
-      </div>
-      <div>
-        <a href="javascript:window.history.back();">back</a>
-        <span>· </span>
-        <a href="/">home</a>
-      </div>
-    </section> -->
-    <section class="post-nav">
-      
-      <a class="prev" rel="prev" href="/posts/cd6c68c0/"
-        >Calibre电子书自定义样式</a
-      >
-       
-      <a class="next" rel="next" href="/posts/be10087/"
-        >魔兽世界WotLK备份</a
-      >
-      
-    </section>
-  </article>
+        </div>
+
+        
+                <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/posts/cd6c68c0/">Calibre电子书自定义样式</a>
+            
+            
+            <a class="next" rel="next" href="/posts/be10087/">魔兽世界WotLK备份</a>
+            
+        </section>
+
+
+    </article>
 </div>
 
             </div>

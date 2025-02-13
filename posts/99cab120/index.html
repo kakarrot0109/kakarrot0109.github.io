@@ -2,36 +2,53 @@
 <html lang="zh-CN">
 
 <head>
-    <meta charset="UTF-8" />
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
-/>
-<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-<meta name="author" content="KAKARROT" />
- 
-<meta name="subtitle" content="Heaven helps those who help themselves." />
- 
-<meta name="description" content="I just want things to be what they are supposed to be." />
- 
-<meta name="keywords" content="产品,哲学,历史,魔兽,音乐" />
- 
+    <meta name="author" content="KAKARROT">
+
+
+    <meta name="subtitle" content="Heaven helps those who help themselves.">
+
+
+    <meta name="description" content="I just want things to be what they are supposed to be.">
+
+
+    <meta name="keywords" content="产品,哲学,历史,魔兽,音乐">
+
+
 <title>用户留存那些事 | KAKARROT&#39;S BLOG</title>
 
- 
-<link rel="icon" href="/favicon.ico" />
-  
-<!-- stylesheets list from _config.yml -->
 
-<link rel="stylesheet" href="/css/style.css" />
-   
-<!-- scripts list from _config.yml -->
 
-<script src="/js/script.js"></script>
+    <link rel="icon" href="/favicon.ico">
 
-<script src="/js/tocbot.min.js"></script>
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
         
+    
+
 
 <meta name="generator" content="Hexo 7.3.0"></head>
 
@@ -58,7 +75,7 @@
         <header>
     <nav class="navbar">
         <div class="container">
-            <div class="navbar-header header-logo"><a href="/">Kakarrot&#39;s Blog</a></div>
+            <div class="navbar-header header-logo"><a href="/">Bentham&#39;s Blog</a></div>
             <div class="menu navbar-right">
                 
                     <a class="menu-item" href="/archives">Posts</a>
@@ -80,7 +97,7 @@
         <div class="container">
             <div class="navbar-header">
                 <div>
-                    <a href="/">Kakarrot&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                    <a href="/">Bentham&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
                 </div>
                 <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
             </div>
@@ -114,104 +131,84 @@
 </script>
             <div class="main">
                 <div class="container">
-    <div class="post-toc">
-  <div class="tocbot-list"></div>
-  <div class="tocbot-list-menu">
-    <a class="tocbot-toc-expand" onclick="expand_toc()">展开全部</a>
-    <a onclick="go_top()">返回顶部</a>
-    <a onclick="go_bottom()">降至底部</a>
-  </div>
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">展开全部</a>
+        <a onclick="go_top()">回到顶部</a>
+        <a onclick="go_bottom()">回到底部</a>
+    </div>
 </div>
 
 <script>
-  var tocbot_timer;
-  var DEPTH_MAX = 6; // 为 6 时展开所有
-  var tocbot_default_config = {
-    tocSelector: ".tocbot-list",
-    contentSelector: ".post-content",
-    headingSelector: "h1, h2, h3, h4, h5",
-    orderedList: false,
-    scrollSmooth: true,
-    onClick: extend_click,
-  };
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
 
-  function extend_click() {
-    clearTimeout(tocbot_timer);
-    tocbot_timer = setTimeout(function () {
-      tocbot.refresh(
-        obj_merge(tocbot_default_config, {
-          hasInnerContainers: true,
-        })
-      );
-    }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
-  }
-
-  document.ready(function () {
-    tocbot.init(
-      obj_merge(tocbot_default_config, {
-        collapseDepth: 1,
-      })
-    );
-  });
-
-  function expand_toc() {
-    var b = document.querySelector(".tocbot-toc-expand");
-    var expanded = b.getAttribute("data-expanded");
-    expanded
-      ? b.removeAttribute("data-expanded")
-      : b.setAttribute("data-expanded", true);
-    tocbot.refresh(
-      obj_merge(tocbot_default_config, {
-        collapseDepth: expanded ? 1 : DEPTH_MAX,
-      })
-    );
-    b.innerText = expanded ? "展开全部" : "收起全部";
-  }
-
-  function go_top() {
-    window.scrollTo(0, 0);
-  }
-
-  function go_bottom() {
-    window.scrollTo(0, document.body.scrollHeight);
-  }
-
-  function obj_merge(target, source) {
-    for (var item in source) {
-      if (source.hasOwnProperty(item)) {
-        target[item] = source[item];
-      }
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
     }
-    return target;
-  }
-</script>
-  
-  <article class="post-wrap">
-    <header class="post-header">
-      <h1 class="post-title">用户留存那些事</h1>
-      
-      <div class="post-meta">
-         作者:
-        <a itemprop="author" rel="author" href="/"
-          >KAKARROT&nbsp;&nbsp;</a
-        >
-         
-        <span class="post-time">
-          日期:
-          <a href="#">2016年07月03日&nbsp;&nbsp;</a>
-        </span>
-         
-        <span class="post-category">
-          分类: 
-          <a href="/categories/%E4%BA%A7%E5%93%81/">产品</a>
-          
-        </span>
-        
-      </div>
-      
-    </header>
 
-    <div class="post-content"><h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>在互联网行业当中，因为拉新或推广的活动把客户引过来，用户开始访问公司网站、使用产品，但是经过一段时间可能就会有一部分客户逐渐流失了。那些留下来的人或者是经常回访我们公司网站、使用产品的人就称为留存。</p>
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? '展开全部' : '收起全部';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">用户留存那些事</h1>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>在互联网行业当中，因为拉新或推广的活动把客户引过来，用户开始访问公司网站、使用产品，但是经过一段时间可能就会有一部分客户逐渐流失了。那些留下来的人或者是经常回访我们公司网站、使用产品的人就称为留存。</p>
 <p>现在大家经常会用到所谓的“日活”（编者注：日活跃用户量，DAU）来监测我们的网站，有的时候会看到我们的“日活”在一段时期内都是逐渐地增加的，这是一个非常好的现象。但是如果我们忽略了留存分析的话，这个结果很可能是一个错误。</p>
 <p>比如某公司做了很多拉新、推广的活动，人是带来了很多，但是留下来或经常返回来的客户不一定增长，他们有可能是在减少，只不过是拉新过来的人太多了而掩盖了流失率居高不下的问题，实际上客户的留存是在逐渐降低的。这个时候留存分析就很重要！</p>
 <h2 id="数据模型"><a href="#数据模型" class="headerlink" title="数据模型"></a>数据模型</h2><p><img src="https://i.loli.net/2019/07/03/5d1c11fa4d03811003.png" alt="留存图.png"><br><img src="https://i.loli.net/2019/07/03/5d1c11fa77bbc89312.png" alt="留存表.png"></p>
@@ -322,40 +319,21 @@
 <p>抓住留存周期内各个期间，分析用户行为，找到用户留存原因。</p>
 <p>使用户留下来的功能做到极致，使用户离开的功能完成迭代修复。</p>
 <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a target="_blank" rel="noopener" href="https://blog.growingio.com/courses/18">https://blog.growingio.com/courses/18</a></p>
-</div>
 
-    
-    <!-- <section class="post-tags">
-      <div>
-        <span>Tag(s):</span>
-        <span class="tag">
-           
-          <a href="/tags/%E4%BA%A7%E5%93%81%E7%BB%8F%E7%90%86/"># 产品经理</a>
-          
-          <a href="/tags/%E4%BA%A7%E5%93%81/"># 产品</a>
-          
-          <a href="/tags/%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1/"># 产品设计</a>
-           
-        </span>
-      </div>
-      <div>
-        <a href="javascript:window.history.back();">back</a>
-        <span>· </span>
-        <a href="/">home</a>
-      </div>
-    </section> -->
-    <section class="post-nav">
-      
-      <a class="prev" rel="prev" href="/posts/70f22acb/"
-        >用户转化那些事</a
-      >
-       
-      <a class="next" rel="next" href="/posts/4480440d/"
-        >用户注册那些事</a
-      >
-      
-    </section>
-  </article>
+        </div>
+
+        
+                <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/posts/70f22acb/">用户转化那些事</a>
+            
+            
+            <a class="next" rel="next" href="/posts/4480440d/">用户注册那些事</a>
+            
+        </section>
+
+
+    </article>
 </div>
 
             </div>

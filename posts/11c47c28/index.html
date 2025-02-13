@@ -2,36 +2,53 @@
 <html lang="zh-CN">
 
 <head>
-    <meta charset="UTF-8" />
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
-/>
-<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-<meta name="author" content="KAKARROT" />
- 
-<meta name="subtitle" content="Heaven helps those who help themselves." />
- 
-<meta name="description" content="I just want things to be what they are supposed to be." />
- 
-<meta name="keywords" content="产品,哲学,历史,魔兽,音乐" />
- 
+    <meta name="author" content="KAKARROT">
+
+
+    <meta name="subtitle" content="Heaven helps those who help themselves.">
+
+
+    <meta name="description" content="I just want things to be what they are supposed to be.">
+
+
+    <meta name="keywords" content="产品,哲学,历史,魔兽,音乐">
+
+
 <title>Hexo+Chic主题二次开发 | KAKARROT&#39;S BLOG</title>
 
- 
-<link rel="icon" href="/favicon.ico" />
-  
-<!-- stylesheets list from _config.yml -->
 
-<link rel="stylesheet" href="/css/style.css" />
-   
-<!-- scripts list from _config.yml -->
 
-<script src="/js/script.js"></script>
+    <link rel="icon" href="/favicon.ico">
 
-<script src="/js/tocbot.min.js"></script>
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
         
+    
+
 
 <meta name="generator" content="Hexo 7.3.0"></head>
 
@@ -58,7 +75,7 @@
         <header>
     <nav class="navbar">
         <div class="container">
-            <div class="navbar-header header-logo"><a href="/">Kakarrot&#39;s Blog</a></div>
+            <div class="navbar-header header-logo"><a href="/">Bentham&#39;s Blog</a></div>
             <div class="menu navbar-right">
                 
                     <a class="menu-item" href="/archives">Posts</a>
@@ -80,7 +97,7 @@
         <div class="container">
             <div class="navbar-header">
                 <div>
-                    <a href="/">Kakarrot&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                    <a href="/">Bentham&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
                 </div>
                 <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
             </div>
@@ -114,104 +131,84 @@
 </script>
             <div class="main">
                 <div class="container">
-    <div class="post-toc">
-  <div class="tocbot-list"></div>
-  <div class="tocbot-list-menu">
-    <a class="tocbot-toc-expand" onclick="expand_toc()">展开全部</a>
-    <a onclick="go_top()">返回顶部</a>
-    <a onclick="go_bottom()">降至底部</a>
-  </div>
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">展开全部</a>
+        <a onclick="go_top()">回到顶部</a>
+        <a onclick="go_bottom()">回到底部</a>
+    </div>
 </div>
 
 <script>
-  var tocbot_timer;
-  var DEPTH_MAX = 6; // 为 6 时展开所有
-  var tocbot_default_config = {
-    tocSelector: ".tocbot-list",
-    contentSelector: ".post-content",
-    headingSelector: "h1, h2, h3, h4, h5",
-    orderedList: false,
-    scrollSmooth: true,
-    onClick: extend_click,
-  };
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
 
-  function extend_click() {
-    clearTimeout(tocbot_timer);
-    tocbot_timer = setTimeout(function () {
-      tocbot.refresh(
-        obj_merge(tocbot_default_config, {
-          hasInnerContainers: true,
-        })
-      );
-    }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
-  }
-
-  document.ready(function () {
-    tocbot.init(
-      obj_merge(tocbot_default_config, {
-        collapseDepth: 1,
-      })
-    );
-  });
-
-  function expand_toc() {
-    var b = document.querySelector(".tocbot-toc-expand");
-    var expanded = b.getAttribute("data-expanded");
-    expanded
-      ? b.removeAttribute("data-expanded")
-      : b.setAttribute("data-expanded", true);
-    tocbot.refresh(
-      obj_merge(tocbot_default_config, {
-        collapseDepth: expanded ? 1 : DEPTH_MAX,
-      })
-    );
-    b.innerText = expanded ? "展开全部" : "收起全部";
-  }
-
-  function go_top() {
-    window.scrollTo(0, 0);
-  }
-
-  function go_bottom() {
-    window.scrollTo(0, document.body.scrollHeight);
-  }
-
-  function obj_merge(target, source) {
-    for (var item in source) {
-      if (source.hasOwnProperty(item)) {
-        target[item] = source[item];
-      }
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
     }
-    return target;
-  }
-</script>
-  
-  <article class="post-wrap">
-    <header class="post-header">
-      <h1 class="post-title">Hexo+Chic主题二次开发</h1>
-      
-      <div class="post-meta">
-         作者:
-        <a itemprop="author" rel="author" href="/"
-          >KAKARROT&nbsp;&nbsp;</a
-        >
-         
-        <span class="post-time">
-          日期:
-          <a href="#">2022年06月07日&nbsp;&nbsp;</a>
-        </span>
-         
-        <span class="post-category">
-          分类: 
-          <a href="/categories/Hexo/">Hexo</a>
-          
-        </span>
-        
-      </div>
-      
-    </header>
 
-    <div class="post-content"><h2 id="Chic-theme-介绍"><a href="#Chic-theme-介绍" class="headerlink" title="Chic theme 介绍"></a>Chic theme 介绍</h2><ul>
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? '展开全部' : '收起全部';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Hexo+Chic主题二次开发</h1>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="Chic-theme-介绍"><a href="#Chic-theme-介绍" class="headerlink" title="Chic theme 介绍"></a>Chic theme 介绍</h2><ul>
 <li>主题介绍：优雅、功能全面、阅读友好的 hexo 主题。</li>
 <li>主题地址：<a target="_blank" rel="noopener" href="https://github.com/Siricee/hexo-theme-Chic">GitHub 仓库地址</a></li>
 </ul>
@@ -245,38 +242,21 @@
 
 <figure class="highlight html"><figcaption><span>_page\tag.ejs</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;%# single tag page%&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;container&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;post-wrap tags&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h2</span> <span class="attr">class</span>=<span class="string">&quot;post-title&quot;</span>&gt;</span>-<span class="symbol">&amp;nbsp;</span>标签<span class="symbol">&amp;nbsp;</span>·<span class="symbol">&amp;nbsp;</span>&lt;%-page.tag%&gt;-<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  &lt;%- partial(&#x27;archive&#x27;, &#123;pagination: config.tag, index: true&#125;) %&gt;</span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-<h4 id="主题自定义CSS"><a href="#主题自定义CSS" class="headerlink" title="主题自定义CSS"></a>主题自定义CSS</h4><figure class="highlight css"><figcaption><span>_partial\custom.styl</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">// 深色模式代码块</span><br><span class="line"><span class="selector-class">.dark-theme</span> <span class="selector-class">.post-content</span> <span class="selector-tag">figure</span>,</span><br><span class="line"><span class="selector-class">.dark-theme</span> <span class="selector-class">.post-content</span> <span class="selector-tag">figure</span><span class="selector-class">.highlight</span> <span class="selector-class">.code</span> pre &#123;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#23241f</span>;</span><br><span class="line">    <span class="attribute">color</span>: <span class="number">#f8f8f2</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 深色模式代码块行号</span><br><span class="line"><span class="selector-class">.dark-theme</span> <span class="selector-class">.post-content</span> <span class="selector-tag">figure</span><span class="selector-class">.highlight</span> <span class="selector-class">.gutter</span> pre &#123;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#23241f</span>;</span><br><span class="line">    <span class="attribute">color</span>: $dark-mode-pre-line-number-foreground-color;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 深色模式引用模式</span><br><span class="line">$dark-post-<span class="selector-tag">blockquote</span>-<span class="attribute">background-color</span> = <span class="selector-id">#23241f</span></span><br></pre></td></tr></table></figure></div>
+<h4 id="主题自定义CSS"><a href="#主题自定义CSS" class="headerlink" title="主题自定义CSS"></a>主题自定义CSS</h4><figure class="highlight css"><figcaption><span>_partial\custom.styl</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">// 深色模式代码块</span><br><span class="line"><span class="selector-class">.dark-theme</span> <span class="selector-class">.post-content</span> <span class="selector-tag">figure</span>,</span><br><span class="line"><span class="selector-class">.dark-theme</span> <span class="selector-class">.post-content</span> <span class="selector-tag">figure</span><span class="selector-class">.highlight</span> <span class="selector-class">.code</span> pre &#123;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#23241f</span>;</span><br><span class="line">    <span class="attribute">color</span>: <span class="number">#f8f8f2</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 深色模式代码块行号</span><br><span class="line"><span class="selector-class">.dark-theme</span> <span class="selector-class">.post-content</span> <span class="selector-tag">figure</span><span class="selector-class">.highlight</span> <span class="selector-class">.gutter</span> pre &#123;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#23241f</span>;</span><br><span class="line">    <span class="attribute">color</span>: $dark-mode-pre-line-number-foreground-color;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 深色模式引用模式</span><br><span class="line">$dark-post-<span class="selector-tag">blockquote</span>-<span class="attribute">background-color</span> = <span class="selector-id">#23241f</span></span><br></pre></td></tr></table></figure>
+        </div>
 
-    
-    <!-- <section class="post-tags">
-      <div>
-        <span>Tag(s):</span>
-        <span class="tag">
-           
-          <a href="/tags/Hexo/"># Hexo</a>
-          
-          <a href="/tags/Blog/"># Blog</a>
-           
-        </span>
-      </div>
-      <div>
-        <a href="javascript:window.history.back();">back</a>
-        <span>· </span>
-        <a href="/">home</a>
-      </div>
-    </section> -->
-    <section class="post-nav">
-      
-      <a class="prev" rel="prev" href="/posts/efab4cb0/"
-        >Hexo更新升级</a
-      >
-       
-      <a class="next" rel="next" href="/posts/d1d2222d/"
-        >产品架构那些事</a
-      >
-      
-    </section>
-  </article>
+        
+                <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/posts/efab4cb0/">Hexo更新升级</a>
+            
+            
+            <a class="next" rel="next" href="/posts/d1d2222d/">产品架构那些事</a>
+            
+        </section>
+
+
+    </article>
 </div>
 
             </div>
