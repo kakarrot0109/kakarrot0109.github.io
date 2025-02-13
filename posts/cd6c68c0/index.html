@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8" />
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+/>
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+<meta name="author" content="KAKARROT" />
+ 
+<meta name="subtitle" content="Heaven helps those who help themselves." />
+ 
+<meta name="description" content="I just want things to be what they are supposed to be." />
+ 
+<meta name="keywords" content="产品,哲学,历史,魔兽,音乐" />
+ 
+<title>Calibre电子书自定义样式 | KAKARROT&#39;S BLOG</title>
+
+ 
+<link rel="icon" href="/favicon.ico" />
+  
+<!-- stylesheets list from _config.yml -->
+
+<link rel="stylesheet" href="/css/style.css" />
+   
+<!-- scripts list from _config.yml -->
+
+<script src="/js/script.js"></script>
+
+<script src="/js/tocbot.min.js"></script>
+        
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Kakarrot&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Kakarrot&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    <div class="post-toc">
+  <div class="tocbot-list"></div>
+  <div class="tocbot-list-menu">
+    <a class="tocbot-toc-expand" onclick="expand_toc()">展开全部</a>
+    <a onclick="go_top()">返回顶部</a>
+    <a onclick="go_bottom()">降至底部</a>
+  </div>
+</div>
+
+<script>
+  var tocbot_timer;
+  var DEPTH_MAX = 6; // 为 6 时展开所有
+  var tocbot_default_config = {
+    tocSelector: ".tocbot-list",
+    contentSelector: ".post-content",
+    headingSelector: "h1, h2, h3, h4, h5",
+    orderedList: false,
+    scrollSmooth: true,
+    onClick: extend_click,
+  };
+
+  function extend_click() {
+    clearTimeout(tocbot_timer);
+    tocbot_timer = setTimeout(function () {
+      tocbot.refresh(
+        obj_merge(tocbot_default_config, {
+          hasInnerContainers: true,
+        })
+      );
+    }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+  }
+
+  document.ready(function () {
+    tocbot.init(
+      obj_merge(tocbot_default_config, {
+        collapseDepth: 1,
+      })
+    );
+  });
+
+  function expand_toc() {
+    var b = document.querySelector(".tocbot-toc-expand");
+    var expanded = b.getAttribute("data-expanded");
+    expanded
+      ? b.removeAttribute("data-expanded")
+      : b.setAttribute("data-expanded", true);
+    tocbot.refresh(
+      obj_merge(tocbot_default_config, {
+        collapseDepth: expanded ? 1 : DEPTH_MAX,
+      })
+    );
+    b.innerText = expanded ? "展开全部" : "收起全部";
+  }
+
+  function go_top() {
+    window.scrollTo(0, 0);
+  }
+
+  function go_bottom() {
+    window.scrollTo(0, document.body.scrollHeight);
+  }
+
+  function obj_merge(target, source) {
+    for (var item in source) {
+      if (source.hasOwnProperty(item)) {
+        target[item] = source[item];
+      }
+    }
+    return target;
+  }
+</script>
+  
+  <article class="post-wrap">
+    <header class="post-header">
+      <h1 class="post-title">Calibre电子书自定义样式</h1>
+      
+      <div class="post-meta">
+         作者:
+        <a itemprop="author" rel="author" href="/"
+          >KAKARROT&nbsp;&nbsp;</a
+        >
+         
+        <span class="post-time">
+          日期:
+          <a href="#">2025年02月01日&nbsp;&nbsp;</a>
+        </span>
+         
+        <span class="post-category">
+          分类: 
+          <a href="/categories/%E9%98%85%E8%AF%BB/">阅读</a>
+          
+        </span>
+        
+      </div>
+      
+    </header>
+
+    <div class="post-content"><h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>市面上大部分阅读器字体、样式排版非常不友好，而 Calibre 功能强大，可以适合折腾。</p>
+<p>打开”编辑书籍”，在左侧的”样式”菜单里覆盖<code>css</code>文件即可。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Calibre电子书自定义样式 - PC端阅读体验 */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* 全局设置 */</span></span><br><span class="line"><span class="selector-tag">body</span> &#123;</span><br><span class="line">  <span class="attribute">font-family</span>: <span class="string">&quot;Source Code Pro&quot;</span>, <span class="string">&quot;思源黑体&quot;</span>, sans-serif; <span class="comment">/* 全局字体 */</span></span><br><span class="line">  <span class="attribute">font-size</span>: <span class="number">18px</span>; <span class="comment">/* 根据需要调整字号 */</span></span><br><span class="line">  <span class="attribute">line-height</span>: <span class="number">1.6</span>; <span class="comment">/* 行高，保证阅读舒适 */</span></span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#333</span>; <span class="comment">/* 主文本颜色 */</span></span><br><span class="line">  <span class="attribute">background-color</span>: <span class="number">#fdfdfd</span>; <span class="comment">/* 背景颜色，柔和舒适 */</span></span><br><span class="line">  <span class="attribute">margin</span>: <span class="number">0</span> auto; <span class="comment">/* 居中显示内容 */</span></span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">20px</span>; <span class="comment">/* 页面内边距 */</span></span><br><span class="line">  <span class="attribute">max-width</span>: <span class="number">800px</span>; <span class="comment">/* 控制文本行宽，利于阅读 */</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 标题样式 */</span></span><br><span class="line"><span class="selector-tag">h1</span>,</span><br><span class="line"><span class="selector-tag">h2</span>,</span><br><span class="line"><span class="selector-tag">h3</span>,</span><br><span class="line"><span class="selector-tag">h4</span>,</span><br><span class="line"><span class="selector-tag">h5</span>,</span><br><span class="line"><span class="selector-tag">h6</span> &#123;</span><br><span class="line">  <span class="attribute">font-family</span>: inherit; <span class="comment">/* 继承全局字体 */</span></span><br><span class="line">  <span class="attribute">font-weight</span>: bold; <span class="comment">/* 标题加粗 */</span></span><br><span class="line">  <span class="attribute">margin-top</span>: <span class="number">1.5em</span>; <span class="comment">/* 标题上外边距 */</span></span><br><span class="line">  <span class="attribute">margin-bottom</span>: <span class="number">0.5em</span>; <span class="comment">/* 标题下外边距 */</span></span><br><span class="line">  <span class="attribute">line-height</span>: <span class="number">1.2</span>; <span class="comment">/* 标题行高 */</span></span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#111</span>; <span class="comment">/* 标题颜色 */</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 段落 */</span></span><br><span class="line"><span class="selector-tag">p</span> &#123;</span><br><span class="line">  <span class="attribute">letter-spacing</span>: <span class="number">1px</span>; <span class="comment">/* 字间距 */</span></span><br><span class="line">  <span class="attribute">margin</span>: <span class="number">1em</span> <span class="number">0</span>; <span class="comment">/* 段前段后间距 */</span></span><br><span class="line">  <span class="attribute">text-align</span>: justify; <span class="comment">/* 两端对齐 */</span></span><br><span class="line">  <span class="attribute">text-justify</span>: inter-word; <span class="comment">/* 单词间距调整 */</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 链接 */</span></span><br><span class="line"><span class="selector-tag">a</span> &#123;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#007acc</span>; <span class="comment">/* 链接颜色 */</span></span><br><span class="line">  <span class="attribute">text-decoration</span>: none; <span class="comment">/* 去掉下划线 */</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">a</span><span class="selector-pseudo">:hover</span> &#123;</span><br><span class="line">  <span class="attribute">text-decoration</span>: underline; <span class="comment">/* 鼠标悬停显示下划线 */</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 图片 */</span></span><br><span class="line"><span class="selector-tag">img</span> &#123;</span><br><span class="line">  <span class="attribute">max-width</span>: <span class="number">100%</span>; <span class="comment">/* 图片最大宽度 */</span></span><br><span class="line">  <span class="attribute">height</span>: auto; <span class="comment">/* 图片高度自适应 */</span></span><br><span class="line">  <span class="attribute">display</span>: block; <span class="comment">/* 图片居中显示 */</span></span><br><span class="line">  <span class="attribute">margin</span>: <span class="number">10px</span> auto; <span class="comment">/* 图片外边距 */</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 引用块 */</span></span><br><span class="line"><span class="selector-tag">blockquote</span> &#123;</span><br><span class="line">  <span class="attribute">margin</span>: <span class="number">1em</span> <span class="number">0</span>; <span class="comment">/* 引用块外边距 */</span></span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">0.5em</span> <span class="number">1em</span>; <span class="comment">/* 引用块内边距 */</span></span><br><span class="line">  <span class="attribute">border-left</span>: <span class="number">4px</span> solid <span class="number">#ddd</span>; <span class="comment">/* 左侧边框 */</span></span><br><span class="line">  <span class="attribute">background-color</span>: <span class="number">#f9f9f9</span>; <span class="comment">/* 背景颜色 */</span></span><br><span class="line">  <span class="attribute">font-style</span>: italic; <span class="comment">/* 斜体 */</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 代码及预格式文本 */</span></span><br><span class="line"><span class="selector-tag">code</span>,</span><br><span class="line">pre &#123;</span><br><span class="line">  <span class="attribute">font-family</span>: <span class="string">&quot;Source Code Pro&quot;</span>, <span class="string">&quot;思源黑体&quot;</span>, monospace; <span class="comment">/* 代码字体 */</span></span><br><span class="line">  <span class="attribute">background-color</span>: <span class="number">#f4f4f4</span>; <span class="comment">/* 代码块背景色 */</span></span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">2px</span> <span class="number">4px</span>; <span class="comment">/* 代码块内边距 */</span></span><br><span class="line">  <span class="attribute">border-radius</span>: <span class="number">3px</span>; <span class="comment">/* 圆角 */</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 预格式化文本块 */</span></span><br><span class="line">pre &#123;</span><br><span class="line">  <span class="attribute">overflow</span>: auto; <span class="comment">/* 滚动条 */</span></span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">10px</span>; <span class="comment">/* 代码块内边距 */</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 列表 */</span></span><br><span class="line"><span class="selector-tag">ul</span>,</span><br><span class="line"><span class="selector-tag">ol</span> &#123;</span><br><span class="line">  <span class="attribute">margin</span>: <span class="number">1em</span> <span class="number">0</span>; <span class="comment">/* 列表外边距 */</span></span><br><span class="line">  <span class="attribute">padding-left</span>: <span class="number">40px</span>; <span class="comment">/* 列表缩进 */</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 表格 */</span></span><br><span class="line"><span class="selector-tag">table</span> &#123;</span><br><span class="line">  <span class="attribute">border-collapse</span>: collapse; <span class="comment">/* 合并边框 */</span></span><br><span class="line">  <span class="attribute">margin</span>: <span class="number">1em</span> <span class="number">0</span>; <span class="comment">/* 表格外边距 */</span></span><br><span class="line">  <span class="attribute">width</span>: <span class="number">100%</span>; <span class="comment">/* 表格宽度 */</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">table</span>,</span><br><span class="line"><span class="selector-tag">th</span>,</span><br><span class="line"><span class="selector-tag">td</span> &#123;</span><br><span class="line">  <span class="attribute">border</span>: <span class="number">1px</span> solid <span class="number">#ddd</span>; <span class="comment">/* 表格边框 */</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">th</span>,</span><br><span class="line"><span class="selector-tag">td</span> &#123;</span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">8px</span>; <span class="comment">/* 单元格内边距 */</span></span><br><span class="line">  <span class="attribute">text-align</span>: left; <span class="comment">/* 左对齐 */</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 水平分割线 */</span></span><br><span class="line">hr &#123;</span><br><span class="line">  <span class="attribute">border</span>: none; <span class="comment">/* 无边框 */</span></span><br><span class="line">  <span class="attribute">border-top</span>: <span class="number">1px</span> solid <span class="number">#ddd</span>; <span class="comment">/* 上边框 */</span></span><br><span class="line">  <span class="attribute">margin</span>: <span class="number">2em</span> <span class="number">0</span>; <span class="comment">/* 分割线外边距 */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</div>
+
+    
+    <!-- <section class="post-tags">
+      <div>
+        <span>Tag(s):</span>
+        <span class="tag">
+           
+          <a href="/tags/Calibre/"># Calibre</a>
+          
+          <a href="/tags/%E8%AF%BB%E4%B9%A6/"># 读书</a>
+           
+        </span>
+      </div>
+      <div>
+        <a href="javascript:window.history.back();">back</a>
+        <span>· </span>
+        <a href="/">home</a>
+      </div>
+    </section> -->
+    <section class="post-nav">
+       
+      <a class="next" rel="next" href="/posts/7c89e4ff/"
+        >魔兽世界插件-KUI</a
+      >
+      
+    </section>
+  </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© KAKARROT | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>
