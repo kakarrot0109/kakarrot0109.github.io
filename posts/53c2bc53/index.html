@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="KAKARROT">
+
+
+    <meta name="subtitle" content="Heaven helps those who help themselves.">
+
+
+    <meta name="description" content="I just want things to be what they are supposed to be.">
+
+
+    <meta name="keywords" content="产品,哲学,历史,魔兽,音乐">
+
+
+<title>AI Agent学习(三) | KAKARROT&#39;S BLOG</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Kakarrot&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Kakarrot&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">展开全部</a>
+        <a onclick="go_top()">回到顶部</a>
+        <a onclick="go_bottom()">回到底部</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? '展开全部' : '收起全部';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">AI Agent学习(三)</h1>
+            
+        </header>
+
+        <div class="post-content">
+            <p>这个阶段卡壳次数很多，主要问题有2个：</p>
+<ol>
+<li>信息源RSS问题：可以正常访问并且有相关数据的RSS太难找；</li>
+<li>Prompt问题：Gemini生成的Python中<code>Prompt</code>相对简单，输出结果在汉化文章这块无法达到100%；</li>
+</ol>
+<p>整个代码通过了5次迭代，其中在VSCode中还询问了Github Copilot代码问题才相对于跑出一个正确的流程。</p>
+<h2 id="核心概念"><a href="#核心概念" class="headerlink" title="核心概念"></a>核心概念</h2><h3 id="LLM集成"><a href="#LLM集成" class="headerlink" title="LLM集成"></a>LLM集成</h3><ul>
+<li><strong>这是什么？</strong> 这是在你的Python脚本和本地运行的Ollama模型之间建立一座“桥梁”。</li>
+<li><strong>我们用什么工具？</strong> <strong>LangChain</strong>。它能让这座桥的搭建工作变得异常简单，你不需要关心底层的网络请求细节，只需要告诉LangChain：“嘿，我的LLM在本地，模型叫<code>llama3:8b</code>”，它就会帮你处理好一切。</li>
+</ul>
+<h3 id="构建Prompt"><a href="#构建Prompt" class="headerlink" title="构建Prompt"></a>构建Prompt</h3><ul>
+<li><strong>这是什么？</strong> 这是为你AI大脑（LLM）撰写一份清晰的“工作指令单”(SOP)。</li>
+<li><strong>为什么重要？</strong> LLM的能力很强，但它需要精确的指令才能产出你想要的结果。一份好的Prompt，就像给员工一份清晰的KPI和任务描述，能极大提升产出质量。对于想成为AI PM的你来说，<strong>Prompt Engineering是最核心、最需要掌握的技能之一</strong>。</li>
+</ul>
+<h3 id="输出结果"><a href="#输出结果" class="headerlink" title="输出结果"></a>输出结果</h3><ul>
+<li><strong>这是什么？</strong> 将LLM生成的、经过提炼的精华内容，按照我们想要的格式（Markdown），保存成一个文件。</li>
+<li><strong>目标？</strong> 每天运行一次脚本，就能得到一份格式精美、内容聚焦的 <code>daily_ai_report.md</code> 文件。</li>
+</ul>
+<h2 id="Python相关库介绍"><a href="#Python相关库介绍" class="headerlink" title="Python相关库介绍"></a>Python相关库介绍</h2><h3 id="Feedparser"><a href="#Feedparser" class="headerlink" title="Feedparser"></a>Feedparser</h3><p>我们需要一个专门解析RSS Feed的库，叫做 <code>feedparser</code>。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install feedparser</span><br></pre></td></tr></table></figure>
+
+<h3 id="LangChain"><a href="#LangChain" class="headerlink" title="LangChain"></a>LangChain</h3><p>我们需要LangChain的核心组件来与Ollama交互。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install langchain-community langchain-core</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>langchain-community</code>: 包含了与Ollama等第三方服务集成的代码。</li>
+<li><code>langchain-core</code>: 提供了LangChain的核心抽象，如Prompt模板和输出解析器。</li>
+</ul>
+<h3 id="Requests"><a href="#Requests" class="headerlink" title="Requests"></a>Requests</h3><p>我们需要<code>Requests</code>来访问网页。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install requests</span><br></pre></td></tr></table></figure>
+
+<h3 id="Trafilatura"><a href="#Trafilatura" class="headerlink" title="Trafilatura"></a>Trafilatura</h3><p>我们需要<code>Trafilatura</code>来抓取网页正文。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install trafilatura</span><br></pre></td></tr></table></figure>
+
+<h2 id="代码迭代问题汇总"><a href="#代码迭代问题汇总" class="headerlink" title="代码迭代问题汇总"></a>代码迭代问题汇总</h2><p>以下是<code>mvp_agent.py</code>经历的5次关键迭代的汇总、分析与总结。</p>
+<h3 id="迭代历程总览"><a href="#迭代历程总览" class="headerlink" title="迭代历程总览"></a><strong>迭代历程总览</strong></h3><table>
+<thead>
+<tr>
+<th><strong>版本</strong></th>
+<th><strong>核心问题 (Core Problem)</strong></th>
+<th><strong>关键解决方案 (Key Solution)</strong></th>
+<th><strong>产品思维&#x2F;迭代理念</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>V1</strong></td>
+<td>可行性未知</td>
+<td>打通端到端流程 (RSS-&gt;LLM-&gt;MD)</td>
+<td><strong>MVP验证</strong>：先让产品跑起来，验证核心假设。</td>
+</tr>
+<tr>
+<td><strong>V2</strong></td>
+<td>不可控、非本地化</td>
+<td>增加日期&#x2F;数量控制；引入翻译链</td>
+<td>**用户体验优化 (V0.1)**：增加基础控制权，满足核心用户（自己）的基础需求。</td>
+</tr>
+<tr>
+<td><strong>V3</strong></td>
+<td>输出质量低下</td>
+<td>更换信源；抓取文章全文</td>
+<td><strong>GIGO原则</strong>：意识到输入质量决定输出质量，引入外部知识增强（RAG雏形）。</td>
+</tr>
+<tr>
+<td><strong>V4</strong></td>
+<td>输出语言不稳定</td>
+<td>One-Shot Prompting (示例学习)</td>
+<td><strong>高级工程技巧</strong>：当指令失效时，改变与AI的协作模式，从“指导”变为“示范”。</td>
+</tr>
+<tr>
+<td><strong>V5</strong></td>
+<td>偶发性格式错误</td>
+<td>极限强化Prompt；输出预启动</td>
+<td><strong>系统健壮性</strong>：不信任模型的自觉性，通过强制手段和行为塑造来保证100%的可靠性。</td>
+</tr>
+</tbody></table>
+<hr>
+<h3 id="AI-Agent-项目迭代复盘总结"><a href="#AI-Agent-项目迭代复盘总结" class="headerlink" title="AI Agent 项目迭代复盘总结"></a><strong>AI Agent 项目迭代复盘总结</strong></h3><h4 id="第一版-V1-端到端流程验证-MVP"><a href="#第一版-V1-端到端流程验证-MVP" class="headerlink" title="第一版 (V1): 端到端流程验证 (MVP)"></a><strong>第一版 (V1): 端到端流程验证 (MVP)</strong></h4><ul>
+<li><p>迭代问题 (The Problem):</p>
+<p>项目从零开始，首要问题是如何验证整个想法的可行性。即，能否用Python代码将“获取网络信息”和“本地LLM分析”这两个核心环节连接起来，并产出任何形式的结果。</p>
+</li>
+<li><p><strong>解决方案 (The Solution):</strong></p>
+<ol>
+<li>选择<strong>单一、简单</strong>的信息源（一个RSS Feed）。</li>
+<li>编写了一个最简脚本，只包含三个核心步骤：获取数据、调用本地Ollama模型进行摘要、将结果输出到本地Markdown文件。</li>
+<li>所有参数和指令都是<strong>硬编码</strong>的，例如写死的处理文章数量。</li>
+</ol>
+</li>
+<li><p>核心思路 (The Core Idea):</p>
+<p>PoC (Proof of Concept) 验证。这一阶段完全不关心输出质量、可控性和用户体验，唯一的目标就是打通技术链路，证明“本地AI Agent自动处理资讯”这个核心逻辑能够走通。这就像产品开发中的“跑通最小闭环”，先求“有”，再求“好”。</p>
+</li>
+</ul>
+<hr>
+<h4 id="第二版-V2-增加可控性与本地化"><a href="#第二版-V2-增加可控性与本地化" class="headerlink" title="第二版 (V2): 增加可控性与本地化"></a><strong>第二版 (V2): 增加可控性与本地化</strong></h4><ul>
+<li><p>迭代问题 (The Problem):</p>
+<p>V1版本完全不可控，且输出的内容是英文，不符合最终用户（您自己）的需求。</p>
+<ol>
+<li><strong>控制性问题</strong>：无法控制获取文章的数量和时效性。</li>
+<li><strong>本地化问题</strong>：输出的分析报告是英文的，阅读体验不佳。</li>
+</ol>
+</li>
+<li><p><strong>解决方案 (The Solution):</strong></p>
+<ol>
+<li>引入<code>datetime</code>库，增加了<strong>按日期过滤</strong>文章的功能。</li>
+<li>增加了<code>MAX_ARTICLES_TO_PROCESS</code>参数，让用户可以<strong>控制处理数量</strong>。</li>
+<li>设计了<strong>“两步式AI处理流程”</strong>：创建了一个专门的“翻译链”，在分析前先将原文摘要翻译成中文。</li>
+</ol>
+</li>
+<li><p>核心思路 (The Core Idea):</p>
+<p>从PoC到可用工具的进化。这个版本的核心是“赋权给用户”，通过增加可配置的参数，让Agent从一个“黑盒”变成一个可控制的工具。同时，“翻译链”的引入，标志着我们开始将复杂的任务拆解为更小、更专业的子任务，这是Agent设计中的一个关键思想。</p>
+</li>
+</ul>
+<hr>
+<h4 id="第三版-V3-提升输入质量与上下文深度"><a href="#第三版-V3-提升输入质量与上下文深度" class="headerlink" title="第三版 (V3): 提升输入质量与上下文深度"></a><strong>第三版 (V3): 提升输入质量与上下文深度</strong></h4><ul>
+<li><p>迭代问题 (The Problem):</p>
+<p>“Garbage In, Garbage Out”（垃圾进，垃圾出）。V2的分析质量很差，内容空洞，翻译效果也不理想。经过分析，我们发现根源在于输入给AI的“原材料”质量太差——仅凭短短的摘要，AI难以进行有深度的分析。</p>
+</li>
+<li><p><strong>解决方案 (The Solution):</strong></p>
+<ol>
+<li><strong>更换信息源</strong>：从高阶、抽象的信源换成了更具体、更聚焦AI产品本身的信源。</li>
+<li><strong>引入全文抓取</strong>：使用<code>requests</code>和<code>trafilatura</code>库，在分析前先根据文章链接抓取<strong>网页全文</strong>，将输入从“摘要”升级为“全文”。</li>
+<li><strong>强化Prompt</strong>：对Prompt进行初步优化，使其指令更明确。</li>
+</ol>
+</li>
+<li><p>核心思路 (The Core Idea):</p>
+<p>引入RAG（检索增强生成）的初步思想。我们不再仅仅依赖LLM的内部知识，而是为它提供了丰富的、实时的、完整的外部上下文（文章全文）来辅助它进行决策和分析。这让Agent的分析能力产生了质的飞跃，是整个项目最重要的转折点之一。</p>
+</li>
+</ul>
+<hr>
+<h4 id="第四版-V4-应对“指令漂移”的工程技巧"><a href="#第四版-V4-应对“指令漂移”的工程技巧" class="headerlink" title="第四版 (V4): 应对“指令漂移”的工程技巧"></a><strong>第四版 (V4): 应对“指令漂移”的工程技巧</strong></h4><ul>
+<li><p>迭代问题 (The Problem):</p>
+<p>输出的稳定性问题暴露无遗。即使输入质量提升，本地模型在处理长篇英文后，依然会“忘记”或“忽略”返回中文的指令，导致输出中英混杂，结果不可靠。</p>
+</li>
+<li><p><strong>解决方案 (The Solution):</strong></p>
+<ol>
+<li>引入了高级Prompt工程技巧——<strong>One-Shot Prompting（示例学习）</strong>。</li>
+<li>在分析Prompt中，嵌入了一个<strong>完整、高质量的手写范例</strong>，包含理想的输入和理想的输出。</li>
+</ol>
+</li>
+<li><p>核心思路 (The Core Idea):</p>
+<p>从“指令遵循”到“模式匹配”的转变。我们不再天真地相信模型能100%听懂并遵循指令，而是利用其更底层的能力——模式识别。通过给出一个完美的“样板”，我们引导模型的核心任务从“理解并执行指令”转变为“模仿这个样板的格式和语言来填充新内容”。这对于提升小型本地模型的输出稳定性和格式一致性极为有效。</p>
+</li>
+</ul>
+<hr>
+<h4 id="第五版-V5-终极约束与行为塑造"><a href="#第五版-V5-终极约束与行为塑造" class="headerlink" title="第五版 (V5): 终极约束与行为塑造"></a><strong>第五版 (V5): 终极约束与行为塑造</strong></h4><ul>
+<li><p>迭代问题 (The Problem):</p>
+<p>在V4的基础上，偶尔还是会出现极少数的英文内容，说明模型的“缰绳”还不够紧，我们需要最强的约束手段来保证100%的输出可靠性。</p>
+</li>
+<li><p><strong>解决方案 (The Solution):</strong></p>
+<ol>
+<li><strong>极限Prompt强化</strong>：在Prompt中加入了“角色”、“规则”、“失败条件”等类似法律条文的结构，用最强硬的语言下达指令。</li>
+<li><strong>引入输出“预启动”（Output Priming）</strong>：在Prompt的末尾，直接帮模型打出它应该回答的第一个词和格式（例如 <code>**核心摘要 (Executive Summary):**\n*</code>）。</li>
+</ol>
+</li>
+<li><p>核心思路 (The Core Idea):</p>
+<p>从“引导”到“强制”的行为塑造。“输出预启动”是一种强大的行为塑造技巧。我们不给模型任何自由发挥的“空白”，而是直接设定好输出的轨道，让它只能沿着我们铺好的路往下走。这最大程度地降低了模型自由发挥导致错误的概率，是确保输出格式和语言高度一致的“杀手锏”。</p>
+</li>
+</ul>
+<h2 id="Python代码"><a href="#Python代码" class="headerlink" title="Python代码"></a>Python代码</h2><h3 id="核心精髓"><a href="#核心精髓" class="headerlink" title="核心精髓"></a>核心精髓</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">translation_prompt = ChatPromptTemplate.from_template(translation_prompt_str)</span><br><span class="line">translation_chain = translation_prompt | llm | output_parser</span><br></pre></td></tr></table></figure>
+
+<p>这短短两行代码是 <strong>LangChain Expression Language (LCEL)</strong> 的核心精髓，也是LangChain v0.1.0版本后最重要、最优雅的设计。</p>
+<p><strong>核心比喻：一条智能翻译流水线</strong></p>
+<p>想象一下，我们要建立一条全自动的翻译流水线。</p>
+<ul>
+<li><strong>原材料</strong>：一篇英文文章 (<code>&quot;Hello, world.&quot;</code>)</li>
+<li><strong>最终产品</strong>：一篇翻译好的中文文章 (<code>&quot;你好，世界。&quot;</code>)</li>
+</ul>
+<p>这两行代码，就是用来定义和构建这条流水线的。</p>
+<p>好的，没问题。这短短两行代码是 <strong>LangChain Expression Language (LCEL)</strong> 的核心精髓，也是LangChain v0.1.0版本后最重要、最优雅的设计。</p>
+<p>我将用一个“生产流水线”的比喻，为您彻底拆解这两行代码的含义和工作原理。</p>
+<hr>
+<h3 id="核心比喻：一条智能翻译流水线"><a href="#核心比喻：一条智能翻译流水线" class="headerlink" title="核心比喻：一条智能翻译流水线"></a><strong>核心比喻：一条智能翻译流水线</strong></h3><p>想象一下，我们要建立一条全自动的翻译流水线。</p>
+<ul>
+<li><strong>原材料</strong>：一篇英文文章 (<code>&quot;Hello, world.&quot;</code>)</li>
+<li><strong>最终产品</strong>：一篇翻译好的中文文章 (<code>&quot;你好，世界。&quot;</code>)</li>
+</ul>
+<p>这两行代码，就是用来定义和构建这条流水线的。</p>
+<hr>
+<h3 id="第一行代码："><a href="#第一行代码：" class="headerlink" title="第一行代码："></a>第一行代码：</h3><p><strong><code>translation_prompt = ChatPromptTemplate.from_template(translation_prompt_str)</code></strong></p>
+<p><strong>这是在定义流水线的“第一道工序：制定工作指令单模板”。</strong></p>
+<ul>
+<li><p><code>translation_prompt_str</code>：这是我们之前定义的一个普通的Python<strong>字符串</strong>，内容类似：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">You are a professional translator...</span></span><br><span class="line"><span class="string">English Text:</span></span><br><span class="line"><span class="string">&#123;english_text&#125;</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>它就像一个空白的Word文档模板，里面有一个用大括号 <code>&#123;english_text&#125;</code> 标记出来的“待填写”的区域。</p>
+</li>
+<li><p><code>ChatPromptTemplate.from_template(...)</code>：这是一个LangChain的<strong>构造函数</strong>。它的作用是，把你那个普通的字符串模板，变成一个LangChain框架能够理解的、“智能化”的<strong>Prompt对象</strong>。</p>
+<ul>
+<li>智能化体现在哪里？<ol>
+<li><strong>知道有变量</strong>：这个新生成的 <code>translation_prompt</code> 对象，知道自己不仅仅是一段静态文本，它内部包含一个名为 <code>english_text</code> 的变量。</li>
+<li><strong>知道如何格式化</strong>：它知道当接收到外部数据时（比如一个包含<code>english_text</code>键的字典），应该如何将数据填入模板，生成一份完整的、可以发送给AI的“工作指令单”。</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>小结：</strong> <code>translation_prompt</code> 不再是一个简单的字符串，而是一个<strong>“工作指令单的生成器”</strong>。它是我们流水线的第一个工作站，负责将零散的原材料（英文文本）规范化、格式化。</p>
+<hr>
+<h3 id="第二行代码："><a href="#第二行代码：" class="headerlink" title="第二行代码："></a>第二行代码：</h3><p><strong><code>translation_chain = translation_prompt | llm | output_parser</code></strong></p>
+<p><strong>这是在“组装整条流水线”。</strong> 这里的 <code>|</code> 符号是关键。</p>
+<ul>
+<li><p><code>|</code> <strong>(管道符&#x2F;Pipe Operator)<strong>：在LCEL中，这个符号就是连接不同工序的“</strong>传送带</strong>”。它的工作机制非常简单：</p>
+<blockquote>
+<p><strong>将左边工序的“产出物”，自动作为右边工序的“原材料”传递过去。</strong></p>
+</blockquote>
+</li>
+<li><p><code>translation_chain</code>: 这是一个新变量，它代表了<strong>整条被组装好的、随时可以运行的流水线</strong>。</p>
+</li>
+</ul>
+<p>现在，我们沿着“传送带”的方向，看看这条流水线是如何工作的：</p>
+<p><strong>工序1: <code>translation_prompt</code> (工作指令单生成器)</strong></p>
+<ul>
+<li><strong>接收</strong>：从外部接收最原始的输入，例如一个字典：<code>&#123;&quot;english_text&quot;: &quot;Hello, world.&quot;&#125;</code>。</li>
+<li><strong>处理</strong>：将接收到的<code>&quot;Hello, world.&quot;</code>填入它的模板中。</li>
+<li><strong>产出</strong>：一份格式化好的、完整的Prompt。</li>
+<li><strong>传送</strong>：<code>|</code> 传送带将这份完整的Prompt传送到下一站。</li>
+</ul>
+<p><strong>工序2: <code>llm</code> (核心加工车间)</strong></p>
+<ul>
+<li><strong>接收</strong>：从传送带接收到上一站产出的完整Prompt。</li>
+<li><strong>处理</strong>：调用您本地的Ollama <code>llama3:8b</code> 模型，执行核心的AI推理（翻译）任务。</li>
+<li><strong>产出</strong>：一个包含翻译结果的、LangChain内部的“AI消息对象”（<code>AIMessage</code>）。这个产出物还不是我们想要的最终结果，它带着一些框架的“包装”。</li>
+<li><strong>传送</strong>：<code>|</code> 传送带将这个“AI消息对象”传送到下一站。</li>
+</ul>
+<p><strong>工序3: <code>output_parser</code> (质检与包装)</strong></p>
+<ul>
+<li><strong>接收</strong>：从传送带接收到<code>llm</code>产出的“AI消息对象”。</li>
+<li><strong>处理</strong>：我们在这里使用的是<code>StrOutputParser</code>（字符串输出解析器）。它的唯一任务就是<strong>拆开“包装”</strong>，从<code>AIMessage</code>对象中提取出最核心的、我们肉眼可见的<strong>文本内容</strong>。</li>
+<li><strong>产出</strong>：一个纯净的、最终的Python<strong>字符串</strong>，例如：<code>&quot;你好，世界。&quot;</code>。</li>
+<li><strong>结束</strong>：这是流水线的最后一站，这个纯净的字符串就是整条流水线最终的产成品。</li>
+</ul>
+<hr>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a><strong>总结</strong></h3><p>所以，这两行代码的本质是：</p>
+<ol>
+<li>用 <code>ChatPromptTemplate.from_template</code> 创建了流水线的<strong>第一个工作站</strong>。</li>
+<li>用 <code>|</code> 这个“传送带”符号，将**[指令生成]<strong>、</strong>[AI处理]** 和 <strong>[结果解析]</strong> 这三个独立的工作站，<strong>串联（Chain）</strong> 成了一条完整、高效、可复用的自动化流水线，并将其命名为 <code>translation_chain</code>。</li>
+</ol>
+<p>当我们后面调用 <code>translation_chain.invoke(...)</code> 时，就等于按下了这条流水线的“启动”按钮，整个流程便会自动执行。</p>
+<p>这种设计是LCEL的魅力所在，它让我们可以像搭乐高积木一样，自由组合各种组件，构建出逻辑清晰、可读性极强的AI应用。</p>
+<h3 id="源码展示"><a href="#源码展示" class="headerlink" title="源码展示"></a>源码展示</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> trafilatura</span><br><span class="line"><span class="keyword">import</span> feedparser</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime, timedelta</span><br><span class="line"><span class="keyword">from</span> langchain_community.llms.ollama <span class="keyword">import</span> Ollama</span><br><span class="line"><span class="keyword">from</span> langchain_core.output_parsers <span class="keyword">import</span> StrOutputParser</span><br><span class="line"><span class="keyword">from</span> langchain_core.prompts <span class="keyword">import</span> ChatPromptTemplate</span><br><span class="line"></span><br><span class="line"><span class="comment"># --- Part 1: 数据获取模块 (V3: 增加了全文抓取功能) ---</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">fetch_full_article_text</span>(<span class="params">url</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;根据URL抓取并返回文章的核心文本内容&quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="comment"># 下载网页，设置超时和请求头模拟浏览器</span></span><br><span class="line">        headers = &#123;<span class="string">&#x27;User-Agent&#x27;</span>: <span class="string">&#x27;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36&#x27;</span>&#125;</span><br><span class="line">        downloaded = requests.get(url, timeout=<span class="number">15</span>, headers=headers)</span><br><span class="line">        downloaded.raise_for_status() <span class="comment"># 如果请求失败则抛出异常</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 使用trafilatura提取正文，它会自动处理HTML标签等噪音</span></span><br><span class="line">        <span class="comment"># `include_comments=False`和`include_tables=False`可以去除评论和表格</span></span><br><span class="line">        text = trafilatura.extract(downloaded.text, include_comments=<span class="literal">False</span>, include_tables=<span class="literal">False</span>)</span><br><span class="line">        <span class="keyword">return</span> text</span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;    -&gt; ERROR: 抓取全文失败 (URL: <span class="subst">&#123;url&#125;</span>). 错误: <span class="subst">&#123;e&#125;</span>&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">fetch_and_filter_articles</span>(<span class="params">rss_url, days_limit=<span class="number">1</span></span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;获取并根据日期过滤文章&quot;&quot;&quot;</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;INFO: 正在从 <span class="subst">&#123;rss_url&#125;</span> 获取资讯...&quot;</span>)</span><br><span class="line">    feed = feedparser.parse(rss_url)</span><br><span class="line">    <span class="comment"># ... (这部分函数与V2版本相同，此处为简洁省略，请从V2代码中复制过来)</span></span><br><span class="line">    <span class="comment"># ...</span></span><br><span class="line">    <span class="comment"># (确保此函数返回一个过滤后的文章列表)</span></span><br><span class="line">    filtered_articles = []</span><br><span class="line">    time_threshold = datetime.now() - timedelta(days=days_limit)</span><br><span class="line">    <span class="keyword">for</span> entry <span class="keyword">in</span> feed.entries:</span><br><span class="line">        published_time = datetime.fromtimestamp(time.mktime(entry.published_parsed))</span><br><span class="line">        <span class="keyword">if</span> published_time &gt;= time_threshold:</span><br><span class="line">            filtered_articles.append(entry)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;INFO: 过滤后剩下 <span class="subst">&#123;<span class="built_in">len</span>(filtered_articles)&#125;</span> 篇在过去 <span class="subst">&#123;days_limit&#125;</span> 天内发布的文章。&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> filtered_articles</span><br><span class="line"></span><br><span class="line"><span class="comment"># --- Part 2: AI分析与报告生成模块 (V4: 引入One-Shot Prompting) ---</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">generate_ai_report</span>(<span class="params">articles_to_process</span>):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;INFO: 正在初始化本地LLM (llama3:8b)...&quot;</span>)</span><br><span class="line">    llm = Ollama(model=<span class="string">&quot;llama3:8b&quot;</span>, temperature=<span class="number">0.1</span>)</span><br><span class="line">    output_parser = StrOutputParser()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># --- 任务链1: 翻译链 (Prompt再次强化) ---</span></span><br><span class="line">    translation_prompt_str = <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    您是一名专业翻译。您的唯一任务是将提供的英文文本准确地翻译成简体中文。</span></span><br><span class="line"><span class="string">    请勿添加任何解释、注释或除翻译内容本身之外的任何文字。您的输出必须仅使用简体中文。</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    English Text:</span></span><br><span class="line"><span class="string">    &#123;english_text&#125;</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    translation_prompt = ChatPromptTemplate.from_template(translation_prompt_str)</span><br><span class="line">    translation_chain = translation_prompt | llm | output_parser</span><br><span class="line"></span><br><span class="line">    <span class="comment"># --- 任务链2: 分析链 (V5核心升级：终极约束) ---</span></span><br><span class="line">    analysis_prompt_str = <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    # 角色 (Role)</span></span><br><span class="line"><span class="string">    您是一位世界级的行业分析师和战略顾问。您的核心身份是用**简体中文**处理信息并输出结构化报告。坚守这一身份是您的首要任务。</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    # 规则 (Rules)</span></span><br><span class="line"><span class="string">    1.  **语言戒律 (Language Commandment):** 你的唯一输出语言是**简体中文**。任何情况下都严禁输出任何英文单词、短语或句子，除非是在直接引用原文标题时。</span></span><br><span class="line"><span class="string">    2.  **格式戒律 (Format Commandment):** 你的输出必须严格遵循【分析报告】的结构，不多一字，不少一节。</span></span><br><span class="line"><span class="string">    3.  **内容戒律 (Content Commandment):** 你的分析必须完全基于下方提供的【文章内容】。</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    # 失败条件 (Failure Conditions)</span></span><br><span class="line"><span class="string">    - 输出任何非简体中文的解释性、对话性文字。</span></span><br><span class="line"><span class="string">    - 未能遵循【分析报告】的格式。</span></span><br><span class="line"><span class="string">    - 任何违反上述戒律的行为都将导致任务评估失败。</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    ---</span></span><br><span class="line"><span class="string">    ### 示例 (Example) ###</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    [文章内容]</span></span><br><span class="line"><span class="string">    AI正以前所未有的速度重塑客户服务行业。通过集成自然语言处理（NLP）和机器学习，聊天机器人现在能够7x24小时处理大量用户查询，并提供个性化的解决方案。例如，大型电商公司“ShopSphere”在部署了AI客服后，其用户满意度提升了30%，平均响应时间从5分钟缩短到10秒。这项技术不仅降低了人力成本，还通过分析用户数据，为产品团队提供了宝贵的改进建议。</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    [分析报告]</span></span><br><span class="line"><span class="string">    **核心摘要 (Executive Summary):**</span></span><br><span class="line"><span class="string">    * 本文探讨AI技术如何通过自动化和个性化彻底改变客户服务行业，以ShopSphere公司为例，证明了其在提升用户满意度、缩短响应时间和反哺产品迭代方面的巨大价值。</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    **解决的关键问题 (Key Problem Solved):**</span></span><br><span class="line"><span class="string">    * **群体 (Who):** 服务密集型企业，如电商、金融行业。</span></span><br><span class="line"><span class="string">    * **问题 (What):** 传统客服面临的响应慢、成本高、服务时间受限等核心痛点。</span></span><br><span class="line"><span class="string">    * **方案 (How):** 通过部署集成了NLP和机器学习的AI聊天机器人，实现自动化、全天候的客户支持。</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    **核心论点与关键信息 (Core Arguments &amp; Key Information):**</span></span><br><span class="line"><span class="string">    * AI客服可实现7x24小时不间断服务。</span></span><br><span class="line"><span class="string">    * ShopSphere案例：用户满意度提升30%，响应时间从5分钟缩短至10秒。</span></span><br><span class="line"><span class="string">    * AI客服能分析用户数据，为产品迭代提供洞察。</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    **战略意义与潜在影响 (Strategic Significance &amp; Potential Impact):**</span></span><br><span class="line"><span class="string">    * **战略意义:** AI客服正从“成本中心”转变为企业的“价值中心”和增长引擎。</span></span><br><span class="line"><span class="string">    * **潜在影响:** 将重塑客服行业岗位结构，并拉高整个行业的服务响应标准。</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    **机遇与启发 (Opportunities &amp; Inspirations):**</span></span><br><span class="line"><span class="string">    * **产品机会:** 面向中小企业的、低代码AI客服SaaS平台存在市场空间。</span></span><br><span class="line"><span class="string">    * **功能灵感:** 在AI客服中集成“负面情绪识别与预警”功能，并能无缝转接人工。</span></span><br><span class="line"><span class="string">    * **市场空白:** 针对医疗、法律等垂直领域的、预训练了专业知识的AI客服解决方案。</span></span><br><span class="line"><span class="string">    ---</span></span><br><span class="line"><span class="string">    ### 您的任务 (Your Task) ###</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    **指令:** 严格遵循上述所有规则和示例，为下方提供的【文章内容】生成【分析报告】。现在，开始你的工作。</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    [文章内容]</span></span><br><span class="line"><span class="string">    &#123;translated_text&#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    [分析报告]</span></span><br><span class="line"><span class="string">    **核心摘要 (Executive Summary):**</span></span><br><span class="line"><span class="string">    * &quot;&quot;&quot;</span></span><br><span class="line">    analysis_prompt = ChatPromptTemplate.from_template(analysis_prompt_str)</span><br><span class="line">    analysis_chain = analysis_prompt | llm | output_parser</span><br><span class="line"></span><br><span class="line">    <span class="comment"># ... (后续的 report_content 初始化、for循环、文件写入等代码与V3版本完全相同)</span></span><br><span class="line">    <span class="comment"># ...</span></span><br><span class="line">    <span class="comment"># (为简洁省略，请直接在V3代码上修改本函数即可)</span></span><br><span class="line">    report_content = <span class="string">&quot;# AI前沿动态日报 (产品经理版-V4)\n\n&quot;</span></span><br><span class="line">    report_content += <span class="string">f&quot;报告生成时间: <span class="subst">&#123;time.strftime(<span class="string">&#x27;%Y-%m-%d %H:%M:%S&#x27;</span>)&#125;</span>\n\n&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;INFO: 开始处理文章（抓取全文-&gt;翻译-&gt;分析）...&quot;</span>)</span><br><span class="line">    <span class="keyword">for</span> article <span class="keyword">in</span> articles_to_process:</span><br><span class="line">        title = article.get(<span class="string">&quot;title&quot;</span>, <span class="string">&quot;无标题&quot;</span>)</span><br><span class="line">        link = article.get(<span class="string">&quot;link&quot;</span>, <span class="string">&quot;无链接&quot;</span>)</span><br><span class="line"></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;  - 正在处理文章: <span class="subst">&#123;title&#125;</span>&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;    -&gt; 正在抓取全文...&quot;</span>)</span><br><span class="line">        full_text = fetch_full_article_text(link)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> full_text:</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;    -&gt; 正在翻译全文(可能需要较长时间)...&quot;</span>)</span><br><span class="line">            translated_text = translation_chain.invoke(&#123;<span class="string">&quot;english_text&quot;</span>: full_text&#125;)</span><br><span class="line"></span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;    -&gt; 正在进行产品分析...&quot;</span>)</span><br><span class="line">            ai_analysis = analysis_chain.invoke(&#123;<span class="string">&quot;translated_text&quot;</span>: translated_text&#125;)</span><br><span class="line"></span><br><span class="line">            report_content += <span class="string">f&quot;## [<span class="subst">&#123;title&#125;</span>](<span class="subst">&#123;link&#125;</span>)\n\n&quot;</span></span><br><span class="line">            <span class="comment"># V4中，我们将翻译和分析都放入报告，方便对照</span></span><br><span class="line">            report_content += <span class="string">f&quot;**AI产品专家分析:**\n<span class="subst">&#123;ai_analysis&#125;</span>\n\n&quot;</span></span><br><span class="line">            report_content += <span class="string">&quot;---\n\n&quot;</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;ERROR: AI处理文章 &#x27;<span class="subst">&#123;title&#125;</span>&#x27; 时出错: <span class="subst">&#123;e&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">    report_filename = <span class="string">&quot;daily_ai_report_v4.md&quot;</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(report_filename, <span class="string">&quot;w&quot;</span>, encoding=<span class="string">&quot;utf-8&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">            f.write(report_content)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;SUCCESS: 报告 &#x27;<span class="subst">&#123;report_filename&#125;</span>&#x27; 已成功生成！&quot;</span>)</span><br><span class="line">    <span class="keyword">except</span> IOError <span class="keyword">as</span> e:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;ERROR: 写入报告文件时出错: <span class="subst">&#123;e&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># --- 程序的主入口 ---</span></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    <span class="comment"># --- 在这里控制你的Agent ---</span></span><br><span class="line">    <span class="comment"># V3版本，我们更换一个更适合分析的信息源</span></span><br><span class="line">    <span class="comment"># AI Tool Report 专门报道新的AI工具，非常具体</span></span><br><span class="line">    RSS_URL = <span class="string">&quot;https://blog.langchain.dev/rss/&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 将这个值改大，比如改成10天，以确保能抓取到文章</span></span><br><span class="line">    DAYS_TO_FETCH = <span class="number">20</span></span><br><span class="line"></span><br><span class="line">    MAX_ARTICLES_TO_PROCESS = <span class="number">3</span> <span class="comment"># 最多只处理其中的3篇文章</span></span><br><span class="line">    <span class="comment"># --------------------------</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 1. 获取并过滤数据</span></span><br><span class="line">    filtered_articles = fetch_and_filter_articles(RSS_URL, days_limit=DAYS_TO_FETCH)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 2. 如果获取到文章，则根据最大数量限制进行处理并生成报告</span></span><br><span class="line">    <span class="keyword">if</span> filtered_articles:</span><br><span class="line">        articles_to_process = filtered_articles[:MAX_ARTICLES_TO_PROCESS]</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;INFO: 将从过滤后的文章中，处理最新的 <span class="subst">&#123;<span class="built_in">len</span>(articles_to_process)&#125;</span> 篇。&quot;</span>)</span><br><span class="line">        generate_ai_report(articles_to_process)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="结果展示"><a href="#结果展示" class="headerlink" title="结果展示"></a>结果展示</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br></pre></td><td class="code"><pre><span class="line"><span class="section"># AI前沿动态日报 (产品经理版-V4)</span></span><br><span class="line"></span><br><span class="line">报告生成时间: 2025-06-23 02:59:44</span><br><span class="line"></span><br><span class="line"><span class="section">## [<span class="string">How and when to build multi-agent systems</span>](<span class="link">https://blog.langchain.com/how-and-when-to-build-multi-agent-systems/</span>)</span></span><br><span class="line"></span><br><span class="line"><span class="strong">**AI产品专家分析:**</span></span><br><span class="line"><span class="strong">**核心摘要 (Executive Summary):**</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">*</span> 本文探讨了多智能体系统（Multi-Agent Systems）在构建和应用过程中的挑战和机遇。</span><br><span class="line"><span class="bullet">*</span> 认知团队和Anthropic 团队的博客文章分别强调了“settings engineering”和“multi-agent systems”的重要性。</span><br><span class="line"><span class="bullet">*</span> 作者认为，设置工程是构建多智能体系统的关键部分，需要考虑上下文、任务边界和代理之间的协作关系。</span><br><span class="line"></span><br><span class="line"><span class="strong">**解决的关键问题 (Key Problem Solved):**</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">*</span> <span class="strong">**群体 (Who):**</span> 服务密集型企业，如电商、金融行业。</span><br><span class="line"><span class="bullet">*</span> <span class="strong">**问题 (What):**</span> 传统客服面临的响应慢、成本高、服务时间受限等核心痛点。</span><br><span class="line"><span class="bullet">*</span> <span class="strong">**方案 (How):**</span> 通过部署集成了NLP和机器学习的AI聊天机器人，实现自动化、全天候的客户支持。</span><br><span class="line"></span><br><span class="line"><span class="strong">**核心论点与关键信息 (Core Arguments &amp; Key Information):**</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">*</span> AI客服可实现7x24小时不间断服务。</span><br><span class="line"><span class="bullet">*</span> ShopSphere案例：用户满意度提升30%，响应时间从5分钟缩短至10秒。</span><br><span class="line"><span class="bullet">*</span> AI客服能分析用户数据，为产品迭代提供洞察。</span><br><span class="line"></span><br><span class="line"><span class="strong">**战略意义与潜在影响 (Strategic Significance &amp; Potential Impact):**</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">*</span> <span class="strong">**战略意义:**</span> AI客服正从“成本中心”转变为企业的“价值中心”和增长引擎。</span><br><span class="line"><span class="bullet">*</span> <span class="strong">**潜在影响:**</span> 将重塑客服行业岗位结构，并拉高整个行业的服务响应标准。</span><br><span class="line"></span><br><span class="line"><span class="strong">**机遇与启发 (Opportunities &amp; Inspirations):**</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">*</span> <span class="strong">**产品机会:**</span> 面向中小企业的、低代码AI客服SaaS平台存在市场空间。</span><br><span class="line"><span class="bullet">*</span> <span class="strong">**功能灵感:**</span> 在AI客服中集成“负面情绪识别与预警”功能，并能无缝转接人工。</span><br><span class="line"><span class="bullet">*</span> <span class="strong">**市场空白:**</span> 针对医疗、法律等垂直领域的、预训练了专业知识的AI客服解决方案。</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line"><span class="section">## [<span class="string">The Hidden Metric That Determines AI Product Success</span>](<span class="link">https://blog.langchain.com/the-hidden-metric-that-determines-ai-product-success/</span>)</span></span><br><span class="line"></span><br><span class="line"><span class="strong">**AI产品专家分析:**</span></span><br><span class="line"><span class="strong">**核心摘要 (Executive Summary):**</span></span><br><span class="line"></span><br><span class="line">本文探讨了CAIR（ Confidence-Awareness-Informed-Response）心理因素对AI产品成功或失败的影响。CAIR衡量用户信心，平衡了用户获得的价值和他们面临的心理障碍。分析发现，CAIR高时，用户热情地采用AI功能，而CAIR低时，采纳将被阻止。</span><br><span class="line"></span><br><span class="line"><span class="strong">**解决的关键问题 (Key Problem Solved):**</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">*</span> <span class="strong">**群体 (Who):**</span> 服务密集型企业，如电商、金融行业。</span><br><span class="line"><span class="bullet">*</span> <span class="strong">**问题 (What):**</span> AI产品面临的采纳障碍和失败原因。</span><br><span class="line"><span class="bullet">*</span> <span class="strong">**方案 (How):**</span> 通过CAIR心理因素分析，优化AI产品设计，提高用户信心和采纳率。</span><br><span class="line"></span><br><span class="line"><span class="strong">**核心论点与关键信息 (Core Arguments &amp; Key Information):**</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">*</span> CAIR衡量用户信心，平衡了用户获得的价值和他们面临的心理障碍。</span><br><span class="line"><span class="bullet">*</span> CAIR高时，用户热情地采用AI功能，而CAIR低时，采纳将被阻止。</span><br><span class="line"><span class="bullet">*</span> 通过CAIR心理因素分析，优化AI产品设计，提高用户信心和采纳率。</span><br><span class="line"></span><br><span class="line"><span class="strong">**战略意义与潜在影响 (Strategic Significance &amp; Potential Impact):**</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">*</span> <span class="strong">**战略意义:**</span> CAIR心理因素对AI产品成功或失败的影响是不可忽视的。</span><br><span class="line"><span class="bullet">*</span> <span class="strong">**潜在影响:**</span> 将重塑客服行业岗位结构，并拉高整个行业的服务响应标准。</span><br><span class="line"></span><br><span class="line"><span class="strong">**机遇与启发 (Opportunities &amp; Inspirations):**</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">*</span> <span class="strong">**产品机会:**</span> 面向中小企业的、低代码AI客服SaaS平台存在市场空间。</span><br><span class="line"><span class="bullet">*</span> <span class="strong">**功能灵感:**</span> 在AI客服中集成“负面情绪识别与预警”功能，并能无缝转接人工。</span><br><span class="line"><span class="bullet">*</span> <span class="strong">**市场空白:**</span> 针对医疗、法律等垂直领域的、预训练了专业知识的AI客服解决方案。</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line"><span class="section">## [<span class="string">Benchmarking Multi-Agent Architectures</span>](<span class="link">https://blog.langchain.com/benchmarking-multi-agent-architectures/</span>)</span></span><br><span class="line"></span><br><span class="line"><span class="strong">**AI产品专家分析:**</span></span><br><span class="line"><span class="strong">**核心摘要 (Executive Summary):**</span></span><br><span class="line"></span><br><span class="line">本文探讨了多智能体架构的动机、通用vs自定义架构和τ-bench数据集的基准测试结果。我们发现，单智能体架构在处理更多工具和上下文时性能会下降，而多智能体架构可以实现更好的结果。</span><br><span class="line"></span><br><span class="line"><span class="strong">**解决的关键问题 (Key Problem Solved):**</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">*</span> <span class="strong">**群体 (Who):**</span> 多智能体系统开发者、团队和应用程序用户。</span><br><span class="line"><span class="bullet">*</span> <span class="strong">**问题 (What):**</span> 单智能体架构在处理更多工具和上下文时性能会下降。</span><br><span class="line"><span class="bullet">*</span> <span class="strong">**方案 (How):**</span> 部署多智能体架构，使用τ-bench数据集进行基准测试。</span><br><span class="line"></span><br><span class="line"><span class="strong">**核心论点与关键信息 (Core Arguments &amp; Key Information):**</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">*</span> 多智能体架构可以实现更好的结果，因为它可以处理更多工具和上下文。</span><br><span class="line"><span class="bullet">*</span> τ-bench数据集的基准测试结果表明，单智能体架构在处理更多工具和上下文时性能会下降。</span><br><span class="line"><span class="bullet">*</span> supervisor架构是最通用的架构，但需要注意改进，以便系统可以更好地工作。</span><br><span class="line"></span><br><span class="line"><span class="strong">**战略意义与潜在影响 (Strategic Significance &amp; Potential Impact):**</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">*</span> <span class="strong">**战略意义:**</span> 多智能体架构将变得更加普遍，成为未来多智能体系统的标准架构。</span><br><span class="line"><span class="bullet">*</span> <span class="strong">**潜在影响:**</span> 将重塑客服行业岗位结构，并拉高整个行业的服务响应标准。</span><br><span class="line"></span><br><span class="line"><span class="strong">**机遇与启发 (Opportunities &amp; Inspirations):**</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">*</span> <span class="strong">**产品机会:**</span> 面向中小企业的、低代码AI客服SaaS平台存在市场空间。</span><br><span class="line"><span class="bullet">*</span> <span class="strong">**功能灵感:**</span> 在AI客服中集成“负面情绪识别与预警”功能，并能无缝转接人工。</span><br><span class="line"><span class="bullet">*</span> <span class="strong">**市场空白:**</span> 针对医疗、法律等垂直领域的、预训练了专业知识的AI客服解决方案。</span><br><span class="line"></span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+
+
+        </div>
+
+        
+                <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/posts/2d319c78/">AI Agent学习(二)</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© KAKARROT | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="KAKARROT">
+
+
+    <meta name="subtitle" content="Heaven helps those who help themselves.">
+
+
+    <meta name="description" content="I just want things to be what they are supposed to be.">
+
+
+    <meta name="keywords" content="产品,哲学,历史,魔兽,音乐">
+
+
+<title>AI Agent学习(一) | KAKARROT&#39;S BLOG</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Kakarrot&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Kakarrot&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">展开全部</a>
+        <a onclick="go_top()">回到顶部</a>
+        <a onclick="go_bottom()">回到底部</a>
+    </div>
+</div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? '展开全部' : '收起全部';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">AI Agent学习(一)</h1>
+            
+        </header>
+
+        <div class="post-content">
+            <p>AI相关死板的概念可以直接去维基百科查询，我们需要做的是：通过产品经理视角理解AI Agent的核心概念。</p>
+<h3 id="一、-从”工具”到”员工”：为什么需要Agent？"><a href="#一、-从”工具”到”员工”：为什么需要Agent？" class="headerlink" title="一、 从”工具”到”员工”：为什么需要Agent？"></a>一、 从”工具”到”员工”：为什么需要Agent？</h3><p>首先，我们要理解一个最根本的转变。</p>
+<ul>
+<li><strong>传统的软件&#x2F;GPT聊天是“工具”</strong>：就像一把锤子或一个计算器。你必须拿起它，明确地告诉它“算一下2+3”，它才会给你结果。你全程参与，它是被动的。</li>
+<li><strong>AI Agent是“虚拟员工”</strong>：你给它设定一个<strong>目标（OKR）</strong>，比如“帮我预订下周去北京出差的机票和酒店”，然后它会<strong>自己</strong>去思考、规划、使用工具，并最终完成任务。你从“操作工”变成了“管理者”。</li>
+</ul>
+<p><strong>结论：Agent的核心价值，就是将人类从“繁琐的过程”中解放出来，专注于“最终的目标”。</strong></p>
+<h3 id="二-Agent的核心组件：把Agent想象成一个“创业团队”"><a href="#二-Agent的核心组件：把Agent想象成一个“创业团队”" class="headerlink" title="二. Agent的核心组件：把Agent想象成一个“创业团队”"></a>二. Agent的核心组件：把Agent想象成一个“创业团队”</h3><p>理解一个Agent最好的方式，就是把它想象成一个由你管理的、目标明确的单人创业团队。这个团队有以下几个核心组成部分：</p>
+<table>
+<thead>
+<tr>
+<th><strong>核心概念</strong></th>
+<th><strong>创业团队比喻</strong></th>
+<th><strong>一句话解释</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>LLM (大语言模型)</strong></td>
+<td><strong>CEO &#x2F; 超级大脑</strong></td>
+<td>团队的核心决策者，负责理解目标、思考战略、下达指令。</td>
+</tr>
+<tr>
+<td><strong>Tools (工具)</strong></td>
+<td><strong>公司的各个“部门”</strong></td>
+<td>执行具体任务的专业部门，如“研发部”、“销售部”、“行政部”等。</td>
+</tr>
+<tr>
+<td><strong>Memory (记忆)</strong></td>
+<td><strong>公司的“共享知识库”</strong></td>
+<td>存储信息的地方，确保团队不会失忆，能持续学习和成长。</td>
+</tr>
+<tr>
+<td><strong>Planning &amp; Reasoning (规划与推理)</strong></td>
+<td><strong>CEO的“工作循环”</strong></td>
+<td>CEO管理团队、推进项目的工作方法和思考模式。</td>
+</tr>
+</tbody></table>
+<h4 id="1-LLM"><a href="#1-LLM" class="headerlink" title="1. LLM"></a>1. LLM</h4><p>这是Agent最核心的驱动力。</p>
+<p><strong>它擅长什么？</strong></p>
+<ul>
+<li>**理解语言 (Comprehension)**：能听懂你用自然语言下达的复杂、模糊的目标。</li>
+<li>**世界知识 (World Knowledge)**：拥有海量的常识，知道“北京”是中国的首都，“出差”需要订票和酒店。</li>
+<li>**逻辑推理 (Reasoning)**：能进行复杂的逻辑思考，比如“要订票，我得先知道日期和预算”。</li>
+<li>**语言生成 (Generation)**：能用流畅的语言和你沟通，汇报工作进展。</li>
+</ul>
+<p><strong>它的局限性？</strong></p>
+<ul>
+<li>这位CEO是个“纯脑力工作者”，没有“手”和“脚”。它无法上网查实时信息，无法访问你的电脑文件，也无法执行任何代码。<strong>它只能思考和说话</strong>。</li>
+</ul>
+<blockquote>
+<p>选择或微调LLM，就像为你的创业公司<strong>招聘CEO</strong>。你需要一个聪明、有经验、且符合公司文化的领导者。</p>
+</blockquote>
+<h4 id="2-Tools"><a href="#2-Tools" class="headerlink" title="2. Tools"></a>2. Tools</h4><p>为了让CEO的决策能落地，我们必须为他配备能够执行任务的“部门”。在AI Agent里，这些“部门”就是<strong>Tools（工具）</strong>，在技术上通常是一个个<strong>API接口</strong>。</p>
+<ul>
+<li><strong>常见的“部门”有哪些？</strong><ul>
+<li>**“科研部” (Web Search Tool)**：负责上网搜索实时信息，比如查询“今天北京的天气如何？”。</li>
+<li>**“研发部” (Code Interpreter)**：负责编写和执行代码，比如进行复杂计算或处理文件。</li>
+<li>**“行政部” (Calendar&#x2F;Email Tool)**：负责管理你的日程、收发邮件。</li>
+<li>**“采购部” (API Call Tool)**：负责调用第三方服务，比如调用携程API来预订机票。</li>
+</ul>
+</li>
+<li><strong>CEO如何与部门协作？</strong><ul>
+<li>CEO（LLM）经过思考，决定需要哪个部门的支持，然后下达一个<strong>格式清晰的指令</strong>（函数调用）。</li>
+<li>部门（Tool）执行任务，然后将<strong>执行结果</strong>汇报给CEO。</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>设计一个Agent，核心工作之一就是<strong>规划这个“虚拟团队”的组织架构</strong>。你需要决定：为了实现产品的核心价值，我到底需要为我的Agent配备哪些“部门”（Tools）？</p>
+</blockquote>
+<h4 id="3-Memory"><a href="#3-Memory" class="headerlink" title="3. Memory"></a>3. Memory</h4><p>一个团队如果做过的事情转头就忘，那它永远无法成长。Memory（记忆）机制解决了这个问题。</p>
+<ul>
+<li>记忆分为两种：<ul>
+<li>**短期记忆 (Short-Term Memory)**：就像会议室里的“白板”或CEO的“便签”。它用来记录当前任务的上下文、中间步骤和临时发现。比如，“我已经查完机票了，结果是xxx，接下来我要查酒店”。这确保了任务的连贯性。</li>
+<li>**长期记忆 (Long-Term Memory)**：就像公司的“共享知识库”或“客户关系管理系统(CRM)”。它用来存储那些需要被永久记住的核心信息、用户偏好、过去的成功经验等。比如，它会记住“我喜欢靠窗的座位”、“我的预算上限是2000元”。</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>设计记忆系统，就是为你的Agent<strong>设计信息管理和个性化策略</strong>。你需要决定：哪些信息是临时的？哪些信息需要被永久记住以优化用户体验？</p>
+</blockquote>
+<h4 id="4-Planning-Reasoning：CEO的“工作循环”"><a href="#4-Planning-Reasoning：CEO的“工作循环”" class="headerlink" title="4. Planning &amp; Reasoning：CEO的“工作循环”"></a>4. Planning &amp; Reasoning：CEO的“工作循环”</h4><p>这是整个团队运转起来的“灵魂”，是CEO管理项目、推进目标的<strong>工作方法论</strong>。目前最主流的一种方法论，叫做 **ReAct (Reason + Act)**。</p>
+<ul>
+<li>ReAct工作循环：<ol>
+<li><strong>思考 (Thought)<strong>：CEO拿到目标后，首先审视全局，然后</strong>思考</strong>：“为了完成最终OKR，我现在最应该做的第一步是什么？”</li>
+<li><strong>行动 (Action)<strong>：CEO根据思考，决定调用哪个</strong>“部门”（Tool）</strong>，并向它下达一个具体任务。</li>
+<li><strong>观察 (Observation)<strong>：CEO</strong>观察</strong>部门提交的工作报告（Tool的返回结果），并评估当前进展。</li>
+<li><strong>重复循环</strong>：CEO结合新的观察结果，回到第一步，继续<strong>思考</strong>：“好了，第一步已经完成，基于新情况，我的第二步应该做什么？”</li>
+</ol>
+</li>
+</ul>
+<p>这个“思考 -&gt; 行动 -&gt; 观察”的循环会一直持续，直到最终目标达成。</p>
+<blockquote>
+<p>设计规划与推理的逻辑，就像<strong>为你的团队设定工作流程（Workflow）和决策机制</strong>。这决定了你的Agent在面对复杂问题时的自主性和智能程度。</p>
+</blockquote>
+<h3 id="总结：一个完整的工作流程"><a href="#总结：一个完整的工作流程" class="headerlink" title="总结：一个完整的工作流程"></a><strong>总结：一个完整的工作流程</strong></h3><p>现在，让我们把所有概念串起来，看看当用户提出“帮我规划一次去硅谷的商务旅行”时，这个“虚拟团队”是如何工作的：</p>
+<ol>
+<li><strong>CEO (LLM)</strong> 接到目标，开始 **思考 (Reasoning)**：“规划旅行，我需要知道日期、目的地、航班和酒店。”</li>
+<li>CEO发现缺少信息，于是决定**行动 (Action)<strong>：使用</strong>“沟通部门”(Output Tool)**，向用户提问：“请告诉我您的出行日期和预算。”</li>
+<li>CEO<strong>观察 (Observation)<strong>到用户的回复：“下周一到周五，预算8000元。” 同时将这个信息记在</strong>“便签”（短期记忆）</strong>上。</li>
+<li>CEO再次<strong>思考</strong>：“信息齐了。第一步，查机票。” 于是下达**行动 (Action)<strong>：调用</strong>“采购部”(API Tool - 携程API)**，指令是“查询下周一到周五，北京到旧金山的往返机票”。</li>
+<li>CEO<strong>观察</strong>到机票结果，存入<strong>短期记忆</strong>，然后继续<strong>思考</strong>下一步…</li>
+</ol>
+<p>这个过程会一直持续，直到一个完整的行程规划被制定出来。</p>
+<p>通过这个“创业团队”模型，您应该能深刻理解，一个AI Agent远不止是一个会聊天的LLM，它是一个<strong>集成了决策大脑、功能部门、信息系统和工作流程的、能够自主完成目标的复杂系统</strong>。作为AI产品经理，核心工作，就是设计和优化这个系统。</p>
+
+        </div>
+
+        
+                <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/posts/2d319c78/">AI Agent学习(二)</a>
+            
+            
+            <a class="next" rel="next" href="/posts/d5775178/">AI Agent学习Roadmap</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© KAKARROT | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>
