@@ -248,10 +248,10 @@
 <h4 id="1-LLM"><a href="#1-LLM" class="headerlink" title="1. LLM"></a>1. LLM</h4><p>这是Agent最核心的驱动力。</p>
 <p><strong>它擅长什么？</strong></p>
 <ul>
-<li>**理解语言 (Comprehension)**：能听懂你用自然语言下达的复杂、模糊的目标。</li>
-<li>**世界知识 (World Knowledge)**：拥有海量的常识，知道“北京”是中国的首都，“出差”需要订票和酒店。</li>
-<li>**逻辑推理 (Reasoning)**：能进行复杂的逻辑思考，比如“要订票，我得先知道日期和预算”。</li>
-<li>**语言生成 (Generation)**：能用流畅的语言和你沟通，汇报工作进展。</li>
+<li>理解语言 (Comprehension)：能听懂你用自然语言下达的复杂、模糊的目标。</li>
+<li>世界知识 (World Knowledge)：拥有海量的常识，知道“北京”是中国的首都，“出差”需要订票和酒店。</li>
+<li>逻辑推理 (Reasoning)：能进行复杂的逻辑思考，比如“要订票，我得先知道日期和预算”。</li>
+<li>语言生成 (Generation)：能用流畅的语言和你沟通，汇报工作进展。</li>
 </ul>
 <p><strong>它的局限性？</strong></p>
 <ul>
@@ -263,10 +263,10 @@
 <h4 id="2-Tools"><a href="#2-Tools" class="headerlink" title="2. Tools"></a>2. Tools</h4><p>为了让CEO的决策能落地，我们必须为他配备能够执行任务的“部门”。在AI Agent里，这些“部门”就是<strong>Tools（工具）</strong>，在技术上通常是一个个<strong>API接口</strong>。</p>
 <ul>
 <li><strong>常见的“部门”有哪些？</strong><ul>
-<li>**“科研部” (Web Search Tool)**：负责上网搜索实时信息，比如查询“今天北京的天气如何？”。</li>
-<li>**“研发部” (Code Interpreter)**：负责编写和执行代码，比如进行复杂计算或处理文件。</li>
-<li>**“行政部” (Calendar&#x2F;Email Tool)**：负责管理你的日程、收发邮件。</li>
-<li>**“采购部” (API Call Tool)**：负责调用第三方服务，比如调用携程API来预订机票。</li>
+<li>“科研部” (Web Search Tool)：负责上网搜索实时信息，比如查询“今天北京的天气如何？”。</li>
+<li>“研发部” (Code Interpreter)：负责编写和执行代码，比如进行复杂计算或处理文件。</li>
+<li>“行政部” (Calendar&#x2F;Email Tool)：负责管理你的日程、收发邮件。</li>
+<li>“采购部” (API Call Tool)：负责调用第三方服务，比如调用携程API来预订机票。</li>
 </ul>
 </li>
 <li><strong>CEO如何与部门协作？</strong><ul>
@@ -281,21 +281,21 @@
 <h4 id="3-Memory"><a href="#3-Memory" class="headerlink" title="3. Memory"></a>3. Memory</h4><p>一个团队如果做过的事情转头就忘，那它永远无法成长。Memory（记忆）机制解决了这个问题。</p>
 <ul>
 <li>记忆分为两种：<ul>
-<li>**短期记忆 (Short-Term Memory)**：就像会议室里的“白板”或CEO的“便签”。它用来记录当前任务的上下文、中间步骤和临时发现。比如，“我已经查完机票了，结果是xxx，接下来我要查酒店”。这确保了任务的连贯性。</li>
-<li>**长期记忆 (Long-Term Memory)**：就像公司的“共享知识库”或“客户关系管理系统(CRM)”。它用来存储那些需要被永久记住的核心信息、用户偏好、过去的成功经验等。比如，它会记住“我喜欢靠窗的座位”、“我的预算上限是2000元”。</li>
+<li>短期记忆 (Short-Term Memory)：就像会议室里的“白板”或CEO的“便签”。它用来记录当前任务的上下文、中间步骤和临时发现。比如，“我已经查完机票了，结果是xxx，接下来我要查酒店”。这确保了任务的连贯性。</li>
+<li>长期记忆 (Long-Term Memory)：就像公司的“共享知识库”或“客户关系管理系统(CRM)”。它用来存储那些需要被永久记住的核心信息、用户偏好、过去的成功经验等。比如，它会记住“我喜欢靠窗的座位”、“我的预算上限是2000元”。</li>
 </ul>
 </li>
 </ul>
 <blockquote>
 <p>设计记忆系统，就是为你的Agent<strong>设计信息管理和个性化策略</strong>。你需要决定：哪些信息是临时的？哪些信息需要被永久记住以优化用户体验？</p>
 </blockquote>
-<h4 id="4-Planning-Reasoning：CEO的“工作循环”"><a href="#4-Planning-Reasoning：CEO的“工作循环”" class="headerlink" title="4. Planning &amp; Reasoning：CEO的“工作循环”"></a>4. Planning &amp; Reasoning：CEO的“工作循环”</h4><p>这是整个团队运转起来的“灵魂”，是CEO管理项目、推进目标的<strong>工作方法论</strong>。目前最主流的一种方法论，叫做 **ReAct (Reason + Act)**。</p>
+<h4 id="4-Planning-Reasoning：CEO的“工作循环”"><a href="#4-Planning-Reasoning：CEO的“工作循环”" class="headerlink" title="4. Planning &amp; Reasoning：CEO的“工作循环”"></a>4. Planning &amp; Reasoning：CEO的“工作循环”</h4><p>这是整个团队运转起来的“灵魂”，是CEO管理项目、推进目标的<strong>工作方法论</strong>。目前最主流的一种方法论，叫做 ReAct (Reason + Act)。</p>
 <ul>
 <li>ReAct工作循环：<ol>
-<li><strong>思考 (Thought)<strong>：CEO拿到目标后，首先审视全局，然后</strong>思考</strong>：“为了完成最终OKR，我现在最应该做的第一步是什么？”</li>
-<li><strong>行动 (Action)<strong>：CEO根据思考，决定调用哪个</strong>“部门”（Tool）</strong>，并向它下达一个具体任务。</li>
-<li><strong>观察 (Observation)<strong>：CEO</strong>观察</strong>部门提交的工作报告（Tool的返回结果），并评估当前进展。</li>
-<li><strong>重复循环</strong>：CEO结合新的观察结果，回到第一步，继续<strong>思考</strong>：“好了，第一步已经完成，基于新情况，我的第二步应该做什么？”</li>
+<li>思考 (Thought**)**：CEO拿到目标后，首先审视全局，然后思考：“为了完成最终OKR，我现在最应该做的第一步是什么？”</li>
+<li>行动 (Action)：CEO根据思考，决定调用哪个<strong>“</strong>部门”（Tool），并向它下达一个具体任务。</li>
+<li>观察 (Observation)：CEO观察部门提交的工作报告（Tool的返回结果），并评估当前进展。</li>
+<li>重复循环：CEO结合新的观察结果，回到第一步，继续思考：“好了，第一步已经完成，基于新情况，我的第二步应该做什么？”</li>
 </ol>
 </li>
 </ul>
@@ -305,11 +305,11 @@
 </blockquote>
 <h3 id="总结：一个完整的工作流程"><a href="#总结：一个完整的工作流程" class="headerlink" title="总结：一个完整的工作流程"></a><strong>总结：一个完整的工作流程</strong></h3><p>现在，让我们把所有概念串起来，看看当用户提出“帮我规划一次去硅谷的商务旅行”时，这个“虚拟团队”是如何工作的：</p>
 <ol>
-<li><strong>CEO (LLM)</strong> 接到目标，开始 **思考 (Reasoning)**：“规划旅行，我需要知道日期、目的地、航班和酒店。”</li>
-<li>CEO发现缺少信息，于是决定**行动 (Action)<strong>：使用</strong>“沟通部门”(Output Tool)**，向用户提问：“请告诉我您的出行日期和预算。”</li>
-<li>CEO<strong>观察 (Observation)<strong>到用户的回复：“下周一到周五，预算8000元。” 同时将这个信息记在</strong>“便签”（短期记忆）</strong>上。</li>
-<li>CEO再次<strong>思考</strong>：“信息齐了。第一步，查机票。” 于是下达**行动 (Action)<strong>：调用</strong>“采购部”(API Tool - 携程API)**，指令是“查询下周一到周五，北京到旧金山的往返机票”。</li>
-<li>CEO<strong>观察</strong>到机票结果，存入<strong>短期记忆</strong>，然后继续<strong>思考</strong>下一步…</li>
+<li>CEO (LLM) 接到目标，开始 思考 (Reasoning)：“规划旅行，我需要知道日期、目的地、航班和酒店。”</li>
+<li>CEO发现缺少信息，于是决定行动 (Action)：使用“沟通部门”(Output Tool)，向用户提问：“请告诉我您的出行日期和预算。”</li>
+<li>CEO观察 (Observation)到用户的回复：“下周一到周五，预算8000元。” 同时将这个信息记在“便签”（短期记忆）上。</li>
+<li>CEO再次思考：“信息齐了。第一步，查机票。” 于是下达行动 (Action)：调用“采购部”(API Tool - 携程API)，指令是“查询下周一到周五，北京到旧金山的往返机票”。</li>
+<li>CEO观察到机票结果，存入短期记忆，然后继续思考下一步…</li>
 </ol>
 <p>这个过程会一直持续，直到一个完整的行程规划被制定出来。</p>
 <p>通过这个“创业团队”模型，您应该能深刻理解，一个AI Agent远不止是一个会聊天的LLM，它是一个<strong>集成了决策大脑、功能部门、信息系统和工作流程的、能够自主完成目标的复杂系统</strong>。作为AI产品经理，核心工作，就是设计和优化这个系统。</p>
