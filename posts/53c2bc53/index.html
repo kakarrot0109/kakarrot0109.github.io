@@ -256,31 +256,31 @@
 <td><strong>V1</strong></td>
 <td>可行性未知</td>
 <td>打通端到端流程 (RSS-&gt;LLM-&gt;MD)</td>
-<td><strong>MVP验证</strong>：先让产品跑起来，验证核心假设。</td>
+<td>MVP验证：先让产品跑起来，验证核心假设。</td>
 </tr>
 <tr>
 <td><strong>V2</strong></td>
 <td>不可控、非本地化</td>
 <td>增加日期&#x2F;数量控制；引入翻译链</td>
-<td>**用户体验优化 (V0.1)**：增加基础控制权，满足核心用户（自己）的基础需求。</td>
+<td>用户体验优化：增加基础控制权，满足核心用户（自己）的基础需求。</td>
 </tr>
 <tr>
 <td><strong>V3</strong></td>
 <td>输出质量低下</td>
 <td>更换信源；抓取文章全文</td>
-<td><strong>GIGO原则</strong>：意识到输入质量决定输出质量，引入外部知识增强（RAG雏形）。</td>
+<td>GIGO原则：意识到输入质量决定输出质量，引入外部知识增强（RAG雏形）。</td>
 </tr>
 <tr>
 <td><strong>V4</strong></td>
 <td>输出语言不稳定</td>
 <td>One-Shot Prompting (示例学习)</td>
-<td><strong>高级工程技巧</strong>：当指令失效时，改变与AI的协作模式，从“指导”变为“示范”。</td>
+<td>高级工程技巧：当指令失效时，改变与AI的协作模式，从“指导”变为“示范”。</td>
 </tr>
 <tr>
 <td><strong>V5</strong></td>
 <td>偶发性格式错误</td>
 <td>极限强化Prompt；输出预启动</td>
-<td><strong>系统健壮性</strong>：不信任模型的自觉性，通过强制手段和行为塑造来保证100%的可靠性。</td>
+<td>系统健壮性：不信任模型的自觉性，通过强制手段和行为塑造来保证100%的可靠性。</td>
 </tr>
 </tbody></table>
 <hr>
@@ -296,13 +296,13 @@
 </ol>
 </li>
 <li><p>核心思路 (The Core Idea):</p>
-<p>PoC (Proof of Concept) 验证。这一阶段完全不关心输出质量、可控性和用户体验，唯一的目标就是打通技术链路，证明“本地AI Agent自动处理资讯”这个核心逻辑能够走通。这就像产品开发中的“跑通最小闭环”，先求“有”，再求“好”。</p>
+<p>PoC (Proof of Concept) 概念验证。这一阶段完全不关心输出质量、可控性和用户体验，唯一的目标就是打通技术链路，证明“本地AI Agent自动处理资讯”这个核心逻辑能够走通。这就像产品开发中的“跑通最小闭环”，先求“有”，再求“好”。</p>
 </li>
 </ul>
 <hr>
 <h4 id="第二版-V2-增加可控性与本地化"><a href="#第二版-V2-增加可控性与本地化" class="headerlink" title="第二版 (V2): 增加可控性与本地化"></a><strong>第二版 (V2): 增加可控性与本地化</strong></h4><ul>
 <li><p>迭代问题 (The Problem):</p>
-<p>V1版本完全不可控，且输出的内容是英文，不符合最终用户（您自己）的需求。</p>
+<p>V1版本完全不可控，且输出的内容是英文，不符合最终用户的需求。</p>
 <ol>
 <li><strong>控制性问题</strong>：无法控制获取文章的数量和时效性。</li>
 <li><strong>本地化问题</strong>：输出的分析报告是英文的，阅读体验不佳。</li>
@@ -358,7 +358,7 @@
 <li><p><strong>解决方案 (The Solution):</strong></p>
 <ol>
 <li><strong>极限Prompt强化</strong>：在Prompt中加入了“角色”、“规则”、“失败条件”等类似法律条文的结构，用最强硬的语言下达指令。</li>
-<li><strong>引入输出“预启动”（Output Priming）</strong>：在Prompt的末尾，直接帮模型打出它应该回答的第一个词和格式（例如 <code>**核心摘要 (Executive Summary):**\n*</code>）。</li>
+<li><strong>引入输出“预启动”（Output Priming）</strong>：在Prompt的末尾，直接帮模型打出它应该回答的第一个词和格式。</li>
 </ol>
 </li>
 <li><p>核心思路 (The Core Idea):</p>
