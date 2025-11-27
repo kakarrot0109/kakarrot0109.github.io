@@ -23,7 +23,7 @@
 
 
 
-    <link rel="icon" href="/favicon.ico">
+    <link rel="icon" href="/image/favicon.ico">
 
 
 
@@ -50,7 +50,7 @@
     
 
 
-<meta name="generator" content="Hexo 8.1.0"></head>
+<meta name="generator" content="Hexo 8.1.1"></head>
 
 <body>
     <script>
@@ -78,13 +78,13 @@
             <div class="navbar-header header-logo"><a href="/">Kakarrot&#39;s Blog</a></div>
             <div class="menu navbar-right">
                 
-                    <a class="menu-item" href="/archives">Posts</a>
+                    <a class="menu-item" href="/archives">文章</a>
                 
-                    <a class="menu-item" href="/category">Categories</a>
+                    <a class="menu-item" href="/category">分类</a>
                 
-                    <a class="menu-item" href="/tag">Tags</a>
+                    <a class="menu-item" href="/tag">标签</a>
                 
-                    <a class="menu-item" href="/about">About</a>
+                    <a class="menu-item" href="/about">关于</a>
                 
                 <input id="switch_default" type="checkbox" class="switch_default">
                 <label for="switch_default" class="toggleBtn"></label>
@@ -103,13 +103,13 @@
             </div>
             <div class="menu" id="mobile-menu">
                 
-                    <a class="menu-item" href="/archives">Posts</a>
+                    <a class="menu-item" href="/archives">文章</a>
                 
-                    <a class="menu-item" href="/category">Categories</a>
+                    <a class="menu-item" href="/category">分类</a>
                 
-                    <a class="menu-item" href="/tag">Tags</a>
+                    <a class="menu-item" href="/tag">标签</a>
                 
-                    <a class="menu-item" href="/about">About</a>
+                    <a class="menu-item" href="/about">关于</a>
                 
             </div>
         </div>
@@ -137,9 +137,9 @@
     <div class="tocbot-list">
     </div>
     <div class="tocbot-list-menu">
-        <a class="tocbot-toc-expand" onclick="expand_toc()">展开全部</a>
+        <a class="tocbot-toc-expand" onclick="expand_toc()">展开目录</a>
         <a onclick="go_top()">回到顶部</a>
-        <a onclick="go_bottom()">回到底部</a>
+        <a onclick="go_bottom()">跳到底部</a>
     </div>
 </div>
 
@@ -177,7 +177,7 @@
         tocbot.refresh(obj_merge(tocbot_default_config, {
             collapseDepth: expanded ? 1 : DEPTH_MAX
         }));
-        b.innerText = expanded ? '展开全部' : '收起全部';
+        b.innerText = expanded ? '展开目录' : '收起目录';
     }
 
     function go_top() {
@@ -197,13 +197,32 @@
         return target;
     }
 </script>
-
     
 
     
     <article class="post-wrap">
         <header class="post-header">
             <h1 class="post-title">Hexo+Chic主题二次开发</h1>
+            
+                <div class="post-meta">
+                    
+                        作者: <a itemprop="author" rel="author" href="/">KAKARROT</a>
+                    
+
+                    
+                        <span class="post-time">
+                        日期: <a href="#">2022年06月07日</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    分类:
+                            
+                                <a href="/categories/Hexo/">Hexo</a>
+                            
+                        </span>
+                    
+                </div>
             
         </header>
 
@@ -232,21 +251,7 @@
 <figure class="highlight html"><figcaption><span>post.ejs</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;post-meta&quot;</span>&gt;</span></span><br><span class="line">  &lt;% if(theme.post_author_enable &amp;&amp; config.author)&#123; %&gt; 作者:</span><br><span class="line">  <span class="tag">&lt;<span class="name">a</span> <span class="attr">itemprop</span>=<span class="string">&quot;author&quot;</span> <span class="attr">rel</span>=<span class="string">&quot;author&quot;</span> <span class="attr">href</span>=<span class="string">&quot;/&quot;</span></span></span><br><span class="line"><span class="tag">    &gt;</span>&lt;%- config.author %&gt;<span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span>&lt;/a</span><br><span class="line">  &gt;</span><br><span class="line">  &lt;% &#125; %&gt; &lt;% if(page.date &amp;&amp; theme.post_date_enable)&#123; %&gt;</span><br><span class="line">  <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;post-time&quot;</span>&gt;</span></span><br><span class="line">    日期: <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;#&quot;</span>&gt;</span>&lt;%- date(page.date, theme.date_format) %&gt;<span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">  &lt;% &#125; %&gt; &lt;% if(page.categories.length!==0 &amp;&amp; theme.post_category_enable)&#123; %&gt;</span><br><span class="line">  <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;post-category&quot;</span>&gt;</span></span><br><span class="line">    分类: &lt;% page.categories.forEach(item=&gt;&#123; %&gt;</span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;&lt;%- url_for(item.path) %&gt;&quot;</span>&gt;</span>&lt;%- item.name %&gt;<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">    &lt;% &#125;) %&gt;</span><br><span class="line">  <span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">  &lt;% &#125; %&gt;</span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>文章页面底部的标签和返回隐藏了。</p>
-<figure class="highlight html"><figcaption><span>post.ejs</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"><!-- <section class="post-tags">
-  <div>
-    <span>Tag(s):</span>
-    <span class="tag">
-      <% if(page.tags.length!==0){%> <% page.tags.forEach(item=>{ %>
-      <a href="<%- url_for(item.path) %>"># <%- item.name %></a>
-      <% }) %> <% } %>
-    </span>
-  </div>
-  <div>
-    <a href="javascript:window.history.back();">back</a>
-    <span>· </span>
-    <a href="<%- config.root %>">home</a>
-  </div>
-</section> --></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><figcaption><span>post.ejs</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- &lt;section class=&quot;post-tags&quot;&gt;</span></span><br><span class="line"><span class="comment">  &lt;div&gt;</span></span><br><span class="line"><span class="comment">    &lt;span&gt;Tag(s):&lt;/span&gt;</span></span><br><span class="line"><span class="comment">    &lt;span class=&quot;tag&quot;&gt;</span></span><br><span class="line"><span class="comment">      &lt;% if(page.tags.length!==0)&#123;%&gt; &lt;% page.tags.forEach(item=&gt;&#123; %&gt;</span></span><br><span class="line"><span class="comment">      &lt;a href=&quot;&lt;%- url_for(item.path) %&gt;&quot;&gt;# &lt;%- item.name %&gt;&lt;/a&gt;</span></span><br><span class="line"><span class="comment">      &lt;% &#125;) %&gt; &lt;% &#125; %&gt;</span></span><br><span class="line"><span class="comment">    &lt;/span&gt;</span></span><br><span class="line"><span class="comment">  &lt;/div&gt;</span></span><br><span class="line"><span class="comment">  &lt;div&gt;</span></span><br><span class="line"><span class="comment">    &lt;a href=&quot;javascript:window.history.back();&quot;&gt;back&lt;/a&gt;</span></span><br><span class="line"><span class="comment">    &lt;span&gt;· &lt;/span&gt;</span></span><br><span class="line"><span class="comment">    &lt;a href=&quot;&lt;%- config.root %&gt;&quot;&gt;home&lt;/a&gt;</span></span><br><span class="line"><span class="comment">  &lt;/div&gt;</span></span><br><span class="line"><span class="comment">&lt;/section&gt; --&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>文章页面边栏快捷按钮汉化</p>
 <figure class="highlight js"><figcaption><span>toc.ejs</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;div <span class="keyword">class</span>=<span class="string">&quot;post-toc&quot;</span>&gt;</span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;tocbot-list&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;tocbot-list-menu&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">class</span>=<span class="string">&quot;tocbot-toc-expand&quot;</span> <span class="attr">onclick</span>=<span class="string">&quot;expand_toc()&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      展开全部</span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">a</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">onclick</span>=<span class="string">&quot;go_top()&quot;</span>&gt;</span>返回顶部<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">onclick</span>=<span class="string">&quot;go_bottom()&quot;</span>&gt;</span>降至底部<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;/div&gt;;</span><br><span class="line"></span><br><span class="line">b.<span class="property">innerText</span> = expanded ? <span class="string">&quot;展开全部&quot;</span> : <span class="string">&quot;收起全部&quot;</span>;</span><br></pre></td></tr></table></figure>
@@ -260,7 +265,26 @@
         </div>
 
         
-                <section class="post-nav">
+        <section class="post-tags">
+            <div>
+                <span>标签:</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/Hexo/"># Hexo</a>
+                    
+                        <a href="/tags/Blog/"># Blog</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">返回</a>
+                <span>· </span>
+                <a href="/">首页</a>
+            </div>
+        </section>
+        <section class="post-nav">
             
                 <a class="prev" rel="prev" href="/posts/efab4cb0/">Hexo更新升级</a>
             

@@ -23,7 +23,7 @@
 
 
 
-    <link rel="icon" href="/favicon.ico">
+    <link rel="icon" href="/image/favicon.ico">
 
 
 
@@ -50,7 +50,7 @@
     
 
 
-<meta name="generator" content="Hexo 8.1.0"></head>
+<meta name="generator" content="Hexo 8.1.1"></head>
 
 <body>
     <script>
@@ -78,13 +78,13 @@
             <div class="navbar-header header-logo"><a href="/">Kakarrot&#39;s Blog</a></div>
             <div class="menu navbar-right">
                 
-                    <a class="menu-item" href="/archives">Posts</a>
+                    <a class="menu-item" href="/archives">文章</a>
                 
-                    <a class="menu-item" href="/category">Categories</a>
+                    <a class="menu-item" href="/category">分类</a>
                 
-                    <a class="menu-item" href="/tag">Tags</a>
+                    <a class="menu-item" href="/tag">标签</a>
                 
-                    <a class="menu-item" href="/about">About</a>
+                    <a class="menu-item" href="/about">关于</a>
                 
                 <input id="switch_default" type="checkbox" class="switch_default">
                 <label for="switch_default" class="toggleBtn"></label>
@@ -103,13 +103,13 @@
             </div>
             <div class="menu" id="mobile-menu">
                 
-                    <a class="menu-item" href="/archives">Posts</a>
+                    <a class="menu-item" href="/archives">文章</a>
                 
-                    <a class="menu-item" href="/category">Categories</a>
+                    <a class="menu-item" href="/category">分类</a>
                 
-                    <a class="menu-item" href="/tag">Tags</a>
+                    <a class="menu-item" href="/tag">标签</a>
                 
-                    <a class="menu-item" href="/about">About</a>
+                    <a class="menu-item" href="/about">关于</a>
                 
             </div>
         </div>
@@ -137,9 +137,9 @@
     <div class="tocbot-list">
     </div>
     <div class="tocbot-list-menu">
-        <a class="tocbot-toc-expand" onclick="expand_toc()">展开全部</a>
+        <a class="tocbot-toc-expand" onclick="expand_toc()">展开目录</a>
         <a onclick="go_top()">回到顶部</a>
-        <a onclick="go_bottom()">回到底部</a>
+        <a onclick="go_bottom()">跳到底部</a>
     </div>
 </div>
 
@@ -177,7 +177,7 @@
         tocbot.refresh(obj_merge(tocbot_default_config, {
             collapseDepth: expanded ? 1 : DEPTH_MAX
         }));
-        b.innerText = expanded ? '展开全部' : '收起全部';
+        b.innerText = expanded ? '展开目录' : '收起目录';
     }
 
     function go_top() {
@@ -197,13 +197,32 @@
         return target;
     }
 </script>
-
     
 
     
     <article class="post-wrap">
         <header class="post-header">
             <h1 class="post-title">用户留存那些事</h1>
+            
+                <div class="post-meta">
+                    
+                        作者: <a itemprop="author" rel="author" href="/">KAKARROT</a>
+                    
+
+                    
+                        <span class="post-time">
+                        日期: <a href="#">2016年07月03日</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    分类:
+                            
+                                <a href="/categories/%E4%BA%A7%E5%93%81/">产品</a>
+                            
+                        </span>
+                    
+                </div>
             
         </header>
 
@@ -323,7 +342,28 @@
         </div>
 
         
-                <section class="post-nav">
+        <section class="post-tags">
+            <div>
+                <span>标签:</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E4%BA%A7%E5%93%81%E7%BB%8F%E7%90%86/"># 产品经理</a>
+                    
+                        <a href="/tags/%E4%BA%A7%E5%93%81/"># 产品</a>
+                    
+                        <a href="/tags/%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1/"># 产品设计</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">返回</a>
+                <span>· </span>
+                <a href="/">首页</a>
+            </div>
+        </section>
+        <section class="post-nav">
             
                 <a class="prev" rel="prev" href="/posts/70f22acb/">用户转化那些事</a>
             
