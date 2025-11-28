@@ -19,7 +19,7 @@
     <meta name="keywords" content="产品,哲学,历史,魔兽,音乐">
 
 
-<title>Tag: 市场营销 | KAKARROT&#39;S BLOG</title>
+<title>标签: 市场营销 | KAKARROT&#39;S BLOG</title>
 
 
 
@@ -62,11 +62,13 @@
             if (isDark) {
                 pagebody.classList.add('dark-theme');
                 // mobile
-                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+                const mobileToggle = document.getElementById("mobile-toggle-theme");
+                if (mobileToggle) mobileToggle.innerText = "· Dark"
             } else {
                 pagebody.classList.remove('dark-theme');
                 // mobile
-                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+                const mobileToggle = document.getElementById("mobile-toggle-theme");
+                if (mobileToggle) mobileToggle.innerText = "· Light"
             }
         })();
     </script>
@@ -78,7 +80,7 @@
             <div class="navbar-header header-logo"><a href="/">Kakarrot&#39;s Blog</a></div>
             <div class="menu navbar-right">
                 
-                    <a class="menu-item" href="/archives">文章</a>
+                    <a class="menu-item" href="/archives">归档</a>
                 
                     <a class="menu-item" href="/category">分类</a>
                 
@@ -103,7 +105,7 @@
             </div>
             <div class="menu" id="mobile-menu">
                 
-                    <a class="menu-item" href="/archives">文章</a>
+                    <a class="menu-item" href="/archives">归档</a>
                 
                     <a class="menu-item" href="/category">分类</a>
                 
@@ -135,7 +137,7 @@
     
 <div class="container">
     <div class="post-wrap tags">
-        <h2 class="post-title">-&nbsp;Tag&nbsp;·&nbsp;市场营销-</h2>
+        <h2 class="post-title">-&nbsp;标签&nbsp;·&nbsp;市场营销-</h2>
     </div>
     <div class="post-wrap archive">
     

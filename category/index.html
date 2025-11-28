@@ -19,7 +19,7 @@
     <meta name="keywords" content="产品,哲学,历史,魔兽,音乐">
 
 
-<title>category | KAKARROT&#39;S BLOG</title>
+<title>分类 | KAKARROT&#39;S BLOG</title>
 
 
 
@@ -62,11 +62,13 @@
             if (isDark) {
                 pagebody.classList.add('dark-theme');
                 // mobile
-                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+                const mobileToggle = document.getElementById("mobile-toggle-theme");
+                if (mobileToggle) mobileToggle.innerText = "· Dark"
             } else {
                 pagebody.classList.remove('dark-theme');
                 // mobile
-                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+                const mobileToggle = document.getElementById("mobile-toggle-theme");
+                if (mobileToggle) mobileToggle.innerText = "· Light"
             }
         })();
     </script>
@@ -78,7 +80,7 @@
             <div class="navbar-header header-logo"><a href="/">Kakarrot&#39;s Blog</a></div>
             <div class="menu navbar-right">
                 
-                    <a class="menu-item" href="/archives">文章</a>
+                    <a class="menu-item" href="/archives">归档</a>
                 
                     <a class="menu-item" href="/category">分类</a>
                 
@@ -103,7 +105,7 @@
             </div>
             <div class="menu" id="mobile-menu">
                 
-                    <a class="menu-item" href="/archives">文章</a>
+                    <a class="menu-item" href="/archives">归档</a>
                 
                     <a class="menu-item" href="/category">分类</a>
                 
@@ -136,7 +138,7 @@
 
     <div class="container">
         <div class="post-wrap categories">
-            <h2 class="post-title">-&nbsp;Categories&nbsp;-</h2>
+            <h2 class="post-title">-&nbsp;分类&nbsp;-</h2>
             <div class="categories-card">
                 
                     
@@ -161,7 +163,7 @@
                                 
                                     <article class="archive-item">
                                         <a class="archive-item-link"
-                                           href="/posts/efab4cb0/">Hexo更新升级</a>
+                                           href="/posts/383a0bb0/">Hexo+Github轻量级博客搭建</a>
                                     </article>
                                 
                             
@@ -169,7 +171,7 @@
                                 
                                     <article class="archive-item">
                                         <a class="archive-item-link"
-                                           href="/posts/383a0bb0/">Hexo+Github轻量级博客搭建</a>
+                                           href="/posts/efab4cb0/">Hexo更新升级</a>
                                     </article>
                                 
                             
@@ -199,15 +201,7 @@
                                 
                                     <article class="archive-item">
                                         <a class="archive-item-link"
-                                           href="/posts/d1d2222d/">产品架构那些事</a>
-                                    </article>
-                                
-                            
-                                
-                                
-                                    <article class="archive-item">
-                                        <a class="archive-item-link"
-                                           href="/posts/4480440d/">用户注册那些事</a>
+                                           href="/posts/6727c243/">产品营销那些事</a>
                                     </article>
                                 
                             
@@ -223,7 +217,15 @@
                                 
                                     <article class="archive-item">
                                         <a class="archive-item-link"
-                                           href="/posts/6727c243/">产品营销那些事</a>
+                                           href="/posts/99cab120/">用户留存那些事</a>
+                                    </article>
+                                
+                            
+                                
+                                
+                                    <article class="archive-item">
+                                        <a class="archive-item-link"
+                                           href="/posts/4480440d/">用户注册那些事</a>
                                     </article>
                                 
                             
@@ -278,7 +280,7 @@
                                 
                                     <article class="archive-item">
                                         <a class="archive-item-link"
-                                           href="/posts/be10087/">魔兽世界WotLK备份</a>
+                                           href="/posts/7c89e4ff/">魔兽世界插件-KUI</a>
                                     </article>
                                 
                             
@@ -286,7 +288,7 @@
                                 
                                     <article class="archive-item">
                                         <a class="archive-item-link"
-                                           href="/posts/7c89e4ff/">魔兽世界插件-KUI</a>
+                                           href="/posts/be10087/">魔兽世界WotLK备份</a>
                                     </article>
                                 
                             
