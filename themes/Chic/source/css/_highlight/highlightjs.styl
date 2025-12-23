@@ -1,0 +1,171 @@
+// ==============================
+// Highlight Color - 东方人文配色
+// ==============================
+
+// Light Theme - 与整体风格协调
+$highlight-deletion     = #fdd
+$highlight-addition     = #dfd
+$highlight-background   = #F2EFE9       // 米色背景
+$highlight-current-line = #E5E0D8       // 浅灰褐
+$highlight-selection    = #E5E0D8
+$highlight-foreground   = #2C2C2C       // 墨色
+$highlight-comment      = #666666       // 深灰 - 次文字色
+$highlight-red          = #C47C5D       // 陶土色
+$highlight-orange       = #B8860B       // 暗金色
+$highlight-yellow       = #8B7355       // 枯竹色
+$highlight-green        = #4A5D58       // 青黛色
+$highlight-aqua         = #5F9EA0       // 苔绿色
+$highlight-blue         = #4A5D58       // 青黛色
+$highlight-purple       = #8B7B8B       // 藕荷色
+$highlight-gutter       = #999999
+
+// Dark Theme - 东方人文风格（夜间模式）
+// 保持低饱和度，与整体风格协调
+$dark-highlight-background   = #252420       // 深墨背景
+$dark-highlight-foreground   = #E8E4DC       // 暖白前景
+$dark-highlight-comment      = #9A9590       // 暖灰注释
+$dark-highlight-red          = #E0A88A       // 陶土调亮
+$dark-highlight-orange       = #D4A574       // 枯竹调亮
+$dark-highlight-yellow       = #C9B896       // 暖黄
+$dark-highlight-green        = #8FB8AD       // 青黛调亮
+$dark-highlight-aqua         = #9DC3BE       // 苔绿调亮
+$dark-highlight-blue         = #8FB8AD       // 青黛调亮
+$dark-highlight-purple       = #BDA8B8       // 藕荷调亮
+$dark-highlight-gutter       = #6B6560       // 深暖灰
+
+.post-content {
+  figure.highlight {
+		margin: 1.5em 0;
+		background: $highlight-background;
+		color: $highlight-foreground;
+		font-size: 13px;
+		overflow: scroll;
+		overflow-y: hidden;
+		overflow-x: auto;
+		border-radius: 8px;
+		border: 1px solid #E5E0D8;
+
+		.dark-theme & {
+			background: $dark-highlight-background;
+			color: $dark-highlight-foreground;
+			border-color: #3D3A35;
+		}
+
+		.gutter {
+			color: $highlight-gutter;
+			.dark-theme & {
+				color: $dark-highlight-gutter;
+			}
+		}
+
+		pre {
+			background: $highlight-background;
+			margin: 0;
+			.dark-theme & {
+				background: $dark-highlight-background;
+			}
+		}
+	}
+
+	code {
+		padding: 2px 6px;
+		background: $highlight-background;
+		font-family: 'JetBrains Mono', 'Fira Code', Menlo, Monaco, Consolas, 'Courier New', monospace;
+		font-size: 13px;
+		border-radius: 4px;
+	}
+
+	pre {
+		padding: 12px 16px;
+		overflow: auto;
+		background: $highlight-background;
+		font-family: 'JetBrains Mono', 'Fira Code', Menlo, Monaco, Consolas, 'Courier New', monospace;
+		border-radius: 8px;
+
+		.dark-theme & {
+			background: $dark-highlight-background;
+		}
+
+		code {
+			padding: 0;
+		}
+	}
+
+
+
+	pre .deletion { background: $highlight-deletion; .dark-theme & { background: #5C3A3A; } }
+	pre .addition { background: $highlight-addition; .dark-theme & { background: #3A5C4A; } }
+	pre .meta     { color: $highlight-purple; .dark-theme & { color: $dark-highlight-purple; } }
+
+	pre {
+
+		.comment { color: $highlight-comment; .dark-theme & { color: $dark-highlight-comment; } }
+
+		.variable
+		.attribute
+		.tag
+		.regexp
+		.ruby .constant
+		.xml .tag .title
+		.xml .pi
+		.xml .doctype
+		.html .doctype
+		.css .id
+		.css .class
+		.css .pseudo {
+			color: $highlight-red;
+			.dark-theme & { color: $dark-highlight-red; }
+		}
+
+		.number
+		.preprocessor
+		.built_in
+		.literal
+		.params
+		.constant
+		.command {
+			color: $highlight-orange;
+			.dark-theme & { color: $dark-highlight-orange; }
+		}
+
+		.ruby .class .title
+		.css .rules .attribute
+		.string
+		.value
+		.inheritance
+		.header
+		.ruby .symbol
+		.xml .cdata
+		.special
+		.number
+		.formula {
+			color: $highlight-green;
+			.dark-theme & { color: $dark-highlight-green; }
+		}
+
+		.title
+		.css .hexcolor {
+			color: $highlight-aqua;
+			.dark-theme & { color: $dark-highlight-aqua; }
+		}
+
+		.function
+		.python .decorator
+		.python .title
+		.ruby .function .title
+		.ruby .title .keyword
+		.perl .sub
+		.javascript .title
+		.coffeescript .title {
+			color: $highlight-blue;
+			.dark-theme & { color: $dark-highlight-blue; }
+		}
+
+		.keyword
+		.javascript .function {
+			color: $highlight-purple;
+			.dark-theme & { color: $dark-highlight-purple; }
+		}
+
+	}
+}

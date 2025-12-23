@@ -1,0 +1,283 @@
+// ==============================
+// Custom style - 苔藓绿配色 (Sage Green)
+// ==============================
+// 浅色：暖沙背景 + 苔藓绿主色 + 淡金色强调
+// 深色：深绿背景 + 苔藓绿调亮 + 暖金色强调
+
+// 优化字体渲染
+body
+  -webkit-font-smoothing antialiased
+  -moz-osx-font-smoothing grayscale
+  text-rendering optimizeLegibility
+
+// ==============================
+// 浅色模式样式
+// ==============================
+
+// 滚动条样式
+html
+  &::-webkit-scrollbar
+    width 6px
+    height 6px
+  &::-webkit-scrollbar-track
+    background #F9F8F4
+  &::-webkit-scrollbar-thumb
+    background-color #E8E4DC
+    border-radius 3px
+    &:hover
+      background-color #5C6B55
+
+// 文章内容样式
+.post-content
+  font-weight 400
+  line-height 1.9
+  letter-spacing 0.03em
+
+  p
+    margin 1.2em 0
+    font-weight 400
+    text-align justify
+
+  // 标题使用衬线体
+  h1, h2, h3, h4, h5, h6
+    font-family $font-family-serif
+    font-weight 600
+    margin 1.8em 0 1em
+    letter-spacing 0.05em
+    color #2C3E50
+
+  // 标题前缀使用苔藓绿
+  h1::before, h2::before
+    color #5C6B55 !important
+  h3::before, h4::before
+    color #5C6B55 !important
+
+  strong
+    font-weight 600
+    color #2C3E50
+
+  li
+    margin 0.4em 0
+
+  // 链接悬停使用深苔藓绿
+  a:hover
+    color #4A5540 !important
+    text-decoration none
+    border-bottom 1px solid #5C6B55
+
+  // 代码块样式
+  code
+    font-family $font-family-mono
+    background #FFFFFF
+    color #5C6B55
+    border-radius 4px
+    padding 2px 6px
+    font-size 0.9em
+    border 1px solid #E8E4DC
+
+  // 引用块样式
+  blockquote
+    background #FFFFFF
+    border-left 3px solid #5C6B55
+    border-radius 0 8px 8px 0
+    padding 1em 1.5em
+    margin 1.5em 0
+    box-shadow 0 1px 3px rgba(0, 0, 0, 0.03)
+    p
+      margin 0
+      color #2C3E50
+
+  // 表格样式
+  table
+    border-radius 8px
+    overflow hidden
+    border 1px solid #E8E4DC
+    thead
+      background #FFFFFF
+    th, td
+      border-color #E8E4DC
+
+  // 图片样式
+  img
+    border-radius 8px
+    box-shadow 0 2px 8px rgba(0, 0, 0, 0.05)
+
+  // 水平分割线
+  hr
+    border none
+    border-top 1px solid #E8E4DC
+    margin 2em 0
+
+// 文章标题样式
+.post-title
+  font-family $font-family-serif
+  font-weight 600 !important
+  letter-spacing 0.05em
+  color #2C3E50
+
+// 文章元信息
+.post-meta
+  font-weight 400
+  font-size 14px
+  color #8C9688
+
+// 归档页日期
+.archive-item-date
+  color #8C9688
+
+// 导航样式
+.navbar
+  border-bottom 1px solid #E8E4DC
+
+.navbar .menu .active
+  color #5C6B55
+  font-weight 600
+
+.nav-title
+  font-family $font-family-serif
+  font-weight 600 !important
+  letter-spacing 0.1em
+
+// 页脚样式
+.footer
+  border-top 1px solid #E8E4DC
+  color #8C9688
+
+// 分页样式
+.paginator a
+  color #5C6B55
+  &:hover
+    color #4A5540
+
+// 头像阴影
+.intro .avatar img
+  box-shadow 0 0 0 0.3618em rgba(92, 107, 85, 0.1)
+
+// 标签样式
+.post-tag
+  background #FFFFFF
+  color #5C6B55
+  border-radius 4px
+  padding 2px 8px
+  margin 2px
+  border 1px solid #E8E4DC
+  &:hover
+    background #5C6B55
+    color #F9F8F4
+    border-color #5C6B55
+
+// 选中文字样式 - 使用淡金色
+::selection
+  background #E6D5B8
+  color #2C3E50
+
+::-moz-selection
+  background #E6D5B8
+  color #2C3E50
+
+// ==============================
+// 深色模式样式
+// ==============================
+
+.dark-theme
+  // 滚动条
+  &::-webkit-scrollbar-track
+    background #1A1E1A
+  &::-webkit-scrollbar-thumb
+    background-color #3A403A
+    &:hover
+      background-color #8BA383
+
+  // 选中文字
+  ::selection
+    background #8BA383
+    color #1A1E1A
+  ::-moz-selection
+    background #8BA383
+    color #1A1E1A
+
+// 深色模式 - 文章内容
+.dark-theme .post-content
+  h1, h2, h3, h4, h5, h6
+    color #E8EBE4
+
+  h1::before, h2::before
+    color #8BA383 !important
+  h3::before, h4::before
+    color #8BA383 !important
+
+  strong
+    color #E8EBE4
+
+  a:hover
+    color #A8C09E !important
+    border-bottom-color #8BA383
+
+  code
+    background #252A25
+    color #8BA383
+    border-color #3A403A
+
+  blockquote
+    background #252A25
+    border-left-color #8BA383
+    box-shadow none
+    p
+      color #E8EBE4
+
+  table
+    border-color #3A403A
+    thead
+      background #2A302A
+    th, td
+      border-color #3A403A
+
+  img
+    box-shadow 0 2px 8px rgba(0, 0, 0, 0.3)
+
+  hr
+    border-top-color #3A403A
+
+// 深色模式 - 文章标题
+.dark-theme .post-title
+  color #E8EBE4
+
+// 深色模式 - 元信息
+.dark-theme .post-meta
+  color #9CA598
+
+// 深色模式 - 归档日期
+.dark-theme .archive-item-date
+  color #9CA598
+
+// 深色模式 - 导航
+.dark-theme .navbar
+  border-bottom-color #3A403A
+
+.dark-theme .navbar .menu .active
+  color #8BA383
+
+// 深色模式 - 页脚
+.dark-theme .footer
+  border-top-color #3A403A
+  color #9CA598
+
+// 深色模式 - 分页
+.dark-theme .paginator a
+  color #8BA383
+  &:hover
+    color #A8C09E
+
+// 深色模式 - 头像
+.dark-theme .intro .avatar img
+  box-shadow 0 0 0 0.3618em rgba(139, 163, 131, 0.15)
+
+// 深色模式 - 标签
+.dark-theme .post-tag
+  background #252A25
+  color #8BA383
+  border-color #3A403A
+  &:hover
+    background #8BA383
+    color #1A1E1A
+    border-color #8BA383

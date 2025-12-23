@@ -1,0 +1,19 @@
+# Dependencies
+node_modules/
+
+# Generated files
+public/
+db.json
+.deploy_git/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# Log files
+*.log
