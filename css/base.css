@@ -1,0 +1,66 @@
+html {
+  font-family: $font-family;
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+html::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+html::-webkit-scrollbar-track {
+  background: #f5f5f7;
+}
+html::-webkit-scrollbar-thumb {
+  height: 40px;
+  background-color: #d2d2d7;
+  border-radius: 4px;
+}
+html::-webkit-scrollbar-thumb:hover {
+  background-color: #86868b;
+}
+body {
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.8em;
+  overflow: overlay;
+  background-color: $light-background-color;
+  color: $light-font-color;
+  transition: color 0.15s ease-out, background 0.15s ease-out;
+}
+body:before {
+  content: "";
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.05;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+body.dark-theme {
+  background-color: $dark-background-color;
+  color: $dark-font-color;
+}
+a {
+  color: $light-global-link-color;
+  text-decoration: none;
+  transition: color 0.12s ease-out;
+  cursor: pointer;
+}
+a:hover {
+  color: $light-global-link-hover-color;
+  text-decoration: none;
+}
+.dark-theme a {
+  color: $dark-global-link-color;
+}
+.dark-theme a:hover {
+  color: $dark-global-link-hover-color;
+}
