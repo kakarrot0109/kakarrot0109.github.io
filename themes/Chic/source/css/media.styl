@@ -11,7 +11,7 @@
     position: fixed
     width: 100%
     z-index: 100
-    transition: all 0.6s ease 0s
+    transition: all 0.15s ease-out
     .container 
       padding: 0
       margin: 0
@@ -171,3 +171,167 @@
 @media screen and (max-width: 1279px) // 最大宽度1279px时应用这条规则。（最大宽度小于1279px返回false，屏蔽规则。）
   .post-toc
     display none
+
+  // ==============================
+  // 移动端TOC悬浮按钮
+  // ==============================
+  .mobile-toc-btn
+    display flex
+    position fixed
+    bottom 24px
+    right 24px
+    width 52px
+    height 52px
+    background #0071E3
+    color #fff
+    border-radius 50%
+    align-items center
+    justify-content center
+    box-shadow 0 4px 16px rgba(0, 113, 227, 0.4)
+    z-index 1000
+    cursor pointer
+    transition transform 0.2s ease, box-shadow 0.2s ease
+
+    &:hover
+      transform scale(1.05)
+      box-shadow 0 6px 20px rgba(0, 113, 227, 0.5)
+
+    &:active
+      transform scale(0.95)
+
+    .dark-theme &
+      background #2997FF
+      box-shadow 0 4px 16px rgba(41, 151, 255, 0.4)
+
+  // ==============================
+  // 移动端TOC抽屉
+  // ==============================
+  .mobile-toc-drawer
+    position fixed
+    bottom 0
+    left 0
+    right 0
+    background $light-background-color
+    border-radius 20px 20px 0 0
+    max-height 70vh
+    transform translateY(100%)
+    transition transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)
+    z-index 1001
+    box-shadow 0 -4px 24px rgba(0, 0, 0, 0.15)
+    overflow hidden
+
+    &.active
+      transform translateY(0)
+
+    .drawer-header
+      display flex
+      justify-content space-between
+      align-items center
+      padding 16px 20px
+      border-bottom 1px solid $light-border-color
+
+      .drawer-title
+        font-weight 600
+        font-size 16px
+        color $light-font-color
+
+      .drawer-close
+        font-size 28px
+        color $light-font-secondary-color
+        cursor pointer
+        width 36px
+        height 36px
+        display flex
+        align-items center
+        justify-content center
+        border-radius 50%
+        transition background 0.15s ease
+
+        &:hover
+          background rgba(0, 0, 0, 0.05)
+
+    .drawer-content
+      padding 12px 20px 32px
+      max-height calc(70vh - 60px)
+      overflow-y auto
+      -webkit-overflow-scrolling touch
+
+      // tocbot 目录样式
+      .toc-list
+        list-style none
+        padding-left 0
+        margin 0
+
+        .toc-list
+          padding-left 16px
+
+        .toc-list-item
+          margin 8px 0
+
+          a
+            color $light-font-secondary-color
+            text-decoration none
+            font-size 14px
+            line-height 1.6
+            display block
+            padding 6px 0
+            transition color 0.15s ease
+
+            &:hover
+              color $light-navbar-active-color
+
+          &.is-active-li > a
+            color $light-navbar-active-color
+            font-weight 500
+
+    .dark-theme &
+      background $dark-background-color
+      box-shadow 0 -4px 24px rgba(0, 0, 0, 0.4)
+
+      .drawer-header
+        border-bottom-color $dark-border-color
+
+        .drawer-title
+          color $dark-font-color
+
+        .drawer-close
+          color $dark-font-secondary-color
+
+          &:hover
+            background rgba(255, 255, 255, 0.1)
+
+      .drawer-content
+        .toc-list-item a
+          color $dark-font-secondary-color
+
+          &:hover
+            color $dark-navbar-active-color
+
+        .toc-list-item.is-active-li > a
+          color $dark-navbar-active-color
+
+  // ==============================
+  // 遮罩层
+  // ==============================
+  .drawer-overlay
+    position fixed
+    top 0
+    left 0
+    right 0
+    bottom 0
+    background rgba(0, 0, 0, 0.5)
+    opacity 0
+    visibility hidden
+    transition opacity 0.3s ease
+    z-index 1000
+
+    &.active
+      opacity 1
+      visibility visible
+
+// 大屏隐藏移动端TOC
+@media screen and (min-width: 1280px)
+  .mobile-toc-btn,
+  .mobile-toc-drawer,
+  .drawer-overlay
+    display none !important

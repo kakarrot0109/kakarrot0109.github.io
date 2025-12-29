@@ -19,6 +19,15 @@
                         日期: <a href="#"><%- date(page.date, theme.date_format)  %></a>
                         </span>
                     <% } %>
+                    <%
+                    // 计算阅读时间
+                    const textContent = strip_html(page.content);
+                    const wordCount = textContent.length;
+                    const readingTime = Math.max(1, Math.ceil(wordCount / 300));
+                    %>
+                    <span class="reading-time">
+                        阅读时间: 约 <%= readingTime %> 分钟
+                    </span>
                     <% if(page.categories.length!==0 && theme.post_category_enable){ %>
                         <span class="post-category">
                     分类:

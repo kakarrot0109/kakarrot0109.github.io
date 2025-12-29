@@ -1,6 +1,6 @@
-/** pagination **/
+/** pagination - Apple 风格分页 **/
 
-.pagination 
+.pagination
   display flex
   flex-direction row
   justify-content center
@@ -8,74 +8,40 @@
   white-space nowrap
   width 100%
   padding-top 2em
-  a,span
+
+  a, span
     -webkit-font-smoothing antialiased
-    font-size 12px
-    color #bfbfbf
+    font-size 13px
+    color #86868B
     letter-spacing 0.1em
-    font-weight 700
-    padding 5px 5px
+    font-weight 500
+    padding 8px 12px
     text-decoration none
-    transition 0.3s
-  
+    transition all 0.15s ease-out
+    border-radius 8px
+
   .page-number
-    padding-bottom 3px
-    margin 0 20px
+    margin 0 8px
     box-sizing border-box
     position relative
     display inline
-    &.disabled 
+
+    &.disabled
       display none
-    
-    &:hover a 
-      color  $light-pagination-link-active-color
-    
 
-    .dark-theme &:hover a 
-      color  $dark-pagination-link-active-color
-    
+    &:hover a
+      color #0071E3
+      background rgba(0, 113, 227, 0.1)
 
-    &:before,
-    &:after 
-      position absolute
-      content ""
-      width 0
-      height 1px
-      background $light-pagination-link-active-color
-      transition 0.3s
-      bottom 0px
-    
-    .dark-theme &:before,
-    .dark-theme &:after
-      background $dark-pagination-link-active-color
-    
+    .dark-theme &:hover a
+      color #2997FF
+      background rgba(41, 151, 255, 0.1)
 
-    &:before .current,
-    &:after .current
-      width 100%
-    
-    &:before 
-      left 50%
-    
-    &:after 
-      right 50%
-    
-    &:hover 
-      &:before,
-      &:after 
-        width 50%
-      
-    
     &.current
-      color $light-pagination-link-active-color
-      
+      a
+        color #FFFFFF
+        background #0071E3
 
-      .dark-theme &
-        color $dark-pagination-link-active-color
-      
-      &:before,
-      &:after 
-        width 60%
-      
-    
-  
+      .dark-theme & a
+        color #1D1D1F
+        background #2997FF

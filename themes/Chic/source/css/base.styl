@@ -5,19 +5,26 @@
 
 html
   font-family $font-family
+  scroll-behavior smooth
+  scroll-padding-top 5rem
+
+  // 尊重用户减少动画偏好
+  @media (prefers-reduced-motion: reduce)
+    scroll-behavior auto
+
   &::-webkit-scrollbar
-    width 6px
-    height 6px
+    width 8px
+    height 8px
 
   &::-webkit-scrollbar-track
-    background #F9F8F4
+    background #F5F5F7
 
   &::-webkit-scrollbar-thumb
     height 40px
-    background-color #E8E4DC
-    border-radius 3px
+    background-color #D2D2D7
+    border-radius 4px
     &:hover
-      background-color #5C6B55
+      background-color #86868B
 
 body
   font-size 15px
@@ -26,7 +33,7 @@ body
   overflow overlay
   background-color $light-background-color
   color $light-font-color
-  transition color 0.2s ease, border-color 0.2s ease, background 0.2s ease, opacity 0.2s ease
+  transition color 0.15s ease-out, background 0.15s ease-out
 
   &:before
     content ""
@@ -43,24 +50,18 @@ body
   &.dark-theme
     background-color $dark-background-color
     color $dark-font-color
-    transition color 0.2s ease, border-color 0.2s ease, background 0.2s ease, opacity 0.2s ease
 
 a
   color $light-global-link-color
   text-decoration none
-  transition color 0.2s ease, border-color 0.2s ease, background 0.2s ease, opacity 0.2s ease
+  transition color 0.12s ease-out
   cursor pointer
 
   &:hover
     color $light-global-link-hover-color
     text-decoration none
-    transition color 0.2s ease, border-color 0.2s ease, background 0.2s ease, opacity 0.2s ease
-    
+
   .dark-theme &
     color $dark-global-link-color
-    text-decoration none
-    transition color 0.2s ease, border-color 0.2s ease, background 0.2s ease, opacity 0.2s ease
     &:hover
       color $dark-global-link-hover-color
-      text-decoration none
-      transition color 0.2s ease, border-color 0.2s ease, background 0.2s ease, opacity 0.2s ease

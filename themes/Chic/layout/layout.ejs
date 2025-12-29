@@ -6,22 +6,19 @@
 </head>
 
 <body>
+    <!-- 阅读进度条 -->
+    <div class="reading-progress" id="reading-progress"></div>
+
     <script>
-        // this function is used to check current theme before page loaded.
+        // 主题检测：优先用户设置，其次系统偏好
         (() => {
-            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
-            const isDark = currentTheme === 'dark';
-            const pagebody = document.getElementsByTagName('body')[0]
+            const stored = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const isDark = stored ? stored === 'dark' : prefersDark;
+            const pagebody = document.body;
+
             if (isDark) {
                 pagebody.classList.add('dark-theme');
-                // mobile
-                const mobileToggle = document.getElementById("mobile-toggle-theme");
-                if (mobileToggle) mobileToggle.innerText = "· Dark"
-            } else {
-                pagebody.classList.remove('dark-theme');
-                // mobile
-                const mobileToggle = document.getElementById("mobile-toggle-theme");
-                if (mobileToggle) mobileToggle.innerText = "· Light"
             }
         })();
     </script>
