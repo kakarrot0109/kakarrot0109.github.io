@@ -204,9 +204,102 @@ document.ready(() => {
     });
   };
 
+  // ==============================
+  // 图片灯箱功能
+  // ==============================
+  _Blog.initImageLightbox = function () {
+    const images = document.querySelectorAll(".post-content img");
+    if (!images.length) return;
+
+    // 创建灯箱容器
+    const lightbox = document.createElement("div");
+    lightbox.className = "image-lightbox";
+    lightbox.innerHTML = '<img src="" alt=""><span class="lightbox-close">&times;</span>';
+    document.body.appendChild(lightbox);
+
+    const lightboxImg = lightbox.querySelector("img");
+
+    images.forEach((img) => {
+      img.addEventListener("click", () => {
+        lightboxImg.src = img.src;
+        lightboxImg.alt = img.alt || "";
+        lightbox.classList.add("active");
+        document.body.style.overflow = "hidden";
+      });
+    });
+
+    // 点击关闭
+    lightbox.addEventListener("click", (e) => {
+      if (e.target === lightbox || e.target.classList.contains("lightbox-close")) {
+        lightbox.classList.remove("active");
+        document.body.style.overflow = "";
+      }
+    });
+
+    // ESC键关闭
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && lightbox.classList.contains("active")) {
+        lightbox.classList.remove("active");
+        document.body.style.overflow = "";
+      }
+    });
+  };
+
+  // ==============================
+  // 移动端TOC抽屉
+  // ==============================
+  _Blog.initMobileToc = function () {
+    const btn = document.getElementById("mobile-toc-btn");
+    const drawer = document.getElementById("mobile-toc-drawer");
+    const overlay = document.getElementById("drawer-overlay");
+    const closeBtn = document.getElementById("drawer-close");
+
+    if (!btn || !drawer) return;
+
+    function openDrawer() {
+      drawer.classList.add("active");
+      if (overlay) overlay.classList.add("active");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeDrawer() {
+      drawer.classList.remove("active");
+      if (overlay) overlay.classList.remove("active");
+      document.body.style.overflow = "";
+    }
+
+    btn.addEventListener("click", openDrawer);
+    if (overlay) overlay.addEventListener("click", closeDrawer);
+    if (closeBtn) closeBtn.addEventListener("click", closeDrawer);
+
+    // 点击目录链接后关闭抽屉
+    drawer.querySelectorAll("a").forEach((a) => {
+      a.addEventListener("click", () => {
+        setTimeout(closeDrawer, 100);
+      });
+    });
+
+    // 监听tocbot更新后重新绑定链接
+    const observer = new MutationObserver(() => {
+      drawer.querySelectorAll("a").forEach((a) => {
+        a.removeEventListener("click", closeDrawer);
+        a.addEventListener("click", () => {
+          setTimeout(closeDrawer, 100);
+        });
+      });
+    });
+
+    const drawerContent = drawer.querySelector(".drawer-content");
+    if (drawerContent) {
+      observer.observe(drawerContent, { childList: true, subtree: true });
+    }
+  };
+
   // 初始化所有功能
   _Blog.initTheme();
   _Blog.initReadingProgress();
   _Blog.initNavbarScroll();
   _Blog.initCodeCopy();
+  _Blog.initImageLightbox();
+  _Blog.initMobileToc();
 });
