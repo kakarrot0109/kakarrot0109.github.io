@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="KAKARROT">
+
+
+    <meta name="subtitle" content="Heaven helps those who help themselves.">
+
+
+    <meta name="description" content="I just want things to be what they are supposed to be.">
+
+
+    <meta name="keywords" content="产品,哲学,历史,魔兽,音乐">
+
+
+<title>从Prompt到Skill工程化实践 | KAKARROT&#39;S BLOG</title>
+
+
+
+    <link rel="icon" href="/image/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+<body>
+    <!-- 阅读进度条 -->
+    <div class="reading-progress" id="reading-progress"></div>
+
+    <script>
+        // 主题检测：优先用户设置，其次系统偏好
+        (() => {
+            const stored = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const isDark = stored ? stored === 'dark' : prefersDark;
+            const pagebody = document.body;
+
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Kakarrot&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">归档</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Kakarrot&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">归档</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">展开目录</a>
+        <a onclick="go_top()">回到顶部</a>
+        <a onclick="go_bottom()">跳到底部</a>
+    </div>
+</div>
+
+<!-- 移动端TOC悬浮按钮 -->
+<div class="mobile-toc-btn" id="mobile-toc-btn">
+    <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2" fill="none">
+        <line x1="4" y1="6" x2="20" y2="6"></line>
+        <line x1="4" y1="12" x2="20" y2="12"></line>
+        <line x1="4" y1="18" x2="14" y2="18"></line>
+    </svg>
+</div>
+
+<!-- 移动端TOC抽屉 -->
+<div class="mobile-toc-drawer" id="mobile-toc-drawer">
+    <div class="drawer-header">
+        <span class="drawer-title">目录</span>
+        <span class="drawer-close" id="drawer-close">&times;</span>
+    </div>
+    <div class="drawer-content js-toc-mobile"></div>
+</div>
+
+<!-- 遮罩层 -->
+<div class="drawer-overlay" id="drawer-overlay"></div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    // 移动端TOC配置
+    var tocbot_mobile_config = {
+        tocSelector: '.js-toc-mobile',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        collapseDepth: 6,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+
+        // 初始化移动端TOC
+        if (window.innerWidth < 1280) {
+            tocbot.init(tocbot_mobile_config);
+        }
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? '展开目录' : '收起目录';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">从Prompt到Skill工程化实践</h1>
+            
+                <div class="post-meta">
+                    
+                        作者: <a itemprop="author" rel="author" href="/">KAKARROT</a>
+                    
+
+                    
+                        <span class="post-time">
+                        日期: <a href="#">2025年12月31日</a>
+                        </span>
+                    
+                    
+                    <span class="reading-time">
+                        阅读时间: 约 9 分钟
+                    </span>
+                    
+                        <span class="post-category">
+                    分类:
+                            
+                                <a href="/categories/AI/">AI</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>2025 年是我深入学习 AI 的一年。从最初对 ChatGPT 的好奇，到系统性地学习 Prompt Engineering，再到构建自己的 Claude Skills 工程化体系，这一年的经历让我对 AI 有了全新的认识。</p>
+<p>不只是”会用”AI，而是”用好”AI，甚至让 AI”帮我用好”AI。</p>
+<span id="more"></span>
+
+<h2 id="第一阶段：Prompt-Engineering-入门"><a href="#第一阶段：Prompt-Engineering-入门" class="headerlink" title="第一阶段：Prompt Engineering 入门"></a>第一阶段：Prompt Engineering 入门</h2><h3 id="从随意提问到结构化思考"><a href="#从随意提问到结构化思考" class="headerlink" title="从随意提问到结构化思考"></a>从随意提问到结构化思考</h3><p>刚开始接触 AI 时，我的提问方式很随意：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">帮我写一个Python脚本处理Excel</span><br></pre></td></tr></table></figure>
+
+<p>得到的结果也很随意——有时候有用，有时候牛头不对马嘴。</p>
+<p>直到我开始系统学习 Prompt Engineering，才意识到与 AI 对话其实是一门技术活。一个好的 Prompt 应该包含：</p>
+<ul>
+<li><strong>角色定义</strong>：你是谁，擅长什么</li>
+<li><strong>任务描述</strong>：具体要做什么</li>
+<li><strong>上下文信息</strong>：背景、约束、边界条件</li>
+<li><strong>输出格式</strong>：期望的结果形态</li>
+<li><strong>示例</strong>：Few-shot learning 的威力</li>
+</ul>
+<h3 id="进阶：理解模型的”思维方式”"><a href="#进阶：理解模型的”思维方式”" class="headerlink" title="进阶：理解模型的”思维方式”"></a>进阶：理解模型的”思维方式”</h3><p>学到后期，我开始研究 Reverse Prompt Engineering——通过分析高质量的 AI 输出，反推出生成它的 Prompt 结构。</p>
+<p>这个过程让我理解了一个关键点：<strong>AI 不是在”理解”你的问题，而是在”预测”最可能的回答</strong>。</p>
+<p>这个认知转变带来了我写 Prompt 方式的根本改变：不是告诉 AI”我想要什么”，而是构建一个”最可能产出好结果”的上下文环境。</p>
+<h2 id="第二阶段：从-Prompt-到工程化"><a href="#第二阶段：从-Prompt-到工程化" class="headerlink" title="第二阶段：从 Prompt 到工程化"></a>第二阶段：从 Prompt 到工程化</h2><h3 id="问题：Prompt-太多，管理太难"><a href="#问题：Prompt-太多，管理太难" class="headerlink" title="问题：Prompt 太多，管理太难"></a>问题：Prompt 太多，管理太难</h3><p>随着使用深入，我积累了大量的 Prompt：</p>
+<ul>
+<li>代码审查用的</li>
+<li>文案创作用的</li>
+<li>数据分析用的</li>
+<li>小红书爆款分析用的</li>
+<li>……</li>
+</ul>
+<p>它们散落在各处——笔记软件、聊天记录、本地文件。每次要用的时候，要么找不到，要么找到了发现已经过时。</p>
+<h3 id="解决方案：建立知识库体系"><a href="#解决方案：建立知识库体系" class="headerlink" title="解决方案：建立知识库体系"></a>解决方案：建立知识库体系</h3><p>我开始构建一个结构化的 AI 知识库：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">AI-Lab/</span><br><span class="line">│</span><br><span class="line">├── Tutorial/              # 教程 - AI 知识源</span><br><span class="line">│   ├── Prompt_Engineering基础教程.md</span><br><span class="line">│   ├── Prompt_Engineering进阶教程.md</span><br><span class="line">│   ├── Reverse_Prompt_Engineering教程.md</span><br><span class="line">│   ├── Claude_Skill基础教程.md</span><br><span class="line">│   └── Claude_Skill进阶教程.md</span><br><span class="line">│</span><br><span class="line">├── Prompt/                # 模板 - 生产级可复用 Prompt</span><br><span class="line">│   ├── Meta_Prompt.md</span><br><span class="line">│   ├── 小红书/</span><br><span class="line">│   ├── CES爆款线分析器.md</span><br><span class="line">│   ├── AI视频剧本创作提示词.md</span><br><span class="line">│   └── Web页面多风格前端生成器.md</span><br><span class="line">│</span><br><span class="line">└── .claude/skills/        # Claude Skill 自动化工具</span><br><span class="line">    ├── prompt-analyzer/   # 提示词分析优化</span><br><span class="line">    └── update-tutorial/   # 知识库级联更新</span><br></pre></td></tr></table></figure>
+
+<p>核心理念是把知识分成三层：</p>
+<ol>
+<li><strong>Tutorial（教程）</strong>：原理性知识，供 AI 读取生成规范</li>
+<li><strong>Prompt（模板）</strong>：生产级的可复用 Prompt</li>
+<li><strong>Skills（技能）</strong>：自动化的工作流</li>
+</ol>
+<h2 id="第三阶段：Claude-Skills-工程化"><a href="#第三阶段：Claude-Skills-工程化" class="headerlink" title="第三阶段：Claude Skills 工程化"></a>第三阶段：Claude Skills 工程化</h2><h3 id="什么是-Claude-Skills？"><a href="#什么是-Claude-Skills？" class="headerlink" title="什么是 Claude Skills？"></a>什么是 Claude Skills？</h3><p>Claude Skills 是 Claude Code 中的一个强大特性——你可以定义自定义的技能（Skill），让 AI 按照预设的流程执行复杂任务。</p>
+<p>简单说，就是把常用的工作流封装成一个”指令”，一键触发。</p>
+<h3 id="我的实践：打造个人-AI-工具箱"><a href="#我的实践：打造个人-AI-工具箱" class="headerlink" title="我的实践：打造个人 AI 工具箱"></a>我的实践：打造个人 AI 工具箱</h3><p>我封装了几个常用的 Skills：</p>
+<p><strong>1. prompt-analyzer（提示词分析器）</strong></p>
+<p>输入一个 Prompt，自动分析其结构，指出改进空间，输出优化版本。</p>
+<p>这解决了一个痛点：很多时候我知道某个 Prompt 不够好，但不知道怎么改。</p>
+<p><strong>2. update-tutorial（知识库级联更新）</strong></p>
+<p>当我更新了某个教程时，自动检查依赖这个教程的其他文档是否需要同步更新。</p>
+<p>知识库最怕的就是”知识孤岛”——某处更新了，其他地方还是旧的。</p>
+<h3 id="工程化思维的价值"><a href="#工程化思维的价值" class="headerlink" title="工程化思维的价值"></a>工程化思维的价值</h3><p>Skills 的开发让我体会到工程化思维在 AI 领域的价值：</p>
+<ul>
+<li><strong>可复用</strong>：写一次，用无数次</li>
+<li><strong>可维护</strong>：集中管理，统一更新</li>
+<li><strong>可组合</strong>：小技能组合成大工作流</li>
+<li><strong>可测试</strong>：输入确定，输出可预期</li>
+</ul>
+<p>这和软件工程的理念是相通的。AI 不是魔法，是工具。用工程化的方式管理工具，才能发挥最大效用。</p>
+<h2 id="一些感悟"><a href="#一些感悟" class="headerlink" title="一些感悟"></a>一些感悟</h2><h3 id="1-AI-是放大器，不是替代品"><a href="#1-AI-是放大器，不是替代品" class="headerlink" title="1. AI 是放大器，不是替代品"></a>1. AI 是放大器，不是替代品</h3><p>AI 放大的是你已有的能力。如果你本身对某个领域有深入理解，AI 可以帮你 10 倍提效。但如果你对领域一无所知，AI 输出的内容你也无法判断对错。</p>
+<p>所以，学习 AI 的同时，更要学习领域知识。</p>
+<h3 id="2-投入产出比最高的是”教会-AI-如何帮你”"><a href="#2-投入产出比最高的是”教会-AI-如何帮你”" class="headerlink" title="2. 投入产出比最高的是”教会 AI 如何帮你”"></a>2. 投入产出比最高的是”教会 AI 如何帮你”</h3><p>很多人花大量时间学习 AI 的各种功能，但很少花时间思考”怎么让 AI 更好地为我工作”。</p>
+<p>我发现，花几个小时写一个好的 Skill，比每天花几分钟手动操作划算得多。</p>
+<h3 id="3-保持怀疑，持续验证"><a href="#3-保持怀疑，持续验证" class="headerlink" title="3. 保持怀疑，持续验证"></a>3. 保持怀疑，持续验证</h3><p>AI 会一本正经地胡说八道。养成验证 AI 输出的习惯，尤其是在专业领域。</p>
+<p>我的做法是：让 AI 在输出时说明推理过程，然后我检查这个过程是否合理。</p>
+<h2 id="明年的计划"><a href="#明年的计划" class="headerlink" title="明年的计划"></a>明年的计划</h2><p>2026 年，我打算继续深入几个方向：</p>
+<ul>
+<li><strong>Agent 开发</strong>：让 AI 不只是回答问题，而是完成完整的任务</li>
+<li><strong>RAG 系统</strong>：构建个人知识库的检索增强生成系统</li>
+<li><strong>多模态应用</strong>：图像、语音与文本的融合应用</li>
+</ul>
+<p>AI 的发展速度超乎想象。能做的就是保持学习，持续实践。</p>
+<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>感谢这一年遇到的所有 AI 工具和社区。特别是 Claude，它不仅是我的学习工具，也是我的工作伙伴。</p>
+<p>如果你也在学习 AI，欢迎交流。</p>
+<p>学习 AI，最好的时间是一年前，其次是现在。</p>
+
+        </div>
+
+        
+        <section class="post-tags">
+            <div>
+                <span>标签:</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/Prompt-Engineering/"># Prompt Engineering</a>
+                    
+                        <a href="/tags/Claude/"># Claude</a>
+                    
+                        <a href="/tags/AI%E5%B7%A5%E7%A8%8B%E5%8C%96/"># AI工程化</a>
+                    
+                        <a href="/tags/%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/"># 学习总结</a>
+                    
+                        
+                </span>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/posts/5781cb/">GitHub Pages 自定义域名被劫持与恢复记录</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© KAKARROT | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>
