@@ -22,7 +22,7 @@ type: "ABOUT ME"
 
 2022 年后,**学习、创新**
 
-认识AI、拥抱AI、学习AI、研究AI。
+认识 AI、拥抱 AI、学习 AI、研究 AI。
 
 ---
 
@@ -52,5 +52,5 @@ type: "ABOUT ME"
   &nbsp;&nbsp;保修时间 2023-05-18 至 2025-07-01
 - 显示：Aoc U32N3C
 - 键盘：NIZ T-35g C103 三模 + IKBC Poker Pro 无线 61 键侧刻
-- 鼠标：Logitech Master 3
+- 鼠标：Logitech Master 3 / Logitech MX Vertical
 - 耳机：Bose QC35 II
