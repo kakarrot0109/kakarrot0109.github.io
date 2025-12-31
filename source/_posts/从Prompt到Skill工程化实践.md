@@ -7,7 +7,7 @@ tags:
   - Claude
   - AI工程化
   - 学习总结
-abbrlink:
+abbrlink: f0c4a247
 date: 2025-12-31 10:00:00
 ---
 
