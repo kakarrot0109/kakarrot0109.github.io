@@ -51,26 +51,18 @@ date: 2024-06-06 00:00:00
 
 - Shadowrocket：代理工具
 - Chrome：浏览器
-- Raycast：效率启动器（替代 Spotlight）
 - AppCleaner：软件卸载
-- The Unarchiver：解压工具
-- IINA：视频播放器
-- MonitorControl：外接显示器亮度控制
-- 思源黑体、思源宋体、Sarasa Gothic：字体
 
 ---
 
 **生产力工具**
 
 - Office 365：Word、Excel、PowerPoint
-- Axure RP 10
-- Xmind
 - Typora
-- VSCode\Cursor
+- Cursor
 - Git\Node.js\Hexo
 - Homebrew：包管理器
-- iTerm2：终端工具
-- OrbStack：Docker 替代品
+- Ghostty：终端工具
 
 ---
 
@@ -80,8 +72,6 @@ date: 2024-06-06 00:00:00
 - Spotify\Apple Music：听歌软件
 - 115 网盘\百度网盘：网盘软件
 - Eagle：图片管理软件
-- NeatReader：读书软件
-- Steam：游戏平台
 
 ---
 
@@ -98,18 +88,19 @@ brew update                 # 更新 Homebrew
 brew upgrade                # 升级所有包
 brew list                   # 列出已安装
 brew cleanup                # 清理旧版本
-```
 
----
+# 常用软件/工具
+brew install git
+brew install node
+brew install pnpm
+brew install mole
+brew install --cask claude-code
+npm install -g hexo-cli
 
-**终端配置（Zsh）**
-
-```bash
-# 安装 Oh My Zsh
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-
-# 常用插件
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
+# 常用字体
+brew tap homebrew/cask-fonts
+brew install --cask font-jetbrains-mono-nerd-font
+brew install --cask font-black-han-sans
 ```
 
 ---
@@ -120,119 +111,15 @@ plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
 # 全局配置
 git config --global user.name "your-name"
 git config --global user.email "your-email"
-
-# 生成 SSH 密钥
-ssh-keygen -t ed25519 -C "your-email"
 ```
 
 ---
 
-**常用快捷键**
+**Hexo 配置**
 
-| 功能         | 快捷键             |
-| ------------ | ------------------ |
-| 截图         | Cmd + Shift + 4    |
-| 全屏截图     | Cmd + Shift + 3    |
-| 录屏         | Cmd + Shift + 5    |
-| Spotlight    | Cmd + Space        |
-| 强制退出     | Cmd + Option + Esc |
-| 切换应用     | Cmd + Tab          |
-| 关闭窗口     | Cmd + W            |
-| 退出应用     | Cmd + Q            |
-| 显示隐藏文件 | Cmd + Shift + .    |
-
----
-
-**Cursor Setting**
-
-```json settings.json
-// Cursor 编辑器核心配置文件
-// 维护者: KAKARROT
-// 包含视觉体验、代码规范及语言特定设置
-{
-  // 编辑器体验
-  "editor.fontSize": 14,
-  "editor.fontFamily": "'JetBrains Mono', 'Fira Code', Menlo, monospace",
-  "editor.fontLigatures": true,
-  "editor.lineHeight": 24,
-  "editor.cursorBlinking": "smooth",
-  "editor.cursorSmoothCaretAnimation": "on",
-  "editor.smoothScrolling": true,
-  "editor.minimap.enabled": false,
-  "editor.renderWhitespace": "selection",
-  "editor.indentSize": "tabSize",
-
-  // 文件与格式化
-  "files.autoSave": "onFocusChange",
-  "editor.formatOnSave": true,
-  "editor.formatOnPaste": true,
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-
-  // 语言配置
-  "[vue]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.tabSize": 2,
-    "editor.codeActionsOnSave": { "source.fixAll.eslint": "explicit" }
-  },
-  "[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.tabSize": 2
-  },
-  "[python]": {
-    "editor.defaultFormatter": "ms-python.black-formatter",
-    "editor.tabSize": 4,
-    "editor.formatOnType": true
-  },
-  "[markdown]": {
-    "editor.wordWrap": "on",
-    "editor.quickSuggestions": {
-      "comments": "off",
-      "strings": "off",
-      "other": "off"
-    },
-    "editor.fontSize": 15
-  },
-  "[plaintext]": {
-    "editor.wordWrap": "on",
-    "editor.fontSize": 15
-  },
-
-  // Python
-  "python.languageServer": "Pylance",
-  "python.analysis.typeCheckingMode": "basic",
-  "python.analysis.autoImportCompletions": true,
-  "python.terminal.activateEnvironment": true,
-
-  // Emmet
-  "emmet.includeLanguages": { "vue-html": "html", "vue": "html" },
-
-  // 终端
-  "terminal.integrated.fontFamily": "'JetBrains Mono', monospace",
-  "terminal.integrated.fontSize": 13,
-  "terminal.integrated.cursorBlinking": true,
-
-  // 文件排除
-  "files.exclude": {
-    "**/.git": true,
-    "**/.DS_Store": true,
-    "**/__pycache__": true,
-    "**/*.pyc": true
-  },
-  "search.exclude": {
-    "**/node_modules": true,
-    "**/dist": true,
-    "**/.venv": true
-  },
-
-  // 工作区
-  "workbench.startupEditor": "newUntitledFile",
-  "workbench.colorTheme": "Cursor Light",
-  "explorer.confirmDelete": false,
-  "git.enableSmartCommit": true,
-  "git.confirmSync": false,
-
-  // Claude Code
-  "claudeCode.preferredLocation": "panel",
-  "claudeCode.selectedModel": "opus"
-}
+```bash
+## 按错误提示，在项目根目录执行：
+rm -rf node_modules && npm install --force
+## 或先清理缓存后再安装：
+rm -rf node_modules package-lock.json && npm install
 ```
