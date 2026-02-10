@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="KAKARROT">
+
+
+    <meta name="subtitle" content="Heaven helps those who help themselves.">
+
+
+    <meta name="description" content="I just want things to be what they are supposed to be.">
+
+
+    <meta name="keywords" content="产品,哲学,历史,魔兽,音乐">
+
+
+<title>魔兽世界WotLK备份 | KAKARROT&#39;S BLOG</title>
+
+
+
+    <link rel="icon" href="/image/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+<body>
+    <!-- 阅读进度条 -->
+    <div class="reading-progress" id="reading-progress"></div>
+
+    <script>
+        // 主题检测：优先用户设置，其次系统偏好
+        (() => {
+            const stored = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const isDark = stored ? stored === 'dark' : prefersDark;
+            const pagebody = document.body;
+
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Kakarrot&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">归档</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Kakarrot&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">归档</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">展开目录</a>
+        <a onclick="go_top()">回到顶部</a>
+        <a onclick="go_bottom()">跳到底部</a>
+    </div>
+</div>
+
+<!-- 移动端TOC悬浮按钮 -->
+<div class="mobile-toc-btn" id="mobile-toc-btn">
+    <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2" fill="none">
+        <line x1="4" y1="6" x2="20" y2="6"></line>
+        <line x1="4" y1="12" x2="20" y2="12"></line>
+        <line x1="4" y1="18" x2="14" y2="18"></line>
+    </svg>
+</div>
+
+<!-- 移动端TOC抽屉 -->
+<div class="mobile-toc-drawer" id="mobile-toc-drawer">
+    <div class="drawer-header">
+        <span class="drawer-title">目录</span>
+        <span class="drawer-close" id="drawer-close">&times;</span>
+    </div>
+    <div class="drawer-content js-toc-mobile"></div>
+</div>
+
+<!-- 遮罩层 -->
+<div class="drawer-overlay" id="drawer-overlay"></div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    // 移动端TOC配置
+    var tocbot_mobile_config = {
+        tocSelector: '.js-toc-mobile',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        collapseDepth: 6,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+
+        // 初始化移动端TOC
+        if (window.innerWidth < 1280) {
+            tocbot.init(tocbot_mobile_config);
+        }
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? '展开目录' : '收起目录';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">魔兽世界WotLK备份</h1>
+            
+                <div class="post-meta">
+                    
+                        作者: <a itemprop="author" rel="author" href="/">KAKARROT</a>
+                    
+
+                    
+                        <span class="post-time">
+                        日期: <a href="#">2024年08月29日</a>
+                        </span>
+                    
+                    
+                    <span class="reading-time">
+                        阅读时间: 约 20 分钟
+                    </span>
+                    
+                        <span class="post-category">
+                    分类:
+                            
+                                <a href="/categories/%E6%B8%B8%E6%88%8F/">游戏</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="Binding-按键设置"><a href="#Binding-按键设置" class="headerlink" title="Binding | 按键设置"></a>Binding | 按键设置</h2><p><a target="_blank" rel="noopener" href="https://myslot.net/mrgArnLc">戒律按键</a></p>
+<p><a target="_blank" rel="noopener" href="https://myslot.net/XOnzR4Kg">敏锐按键</a></p>
+<p><a target="_blank" rel="noopener" href="https://myslot.net/o8Iblnxl">战斗按键</a></p>
+<h2 id="Addons-插件列表"><a href="#Addons-插件列表" class="headerlink" title="Addons | 插件列表"></a>Addons | 插件列表</h2><h3 id="Addons-for-Classic"><a href="#Addons-for-Classic" class="headerlink" title="Addons for Classic"></a>Addons for Classic</h3><ul>
+<li>AtlasLoot:<a target="_blank" rel="noopener" href="https://www.curseforge.com/wow/addons/atlaslootclassic">https://www.curseforge.com/wow/addons/atlaslootclassic</a></li>
+<li>Auctionator: <a target="_blank" rel="noopener" href="https://www.curseforge.com/wow/addons/auctionator">https://www.curseforge.com/wow/addons/auctionator</a></li>
+<li>Attune:<a target="_blank" rel="noopener" href="https://www.curseforge.com/wow/addons/attune">https://www.curseforge.com/wow/addons/attune</a></li>
+<li>Bagnon:<a target="_blank" rel="noopener" href="https://www.curseforge.com/wow/addons/bagnon">https://www.curseforge.com/wow/addons/bagnon</a></li>
+<li>BlizzMove:<a target="_blank" rel="noopener" href="https://www.curseforge.com/wow/addons/blizzmove">https://www.curseforge.com/wow/addons/blizzmove</a></li>
+<li>BigDebuffs:<a target="_blank" rel="noopener" href="https://www.curseforge.com/wow/addons/bigdebuffs">https://www.curseforge.com/wow/addons/bigdebuffs</a></li>
+<li>CharacterStatsClassic:<a target="_blank" rel="noopener" href="https://www.curseforge.com/wow/addons/characterstatsclassic">https://www.curseforge.com/wow/addons/characterstatsclassic</a></li>
+<li>Classic Aura Durations:<a target="_blank" rel="noopener" href="https://www.curseforge.com/wow/addons/classicauradurations">https://www.curseforge.com/wow/addons/classicauradurations</a></li>
+<li>Classic Castbars:<a target="_blank" rel="noopener" href="https://www.curseforge.com/wow/addons/classiccastbars">https://www.curseforge.com/wow/addons/classiccastbars</a></li>
+<li>Details:<a target="_blank" rel="noopener" href="https://www.curseforge.com/wow/addons/details">https://www.curseforge.com/wow/addons/details</a></li>
+<li>HealBarClassic:<a target="_blank" rel="noopener" href="https://www.curseforge.com/wow/addons/healbarsclassic">https://www.curseforge.com/wow/addons/healbarsclassic</a></li>
+<li>ItemRack:<a target="_blank" rel="noopener" href="https://www.curseforge.com/wow/addons/itemrack-classic">https://www.curseforge.com/wow/addons/itemrack-classic</a></li>
+<li>Leatrix Plus:<a target="_blank" rel="noopener" href="https://www.curseforge.com/wow/addons/leatrix-plus-classic">https://www.curseforge.com/wow/addons/leatrix-plus-classic</a></li>
+<li>Leatrix Maps:<a target="_blank" rel="noopener" href="https://www.curseforge.com/wow/addons/leatrix-maps-classic">https://www.curseforge.com/wow/addons/leatrix-maps-classic</a></li>
+<li>LoseControl:<a target="_blank" rel="noopener" href="https://www.curseforge.com/wow/addons/losecontrol">https://www.curseforge.com/wow/addons/losecontrol</a></li>
+<li>MerInspect:<a target="_blank" rel="noopener" href="https://www.curseforge.com/wow/addons/merinspect-classic-era">https://www.curseforge.com/wow/addons/merinspect-classic-era</a></li>
+<li>Nova World Buffs:<a target="_blank" rel="noopener" href="https://www.curseforge.com/wow/addons/nova-world-buffs">https://www.curseforge.com/wow/addons/nova-world-buffs</a></li>
+<li>OmniBar:<a target="_blank" rel="noopener" href="https://www.curseforge.com/wow/addons/omnibar">https://www.curseforge.com/wow/addons/omnibar</a></li>
+<li>OmniCC:<a target="_blank" rel="noopener" href="https://www.curseforge.com/wow/addons/omni-cc">https://www.curseforge.com/wow/addons/omni-cc</a></li>
+<li>Questie:<a target="_blank" rel="noopener" href="https://www.curseforge.com/wow/addons/questie">https://www.curseforge.com/wow/addons/questie</a></li>
+<li>Stat Weights Classic:<a target="_blank" rel="noopener" href="https://www.curseforge.com/wow/addons/stat-weights-classic">https://www.curseforge.com/wow/addons/stat-weights-classic</a></li>
+<li>Target Health:<a target="_blank" rel="noopener" href="https://www.curseforge.com/wow/addons/target-health">https://www.curseforge.com/wow/addons/target-health</a></li>
+<li>Trinket Menu:<a target="_blank" rel="noopener" href="https://www.curseforge.com/wow/addons/trinket-menu">https://www.curseforge.com/wow/addons/trinket-menu</a></li>
+<li>WeakAuras:<a target="_blank" rel="noopener" href="https://www.curseforge.com/wow/addons/weakauras-2">https://www.curseforge.com/wow/addons/weakauras-2</a></li>
+</ul>
+<h3 id="Addons-for-Classic-sod"><a href="#Addons-for-Classic-sod" class="headerlink" title="Addons for Classic_sod"></a>Addons for Classic_sod</h3><ul>
+<li>AtlasLoot_sod:<a target="_blank" rel="noopener" href="https://www.curseforge.com/wow/addons/atlaslootclassic_sod">https://www.curseforge.com/wow/addons/atlaslootclassic_sod</a></li>
+<li>Rune Reminder:<a target="_blank" rel="noopener" href="https://www.curseforge.com/wow/addons/runereminder-season-of-discover">https://www.curseforge.com/wow/addons/runereminder-season-of-discover</a></li>
+</ul>
+<h3 id="Addons-for-WotLK"><a href="#Addons-for-WotLK" class="headerlink" title="Addons for WotLK"></a>Addons for WotLK</h3><ul>
+<li>AtlasLootClassic:<a target="_blank" rel="noopener" href="https://www.curseforge.com/wow/addons/atlaslootclassic">https://www.curseforge.com/wow/addons/atlaslootclassic</a></li>
+<li>Auctionator: <a target="_blank" rel="noopener" href="https://www.curseforge.com/wow/addons/auctionator">https://www.curseforge.com/wow/addons/auctionator</a></li>
+<li>BattleGroundEnemies:<a target="_blank" rel="noopener" href="https://www.curseforge.com/wow/addons/battlegroundenemies">https://www.curseforge.com/wow/addons/battlegroundenemies</a></li>
+<li>Bagnon:<a target="_blank" rel="noopener" href="https://www.curseforge.com/wow/addons/bagnon">https://www.curseforge.com/wow/addons/bagnon</a></li>
+<li>BiaoGe:<a target="_blank" rel="noopener" href="https://www.curseforge.com/wow/addons/biaoge">https://www.curseforge.com/wow/addons/biaoge</a></li>
+<li>BigDebuffs:<a target="_blank" rel="noopener" href="https://www.curseforge.com/wow/addons/bigdebuffs">https://www.curseforge.com/wow/addons/bigdebuffs</a></li>
+<li>Bis-Tooltip:<a target="_blank" rel="noopener" href="https://www.curseforge.com/wow/addons/bis-tooltip">https://www.curseforge.com/wow/addons/bis-tooltip</a></li>
+<li>BlizzMove:<a target="_blank" rel="noopener" href="https://www.curseforge.com/wow/addons/blizzmove">https://www.curseforge.com/wow/addons/blizzmove</a></li>
+<li>BugGrabber:<a target="_blank" rel="noopener" href="https://www.curseforge.com/wow/addons/bug-grabber">https://www.curseforge.com/wow/addons/bug-grabber</a></li>
+<li>BugSack:<a target="_blank" rel="noopener" href="https://www.curseforge.com/wow/addons/bugsack">https://www.curseforge.com/wow/addons/bugsack</a></li>
+<li>Details:<a target="_blank" rel="noopener" href="https://www.curseforge.com/wow/addons/details">https://www.curseforge.com/wow/addons/details</a></li>
+<li>Leatrix Maps:<a target="_blank" rel="noopener" href="https://www.curseforge.com/wow/addons/leatrix-maps-classic">https://www.curseforge.com/wow/addons/leatrix-maps-classic</a></li>
+<li>Leatrix Plus:<a target="_blank" rel="noopener" href="https://www.curseforge.com/wow/addons/leatrix-plus-classic">https://www.curseforge.com/wow/addons/leatrix-plus-classic</a></li>
+<li>LoseControl:<a target="_blank" rel="noopener" href="https://www.curseforge.com/wow/addons/losecontrol">https://www.curseforge.com/wow/addons/losecontrol</a></li>
+<li>Merinspect:<a target="_blank" rel="noopener" href="https://www.curseforge.com/wow/addons/merinspect-classic-era">https://www.curseforge.com/wow/addons/merinspect-classic-era</a></li>
+<li>Myslot:<a target="_blank" rel="noopener" href="https://www.curseforge.com/wow/addons/myslot">https://www.curseforge.com/wow/addons/myslot</a></li>
+<li>OmniCC:<a target="_blank" rel="noopener" href="https://www.curseforge.com/wow/addons/omni-cc">https://www.curseforge.com/wow/addons/omni-cc</a></li>
+<li>Simple Item Levels:<a target="_blank" rel="noopener" href="https://www.curseforge.com/wow/addons/simple-item-level">https://www.curseforge.com/wow/addons/simple-item-level</a></li>
+<li>SUI:<a target="_blank" rel="noopener" href="https://www.curseforge.com/wow/addons/sui">https://www.curseforge.com/wow/addons/sui</a></li>
+<li>TacoTip:<a target="_blank" rel="noopener" href="https://www.curseforge.com/wow/addons/tacotip-gearscore-talents">https://www.curseforge.com/wow/addons/tacotip-gearscore-talents</a></li>
+<li>WeakAuras:<a target="_blank" rel="noopener" href="https://www.curseforge.com/wow/addons/weakauras-2">https://www.curseforge.com/wow/addons/weakauras-2</a><ul>
+<li>PvP Nameplate Auras:<a target="_blank" rel="noopener" href="https://wago.io/Ks2t7qU7a">https://wago.io/Ks2t7qU7a</a></li>
+<li>In-Nameplate Combo Points:<a target="_blank" rel="noopener" href="https://wago.io/ysj6zo6ox">https://wago.io/ysj6zo6ox</a></li>
+<li>Ulduar:<a target="_blank" rel="noopener" href="https://wago.io/uKMqfYh2d">https://wago.io/uKMqfYh2d</a></li>
+<li>TOC:<a target="_blank" rel="noopener" href="https://wago.io/DSRM0qD0Q">https://wago.io/DSRM0qD0Q</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="Macro-宏命令"><a href="#Macro-宏命令" class="headerlink" title="Macro | 宏命令"></a>Macro | 宏命令</h2><h3 id="Macro-for-通用"><a href="#Macro-for-通用" class="headerlink" title="Macro for 通用"></a>Macro for 通用</h3><p><a target="_blank" rel="noopener" href="https://www.wowhead.com/wotlk/cn/database">WLK 数据库</a></p>
+<p><a target="_blank" rel="noopener" href="https://bbs.nga.cn/read.php?pid=464763295&opt=128">附魔外观</a></p>
+<p><a target="_blank" rel="noopener" href="https://bbs.nga.cn/read.php?tid=15414317">坐骑代码</a></p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">--UI设置</span></span><br><span class="line">/fstack <span class="comment">--命令 /fstack 鼠标移动到想要隐藏的元素上 CTRL 然后加上Hide()</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 坐骑</span></span><br><span class="line">#showtooltip</span><br><span class="line">/cast [<span class="built_in">mod</span>:shift]梦魇翡翠幼龙;迅捷幽灵虎</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 装备部位</span></span><br><span class="line">#showtooltip</span><br><span class="line">/use <span class="number">8</span> <span class="comment">--鞋子</span></span><br><span class="line">/use <span class="number">10</span> <span class="comment">--手套</span></span><br><span class="line">/use <span class="number">13</span> <span class="comment">--饰品1</span></span><br><span class="line">/use <span class="number">14</span> <span class="comment">--饰品2</span></span><br><span class="line">/use <span class="number">16</span> <span class="comment">--主手</span></span><br><span class="line">/use <span class="number">17</span> <span class="comment">--副手</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="Macro-for-牧师"><a href="#Macro-for-牧师" class="headerlink" title="Macro for 牧师"></a>Macro for 牧师</h3><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line">#showtooltip</span><br><span class="line">/cast [@mouseover,help]强效治疗术</span><br><span class="line">/cast [@mouseover,harm]心灵震爆</span><br><span class="line">/cast [@target,help]强效治疗术</span><br><span class="line">/cast [@target,harm]心灵震爆</span><br><span class="line"></span><br><span class="line">#showtooltip</span><br><span class="line">/cast [@mouseover,help]愈合祷言</span><br><span class="line">/cast [@mouseover,harm]神圣之火</span><br><span class="line">/cast [@target,help]愈合祷言</span><br><span class="line">/cast [@target,harm]神圣之火</span><br><span class="line"></span><br><span class="line">#showtooltip</span><br><span class="line">/cast [@mouseover,help]苦修</span><br><span class="line">/cast [@mouseover,harm]苦修</span><br><span class="line">/cast [@target,help]苦修</span><br><span class="line">/cast [@target,harm]苦修</span><br><span class="line"></span><br><span class="line">#showtooltip</span><br><span class="line">/cast [@mouseover,help]快速治疗</span><br><span class="line">/cast [@mouseover,harm]暗言术：痛</span><br><span class="line">/cast [@target,help]快速治疗</span><br><span class="line">/cast [@target,harm]暗言术：痛</span><br><span class="line"></span><br><span class="line">#showtooltip</span><br><span class="line">/cast [@mouseover,help]联结治疗</span><br><span class="line">/cast [@mouseover,harm]惩击</span><br><span class="line">/cast [@target,help]联结治疗</span><br><span class="line">/cast [@target,harm]惩击</span><br><span class="line"></span><br><span class="line">#showtooltip</span><br><span class="line">/cast [@mouseover,help]治疗祷言</span><br><span class="line">/cast [@mouseover,harm]噬灵疫病</span><br><span class="line">/cast [@target,help]治疗祷言</span><br><span class="line">/cast [@target,harm]噬灵疫病</span><br><span class="line"></span><br><span class="line">#showtooltip</span><br><span class="line">/cast [@mouseover,help]真言术：盾</span><br><span class="line">/cast [@target,help]真言术：盾</span><br><span class="line">/cast 真言术：盾</span><br><span class="line"></span><br><span class="line">#showtooltip</span><br><span class="line">/cast [@mouseover,help]恢复</span><br><span class="line">/cast [@mouseover,harm]暗言术：灭</span><br><span class="line">/cast [@target,help]恢复</span><br><span class="line">/cast [@target,harm]暗言术：灭</span><br><span class="line"></span><br><span class="line">#showtooltip</span><br><span class="line">/stopcasting</span><br><span class="line">/cast 绝望祷言</span><br><span class="line">/use 邪能治疗石</span><br><span class="line">/use 符文治疗注射器</span><br><span class="line">/use 符文治疗药水</span><br><span class="line">/use 战斗大师的勇敢</span><br><span class="line">/use 联盟军旗</span><br><span class="line"></span><br><span class="line">#showtooltip</span><br><span class="line">/stopcasting</span><br><span class="line">/cast [@cursor] 群体驱散</span><br><span class="line"></span><br><span class="line">#showtooltip</span><br><span class="line">/cast [<span class="built_in">mod</span>:shift]驱除疾病;驱散魔法</span><br><span class="line"></span><br><span class="line">#showtooltip 精神灼烧</span><br><span class="line">/cast [@targettarget,harm,nodead][] 精神灼烧</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="Macro-for-盗贼"><a href="#Macro-for-盗贼" class="headerlink" title="Macro for 盗贼"></a>Macro for 盗贼</h3><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">#showtooltip</span><br><span class="line">/cleartarget</span><br><span class="line">/targetenemy</span><br><span class="line">/cancelaura [nocombat]暗影之舞</span><br><span class="line">/cast [<span class="built_in">mod</span>:shift]侦测;[nostance,nocombat]!潜行;闷棍</span><br><span class="line">/cast [nomod,stealth,@target,exists]搜索</span><br><span class="line"></span><br><span class="line">#showtooltip 偷袭</span><br><span class="line">/use <span class="number">10</span></span><br><span class="line">/cast 预谋</span><br><span class="line">/cast 偷袭</span><br><span class="line"></span><br><span class="line">#showtooltip 锁喉</span><br><span class="line">/cast 预谋</span><br><span class="line">/cast 锁喉</span><br><span class="line"></span><br><span class="line">#showtooltip 伏击</span><br><span class="line">/cast 预谋</span><br><span class="line">/cast 暗影之舞</span><br><span class="line">/use <span class="number">10</span></span><br><span class="line">/cast 伏击</span><br><span class="line"></span><br><span class="line">#showtooltip 脚踢</span><br><span class="line">/stopcasting</span><br><span class="line">/cast [target=focus,harm,exists][harm] [target=targettarget, harm] 脚踢</span><br><span class="line"></span><br><span class="line">#showtooltip 致盲</span><br><span class="line">/stopcasting</span><br><span class="line">/cast [target=focus,harm,exists][harm] [target=targettarget, harm] 致盲</span><br><span class="line"></span><br><span class="line">#showtooltips 嫁祸诀窍</span><br><span class="line">/cast [target=mouseover,help,nodead,exists]嫁祸诀窍</span><br><span class="line">/cast [target=focus,help][target=targettarget,help,nodead]嫁祸诀窍</span><br><span class="line"></span><br><span class="line">#showtooltip</span><br><span class="line">/stopcasting</span><br><span class="line">/cast [@cursor] 扰乱</span><br><span class="line"></span><br><span class="line">#showtooltip</span><br><span class="line">/stopcasting</span><br><span class="line">/use 邪能治疗石</span><br><span class="line">/use 符文治疗注射器</span><br><span class="line">/use 符文治疗药水</span><br><span class="line">/use 战斗大师的勇敢</span><br><span class="line">/use 联盟军旗</span><br><span class="line"></span><br><span class="line">#showtooltip</span><br><span class="line">/use [button:<span class="number">1</span>]致命药膏 IX</span><br><span class="line">/use [button:<span class="number">1</span>]<span class="number">16</span></span><br><span class="line">/use [button:<span class="number">2</span>]速效药膏 IX</span><br><span class="line">/use [button:<span class="number">2</span>]<span class="number">17</span></span><br><span class="line">/click StaticPopup1Button1</span><br><span class="line"></span><br><span class="line">#showtooltip</span><br><span class="line">/use [button:<span class="number">1</span>]致命药膏 IX</span><br><span class="line">/use [button:<span class="number">1</span>]<span class="number">16</span></span><br><span class="line">/use [button:<span class="number">2</span>]减速药膏</span><br><span class="line">/use [button:<span class="number">2</span>]<span class="number">17</span></span><br><span class="line">/click StaticPopup1Button1</span><br></pre></td></tr></table></figure>
+
+        </div>
+
+        
+        <section class="post-tags">
+            <div>
+                <span>标签:</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E7%BD%91%E7%BB%9C%E6%B8%B8%E6%88%8F/"># 网络游戏</a>
+                    
+                        <a href="/tags/%E9%AD%94%E5%85%BD%E4%B8%96%E7%95%8C/"># 魔兽世界</a>
+                    
+                        
+                </span>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/posts/7c89e4ff/">魔兽世界插件-KUI</a>
+            
+            
+            <a class="next" rel="next" href="/posts/a8db8342/">MacOS系统配置+软件</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© KAKARROT | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>

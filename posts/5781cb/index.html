@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="KAKARROT">
+
+
+    <meta name="subtitle" content="Heaven helps those who help themselves.">
+
+
+    <meta name="description" content="I just want things to be what they are supposed to be.">
+
+
+    <meta name="keywords" content="产品,哲学,历史,魔兽,音乐">
+
+
+<title>GitHub Pages 自定义域名被劫持与恢复记录 | KAKARROT&#39;S BLOG</title>
+
+
+
+    <link rel="icon" href="/image/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+<body>
+    <!-- 阅读进度条 -->
+    <div class="reading-progress" id="reading-progress"></div>
+
+    <script>
+        // 主题检测：优先用户设置，其次系统偏好
+        (() => {
+            const stored = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const isDark = stored ? stored === 'dark' : prefersDark;
+            const pagebody = document.body;
+
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Kakarrot&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">归档</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Kakarrot&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">归档</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">展开目录</a>
+        <a onclick="go_top()">回到顶部</a>
+        <a onclick="go_bottom()">跳到底部</a>
+    </div>
+</div>
+
+<!-- 移动端TOC悬浮按钮 -->
+<div class="mobile-toc-btn" id="mobile-toc-btn">
+    <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2" fill="none">
+        <line x1="4" y1="6" x2="20" y2="6"></line>
+        <line x1="4" y1="12" x2="20" y2="12"></line>
+        <line x1="4" y1="18" x2="14" y2="18"></line>
+    </svg>
+</div>
+
+<!-- 移动端TOC抽屉 -->
+<div class="mobile-toc-drawer" id="mobile-toc-drawer">
+    <div class="drawer-header">
+        <span class="drawer-title">目录</span>
+        <span class="drawer-close" id="drawer-close">&times;</span>
+    </div>
+    <div class="drawer-content js-toc-mobile"></div>
+</div>
+
+<!-- 遮罩层 -->
+<div class="drawer-overlay" id="drawer-overlay"></div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    // 移动端TOC配置
+    var tocbot_mobile_config = {
+        tocSelector: '.js-toc-mobile',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        collapseDepth: 6,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+
+        // 初始化移动端TOC
+        if (window.innerWidth < 1280) {
+            tocbot.init(tocbot_mobile_config);
+        }
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? '展开目录' : '收起目录';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">GitHub Pages 自定义域名被劫持与恢复记录</h1>
+            
+                <div class="post-meta">
+                    
+                        作者: <a itemprop="author" rel="author" href="/">KAKARROT</a>
+                    
+
+                    
+                        <span class="post-time">
+                        日期: <a href="#">2025年12月29日</a>
+                        </span>
+                    
+                    
+                    <span class="reading-time">
+                        阅读时间: 约 8 分钟
+                    </span>
+                    
+                        <span class="post-category">
+                    分类:
+                            
+                                <a href="/categories/Hexo/">Hexo</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="问题背景"><a href="#问题背景" class="headerlink" title="问题背景"></a>问题背景</h2><p>今天发现我的博客 <code>kakarrot.com</code> 无法正常访问，出现了两个诡异的现象：</p>
+<ol>
+<li>访问 <code>kakarrot.com</code> 显示的是一个<strong>赌博网站</strong>（DADU128 Slot）</li>
+<li>访问 <code>kakarrot0109.github.io</code> 显示 <strong>404 - Site not found</strong></li>
+</ol>
+<p>第一反应是域名被劫持了，但经过排查发现问题比想象的更复杂。</p>
+<span id="more"></span>
+
+<h2 id="问题排查"><a href="#问题排查" class="headerlink" title="问题排查"></a>问题排查</h2><h3 id="1-DNS-解析检查"><a href="#1-DNS-解析检查" class="headerlink" title="1. DNS 解析检查"></a>1. DNS 解析检查</h3><p>首先检查 DNS 解析是否正常：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">dig kakarrot.com +short</span><br><span class="line"><span class="comment"># 返回: 198.18.0.73 (错误的IP)</span></span><br><span class="line"></span><br><span class="line">dig @8.8.8.8 kakarrot.com +short</span><br><span class="line"><span class="comment"># 返回: kakarrot0109.github.io -&gt; 185.199.xxx.xxx (GitHub Pages IP)</span></span><br></pre></td></tr></table></figure>
+
+<p>通过 Google DNS 查询显示 CNAME 记录是正确的，但本地解析到了错误的 IP。</p>
+<h3 id="2-GitHub-Pages-状态检查"><a href="#2-GitHub-Pages-状态检查" class="headerlink" title="2. GitHub Pages 状态检查"></a>2. GitHub Pages 状态检查</h3><p>访问 GitHub 仓库的 Settings → Pages，发现两个问题：</p>
+<p><strong>问题一：仓库是私有的</strong></p>
+<p>页面显示：”Upgrade or make this repository public to enable Pages”</p>
+<p>GitHub Pages 免费版只支持公开仓库，私有仓库需要升级到 GitHub Pro。</p>
+<p><strong>问题二：自定义域名被占用</strong></p>
+<p>将仓库改为公开后，配置自定义域名时出现警告：</p>
+<blockquote>
+<p>“The custom domain <code>kakarrot.com</code> is already taken. If you are the owner of this domain, check out [GitHub Docs] for information about how to verify and release this domain.”</p>
+</blockquote>
+<p>这就是问题的根源——我的域名被<strong>其他 GitHub 账户绑定</strong>了！</p>
+<h2 id="问题原因分析"><a href="#问题原因分析" class="headerlink" title="问题原因分析"></a>问题原因分析</h2><p>这是一种 GitHub Pages 的域名劫持攻击：</p>
+<ol>
+<li>攻击者发现某个域名的 DNS 指向 GitHub Pages（CNAME 到 <code>*.github.io</code>）</li>
+<li>但该域名在 GitHub 上没有被验证所有权</li>
+<li>攻击者在自己的 GitHub 仓库中配置该域名作为自定义域名</li>
+<li>GitHub Pages 就会将该域名的流量导向攻击者的网站</li>
+</ol>
+<p>这种攻击利用的是 GitHub Pages 的工作机制：GitHub 根据请求的 Host 头来决定返回哪个仓库的内容。如果域名没有被验证，任何人都可以”声明”使用它。</p>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><h3 id="步骤一：将仓库改为公开"><a href="#步骤一：将仓库改为公开" class="headerlink" title="步骤一：将仓库改为公开"></a>步骤一：将仓库改为公开</h3><ol>
+<li>进入仓库 Settings → General</li>
+<li>滚动到底部 “Danger Zone”</li>
+<li>点击 “Change repository visibility”</li>
+<li>选择 “Make public”</li>
+</ol>
+<h3 id="步骤二：验证域名所有权"><a href="#步骤二：验证域名所有权" class="headerlink" title="步骤二：验证域名所有权"></a>步骤二：验证域名所有权</h3><p>这是最关键的一步，用于从攻击者手中”夺回”域名控制权。</p>
+<ol>
+<li>进入 GitHub 账户设置：<a target="_blank" rel="noopener" href="https://github.com/settings/pages">https://github.com/settings/pages</a></li>
+<li>点击 “Add a domain”</li>
+<li>输入域名 <code>kakarrot.com</code></li>
+<li>GitHub 会生成一个 TXT 记录验证要求，类似：<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">主机记录: _github-pages-challenge-kakarrot0109</span><br><span class="line">记录值: a034b75ef658207bb454fc2edb01ff</span><br></pre></td></tr></table></figure></li>
+<li>在域名 DNS 管理后台（我用的是阿里云）添加这条 TXT 记录</li>
+<li>等待 DNS 生效后，回到 GitHub 点击 “Verify”</li>
+<li>验证成功后，域名会从攻击者的账户中释放</li>
+</ol>
+<h3 id="步骤三：配置-DNS-记录"><a href="#步骤三：配置-DNS-记录" class="headerlink" title="步骤三：配置 DNS 记录"></a>步骤三：配置 DNS 记录</h3><p>在阿里云 DNS 中配置以下记录：</p>
+<table>
+<thead>
+<tr>
+<th>主机记录</th>
+<th>记录类型</th>
+<th>记录值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>@</td>
+<td>A</td>
+<td>185.199.108.153</td>
+</tr>
+<tr>
+<td>@</td>
+<td>A</td>
+<td>185.199.109.153</td>
+</tr>
+<tr>
+<td>@</td>
+<td>A</td>
+<td>185.199.110.153</td>
+</tr>
+<tr>
+<td>@</td>
+<td>A</td>
+<td>185.199.111.153</td>
+</tr>
+<tr>
+<td>www</td>
+<td>CNAME</td>
+<td>kakarrot0109.github.io</td>
+</tr>
+<tr>
+<td>_github-pages-challenge-xxx</td>
+<td>TXT</td>
+<td>(验证码)</td>
+</tr>
+</tbody></table>
+<p>使用 4 个 A 记录而不是 CNAME 是因为根域名（@）不能设置 CNAME。</p>
+<h3 id="步骤四：配置-GitHub-Pages"><a href="#步骤四：配置-GitHub-Pages" class="headerlink" title="步骤四：配置 GitHub Pages"></a>步骤四：配置 GitHub Pages</h3><ol>
+<li>进入仓库 Settings → Pages</li>
+<li>Source 选择 “Deploy from a branch”</li>
+<li>Branch 选择 <code>master</code>，目录选择 <code>/ (root)</code></li>
+<li>Custom domain 输入 <code>kakarrot.com</code>，点击 Save</li>
+<li>等待 DNS check successful</li>
+<li>勾选 “Enforce HTTPS”</li>
+</ol>
+<h3 id="步骤五：重新部署博客"><a href="#步骤五：重新部署博客" class="headerlink" title="步骤五：重新部署博客"></a>步骤五：重新部署博客</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo clean &amp;&amp; hexo generate &amp;&amp; hexo deploy</span><br></pre></td></tr></table></figure>
+
+<h2 id="预防措施"><a href="#预防措施" class="headerlink" title="预防措施"></a>预防措施</h2><p>为了防止这种攻击再次发生，建议：</p>
+<ol>
+<li><strong>始终验证域名所有权</strong>：在 GitHub 账户设置中添加并验证你的所有自定义域名</li>
+<li><strong>保持仓库公开</strong>：如果使用免费版 GitHub Pages</li>
+<li><strong>定期检查</strong>：偶尔访问自己的网站确认正常</li>
+<li><strong>配置 HTTPS</strong>：启用 Enforce HTTPS 增加安全性</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这次经历让我了解到 GitHub Pages 自定义域名的安全机制。域名验证功能就是为了防止这种劫持攻击，但很多人（包括我）在初次配置时可能忽略了这一步。</p>
+<p>如果你也在使用 GitHub Pages + 自定义域名，强烈建议立即去 <a target="_blank" rel="noopener" href="https://github.com/settings/pages">https://github.com/settings/pages</a> 验证你的域名所有权，避免遭遇同样的问题。</p>
+<hr>
+<p><em>参考文档：<a target="_blank" rel="noopener" href="https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/verifying-your-custom-domain-for-github-pages">Verifying your custom domain for GitHub Pages</a></em></p>
+
+        </div>
+
+        
+        <section class="post-tags">
+            <div>
+                <span>标签:</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/Blog/"># Blog</a>
+                    
+                        <a href="/tags/Github/"># Github</a>
+                    
+                        <a href="/tags/%E9%85%8D%E7%BD%AE/"># 配置</a>
+                    
+                        
+                </span>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/posts/f0c4a247/">从Prompt到Skill工程化实践</a>
+            
+            
+            <a class="next" rel="next" href="/posts/7c89e4ff/">魔兽世界插件-KUI</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© KAKARROT | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>

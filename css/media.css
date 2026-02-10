@@ -1,0 +1,306 @@
+/* mobile phone and smart portable devices */
+@media screen and (max-width: 479px) {
+  .main {
+    padding-top: 40pt;
+  }
+  .navbar {
+    display: none;
+  }
+  .navbar-mobile {
+    display: block !important;
+    position: fixed;
+    width: 100%;
+    z-index: 100;
+    transition: all 0.15s ease-out;
+  }
+  .navbar-mobile .container {
+    padding: 0;
+    margin: 0;
+    line-height: 5.5em;
+    background: $light-background-color;
+  }
+  .navbar-mobile .container .navbar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding-right: 1em;
+    padding-left: 1em;
+    box-sizing: border-box;
+    position: relative;
+  }
+  .navbar-mobile .container .navbar-header .menu-toggle {
+    cursor: pointer;
+    line-height: 5.5em;
+    padding: auto 2em;
+  }
+  .navbar-mobile .container .navbar-header .menu-toggle span {
+    display: block;
+    background: #000;
+    width: 36px;
+    height: 2px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    -webkit-transition: 0.25s margin 0.25s, 0.25s transform;
+    -moz-transition: 0.25s margin 0.25s, 0.25s transform;
+    transition: 0.25s margin 0.25s, 0.25s transform;
+  }
+  .dark-theme .navbar-mobile .container .navbar-header .menu-toggle span {
+    background: $dark-font-color;
+  }
+  .navbar-mobile .container .navbar-header .menu-toggle span:nth-child(1) {
+    margin-bottom: 8px;
+  }
+  .navbar-mobile .container .navbar-header .menu-toggle span:nth-child(3) {
+    margin-top: 8px;
+  }
+  .navbar-mobile .container .navbar-header .menu-toggle.active span {
+    -webkit-transition: 0.25s margin, 0.25s transform 0.25s;
+    -moz-transition: 0.25s margin, 0.25s transform 0.25s;
+    transition: 0.25s margin, 0.25s transform 0.25s;
+  }
+  .navbar-mobile .container .navbar-header .menu-toggle.active span:nth-child(1) {
+    -moz-transform: rotate(45deg) translate(4px, 6px);
+    -ms-transform: rotate(45deg) translate(4px, 6px);
+    -webkit-transform: rotate(45deg) translate(4px, 6px);
+    transform: rotate(45deg) translate(4px, 6px);
+  }
+  .navbar-mobile .container .navbar-header .menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+  }
+  .navbar-mobile .container .navbar-header .menu-toggle.active span:nth-child(3) {
+    -moz-transform: rotate(-45deg) translate(8px, -10px);
+    -ms-transform: rotate(-45deg) translate(8px, -10px);
+    -webkit-transform: rotate(-45deg) translate(8px, -10px);
+    transform: rotate(-45deg) translate(8px, -10px);
+  }
+  .navbar-mobile .container .menu {
+    text-align: center;
+    background: #fff;
+    border-top: 1px solid #000;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    display: none;
+    box-shadow: 0px 2px 4px rgba(0,0,0,0.1), 0px 4px 8px rgba(0,0,0,0.1);
+  }
+  .navbar-mobile .container .menu a {
+    display: inline-block;
+    margin: 0 1em;
+    line-height: 2.5em;
+  }
+  .navbar-mobile .container .menu.active {
+    display: block;
+    white-space: nowrap;
+    box-sizing: border-box;
+    overflow-x: auto;
+  }
+  .dark-theme .navbar-mobile .container .menu {
+    background: $dark-background-color;
+    border-top: 2px solid $dark-font-secondary-color;
+  }
+  .dark-theme .navbar-mobile .container {
+    background: $dark-background-color !important;
+  }
+  .archive {
+    width: 90%;
+  }
+  .archive .archive-item .archive-item-date {
+    display: none;
+  }
+  #dynamic-to-top {
+    display: none !important;
+  }
+  .footer {
+    height: 3rem;
+    width: 100%;
+    text-align: center;
+    line-height: 1.5rem;
+    padding-top: 2em;
+  }
+  .post-warp {
+    padding-top: 6em;
+  }
+  .post-warp .archive-item-date {
+    display: none;
+  }
+  .categories .categories-card .card-item {
+    width: 100%;
+    display: flex;
+    min-height: 0;
+  }
+  .categories .categories-card .card-item .categories {
+    overflow: hidden;
+  }
+}
+/* iPads (portrait and landscape) ----------- */
+@media screen and (max-width: 1023px) {
+  .navbar-mobile {
+    display: none;
+  }
+}
+/* Desktops and laptops ----------- */
+@media screen and (min-width: 1024px) {
+  .navbar-mobile {
+    display: none;
+  }
+}
+/* post toc Style */
+@media screen and (max-width: 1279px) {
+  .post-toc {
+    display: none;
+  }
+  .mobile-toc-btn {
+    display: flex;
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 52px;
+    height: 52px;
+    background: #0071e3;
+    color: #fff;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(0,113,227,0.4);
+    z-index: 1000;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .mobile-toc-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(0,113,227,0.5);
+  }
+  .mobile-toc-btn:active {
+    transform: scale(0.95);
+  }
+  .dark-theme .mobile-toc-btn {
+    background: #2997ff;
+    box-shadow: 0 4px 16px rgba(41,151,255,0.4);
+  }
+  .mobile-toc-drawer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: $light-background-color;
+    border-radius: 20px 20px 0 0;
+    max-height: 70vh;
+    transform: translateY(100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1001;
+    box-shadow: 0 -4px 24px rgba(0,0,0,0.15);
+    overflow: hidden;
+  }
+  .mobile-toc-drawer.active {
+    transform: translateY(0);
+  }
+  .mobile-toc-drawer .drawer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    border-bottom: 1px solid $light-border-color;
+  }
+  .mobile-toc-drawer .drawer-header .drawer-title {
+    font-weight: 600;
+    font-size: 16px;
+    color: $light-font-color;
+  }
+  .mobile-toc-drawer .drawer-header .drawer-close {
+    font-size: 28px;
+    color: $light-font-secondary-color;
+    cursor: pointer;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background 0.15s ease;
+  }
+  .mobile-toc-drawer .drawer-header .drawer-close:hover {
+    background: rgba(0,0,0,0.05);
+  }
+  .mobile-toc-drawer .drawer-content {
+    padding: 12px 20px 32px;
+    max-height: calc(70vh - 60px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .mobile-toc-drawer .drawer-content .toc-list {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+  }
+  .mobile-toc-drawer .drawer-content .toc-list .toc-list {
+    padding-left: 16px;
+  }
+  .mobile-toc-drawer .drawer-content .toc-list .toc-list-item {
+    margin: 8px 0;
+  }
+  .mobile-toc-drawer .drawer-content .toc-list .toc-list-item a {
+    color: $light-font-secondary-color;
+    text-decoration: none;
+    font-size: 14px;
+    line-height: 1.6;
+    display: block;
+    padding: 6px 0;
+    transition: color 0.15s ease;
+  }
+  .mobile-toc-drawer .drawer-content .toc-list .toc-list-item a:hover {
+    color: $light-navbar-active-color;
+  }
+  .mobile-toc-drawer .drawer-content .toc-list .toc-list-item.is-active-li > a {
+    color: $light-navbar-active-color;
+    font-weight: 500;
+  }
+  .dark-theme .mobile-toc-drawer {
+    background: $dark-background-color;
+    box-shadow: 0 -4px 24px rgba(0,0,0,0.4);
+  }
+  .dark-theme .mobile-toc-drawer .drawer-header {
+    border-bottom-color: $dark-border-color;
+  }
+  .dark-theme .mobile-toc-drawer .drawer-header .drawer-title {
+    color: $dark-font-color;
+  }
+  .dark-theme .mobile-toc-drawer .drawer-header .drawer-close {
+    color: $dark-font-secondary-color;
+  }
+  .dark-theme .mobile-toc-drawer .drawer-header .drawer-close:hover {
+    background: rgba(255,255,255,0.1);
+  }
+  .dark-theme .mobile-toc-drawer .drawer-content .toc-list-item a {
+    color: $dark-font-secondary-color;
+  }
+  .dark-theme .mobile-toc-drawer .drawer-content .toc-list-item a:hover {
+    color: $dark-navbar-active-color;
+  }
+  .dark-theme .mobile-toc-drawer .drawer-content .toc-list-item.is-active-li > a {
+    color: $dark-navbar-active-color;
+  }
+  .drawer-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
+    z-index: 1000;
+  }
+  .drawer-overlay.active {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+@media screen and (min-width: 1280px) {
+  .mobile-toc-btn,
+  .mobile-toc-drawer,
+  .drawer-overlay {
+    display: none !important;
+  }
+}

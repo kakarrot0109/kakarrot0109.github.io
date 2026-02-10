@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="KAKARROT">
+
+
+    <meta name="subtitle" content="Heaven helps those who help themselves.">
+
+
+    <meta name="description" content="I just want things to be what they are supposed to be.">
+
+
+    <meta name="keywords" content="产品,哲学,历史,魔兽,音乐">
+
+
+<title>产品营销那些事 | KAKARROT&#39;S BLOG</title>
+
+
+
+    <link rel="icon" href="/image/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+<body>
+    <!-- 阅读进度条 -->
+    <div class="reading-progress" id="reading-progress"></div>
+
+    <script>
+        // 主题检测：优先用户设置，其次系统偏好
+        (() => {
+            const stored = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const isDark = stored ? stored === 'dark' : prefersDark;
+            const pagebody = document.body;
+
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Kakarrot&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">归档</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Kakarrot&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">归档</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">展开目录</a>
+        <a onclick="go_top()">回到顶部</a>
+        <a onclick="go_bottom()">跳到底部</a>
+    </div>
+</div>
+
+<!-- 移动端TOC悬浮按钮 -->
+<div class="mobile-toc-btn" id="mobile-toc-btn">
+    <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2" fill="none">
+        <line x1="4" y1="6" x2="20" y2="6"></line>
+        <line x1="4" y1="12" x2="20" y2="12"></line>
+        <line x1="4" y1="18" x2="14" y2="18"></line>
+    </svg>
+</div>
+
+<!-- 移动端TOC抽屉 -->
+<div class="mobile-toc-drawer" id="mobile-toc-drawer">
+    <div class="drawer-header">
+        <span class="drawer-title">目录</span>
+        <span class="drawer-close" id="drawer-close">&times;</span>
+    </div>
+    <div class="drawer-content js-toc-mobile"></div>
+</div>
+
+<!-- 遮罩层 -->
+<div class="drawer-overlay" id="drawer-overlay"></div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    // 移动端TOC配置
+    var tocbot_mobile_config = {
+        tocSelector: '.js-toc-mobile',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        collapseDepth: 6,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+
+        // 初始化移动端TOC
+        if (window.innerWidth < 1280) {
+            tocbot.init(tocbot_mobile_config);
+        }
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? '展开目录' : '收起目录';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">产品营销那些事</h1>
+            
+                <div class="post-meta">
+                    
+                        作者: <a itemprop="author" rel="author" href="/">KAKARROT</a>
+                    
+
+                    
+                        <span class="post-time">
+                        日期: <a href="#">2016年07月10日</a>
+                        </span>
+                    
+                    
+                    <span class="reading-time">
+                        阅读时间: 约 5 分钟
+                    </span>
+                    
+                        <span class="post-category">
+                    分类:
+                            
+                                <a href="/categories/%E4%BA%A7%E5%93%81/">产品</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="营销规划流程"><a href="#营销规划流程" class="headerlink" title="营销规划流程"></a>营销规划流程</h2><h3 id="市场分析"><a href="#市场分析" class="headerlink" title="市场分析"></a>市场分析</h3><p>市场分析是针对特定产品（线）的现有及潜在顾客进行研究，将他们分为不同的类型或细分。</p>
+<p>所谓细分，是指一群有着共同的人口特性、需求及（或）产品用途的顾客。</p>
+<p>将顾客细分的过程可以让营销人员专注于较小群体的需求，因此能更加贴近顾客。</p>
+<p><strong>市场细分重要性</strong></p>
+<ol>
+<li>有助于增进对整体市场的了解，包括顾客如何购买、为什么购买；</li>
+<li>更加了解特定族群想要的是什么，也就能更有效地分配资源，并有助于建立特定产品的竞争优势；</li>
+<li>让企业发现可能隐藏的领域，进一步发掘潜在的市场机会。</li>
+</ol>
+<h3 id="竞争分析"><a href="#竞争分析" class="headerlink" title="竞争分析"></a>竞争分析</h3><p>竞争分析是根据公开流通的信息或企业内部信息编制的汇总报告，内容可以从数页到数个文件档案不等。年报、新闻报道、贸易展览、销售人员、政府及贸易协会的报告，还有和顾客间的非正式会谈内容等，都可能提供竞争分析所需要的信息。</p>
+<h4 id="历史绩效"><a href="#历史绩效" class="headerlink" title="历史绩效"></a>历史绩效</h4><p>历史绩效是观察一项产品在过去相对于原定计划的绩效表现，观察重点包括市场占有率、财务数字以及其他数值或统计性的绩效指标。</p>
+<h4 id="用户"><a href="#用户" class="headerlink" title="用户"></a>用户</h4><ol>
+<li>目标用户人群在哪里？</li>
+<li>目标用户人群有哪些共性？</li>
+<li>注册用户基本资料有什么共性？</li>
+<li>注册用户中活跃用户占比多少？</li>
+<li>注册用户中流失用户占比多少？</li>
+<li>注册用户中付费用户占比多少？</li>
+<li>注册用户中僵尸用户占比多少？</li>
+</ol>
+<h4 id="产品"><a href="#产品" class="headerlink" title="产品"></a>产品</h4><ol>
+<li>产品成本花费多少成本？</li>
+<li>产品上线后多久营收持平？</li>
+<li>产品名称含义，是否可当作品牌使用？</li>
+<li>产品有何特性能够被用户区别？</li>
+<li>如果给产品打分，能得多少分？用户会打多少分？</li>
+<li>产品如果标准化&#x2F;个性化，分别有什么结果？</li>
+</ol>
+<h4 id="销售"><a href="#销售" class="headerlink" title="销售"></a>销售</h4><ol>
+<li>销售团队结构是否能实现销售目标？</li>
+<li>销售团队是否采用最有效的方法接触目标用户群？</li>
+<li>销售团队的产品培训如何？</li>
+<li>销售团队通过哪些渠道来销售产品？</li>
+<li>销售团队是否帮助用户了解产品的优势？</li>
+</ol>
+<h4 id="定价"><a href="#定价" class="headerlink" title="定价"></a>定价</h4><p>产品定价需足以支付所有的相关成本，并给予产品符合其竞争价值的适当定位，同时还要考虑用户的感受。</p>
+<ol>
+<li>是否因为价格原因导致流失许多用户？</li>
+<li>提供什么样的折扣和竞争对手抢占市场？</li>
+</ol>
+<h4 id="活动"><a href="#活动" class="headerlink" title="活动"></a>活动</h4><ol>
+<li>用户对于产品的印象是什么？</li>
+<li>用户对于产品活动所要传达的印象是否一致？</li>
+<li>历史活动成效如何？为什么有效？为什么无效？</li>
+</ol>
+<h3 id="趋势变动"><a href="#趋势变动" class="headerlink" title="趋势变动"></a>趋势变动</h3><p>审视大环境及趋势的变动相对于产品是否成功之间的关联。</p>
+<ol>
+<li>未来可能发生哪些科技变化？在未来几年内将如何影响产品的销售？</li>
+<li>你的行业是否有下列变化趋势？<ul>
+<li>产品改变</li>
+<li>价格水准&#x2F;政策</li>
+<li>分销方式的改变</li>
+<li>合并&#x2F;收购&#x2F;撤资</li>
+<li>渠道力量的变化</li>
+</ul>
+</li>
+<li>经济环境有哪些基本趋势和改变？</li>
+<li>是否有任何法规或政治因素可能对产品销售造成冲击？</li>
+<li>上述趋势发生的可能性有多大？</li>
+<li>这些趋势对产品会造成什么样的影响？</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>谨慎分析公司的产品及企业现状，作为进行年度规划流程的开端。</p>
+<p>将你的顾客群划分为不同的群组或细分，可以让你更有效地分配资源，同时提供最大的竞争契机。</p>
+<p>进行竞争分析时，先自问曾经在业务上输给哪一位对手最多，或是曾从谁手中抢到了最多生意。</p>
+<p>不要把分析对象局限在行业中的领先对手中。</p>
+<p>审视产品过去的绩效表现。观察每一项产品的顾客稳定度、产品价格及其变化所产生的效果、产品销售额及利润的变化趋势、销售团队的态度，以及任何可以用来解释绩效变化的其他变数。</p>
+<p>尝试预测目前的趋势对未来产品可能发生的影响。</p>
+
+        </div>
+
+        
+        <section class="post-tags">
+            <div>
+                <span>标签:</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E4%BA%A7%E5%93%81%E7%BB%8F%E7%90%86/"># 产品经理</a>
+                    
+                        <a href="/tags/%E5%B8%82%E5%9C%BA%E8%90%A5%E9%94%80/"># 市场营销</a>
+                    
+                        <a href="/tags/%E5%B8%82%E5%9C%BA%E8%BF%90%E8%90%A5/"># 市场运营</a>
+                    
+                        
+                </span>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/posts/891ec2eb/">数据分析那些事</a>
+            
+            
+            <a class="next" rel="next" href="/posts/9421aeee/">产品企业那些事</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© KAKARROT | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>

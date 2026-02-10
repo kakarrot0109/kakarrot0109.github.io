@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="KAKARROT">
+
+
+    <meta name="subtitle" content="Heaven helps those who help themselves.">
+
+
+    <meta name="description" content="I just want things to be what they are supposed to be.">
+
+
+    <meta name="keywords" content="产品,哲学,历史,魔兽,音乐">
+
+
+<title>魔兽世界插件-KUI | KAKARROT&#39;S BLOG</title>
+
+
+
+    <link rel="icon" href="/image/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+<body>
+    <!-- 阅读进度条 -->
+    <div class="reading-progress" id="reading-progress"></div>
+
+    <script>
+        // 主题检测：优先用户设置，其次系统偏好
+        (() => {
+            const stored = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const isDark = stored ? stored === 'dark' : prefersDark;
+            const pagebody = document.body;
+
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Kakarrot&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">归档</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Kakarrot&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">归档</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">展开目录</a>
+        <a onclick="go_top()">回到顶部</a>
+        <a onclick="go_bottom()">跳到底部</a>
+    </div>
+</div>
+
+<!-- 移动端TOC悬浮按钮 -->
+<div class="mobile-toc-btn" id="mobile-toc-btn">
+    <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2" fill="none">
+        <line x1="4" y1="6" x2="20" y2="6"></line>
+        <line x1="4" y1="12" x2="20" y2="12"></line>
+        <line x1="4" y1="18" x2="14" y2="18"></line>
+    </svg>
+</div>
+
+<!-- 移动端TOC抽屉 -->
+<div class="mobile-toc-drawer" id="mobile-toc-drawer">
+    <div class="drawer-header">
+        <span class="drawer-title">目录</span>
+        <span class="drawer-close" id="drawer-close">&times;</span>
+    </div>
+    <div class="drawer-content js-toc-mobile"></div>
+</div>
+
+<!-- 遮罩层 -->
+<div class="drawer-overlay" id="drawer-overlay"></div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    // 移动端TOC配置
+    var tocbot_mobile_config = {
+        tocSelector: '.js-toc-mobile',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        collapseDepth: 6,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+
+        // 初始化移动端TOC
+        if (window.innerWidth < 1280) {
+            tocbot.init(tocbot_mobile_config);
+        }
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? '展开目录' : '收起目录';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">魔兽世界插件-KUI</h1>
+            
+                <div class="post-meta">
+                    
+                        作者: <a itemprop="author" rel="author" href="/">KAKARROT</a>
+                    
+
+                    
+                        <span class="post-time">
+                        日期: <a href="#">2025年01月01日</a>
+                        </span>
+                    
+                    
+                    <span class="reading-time">
+                        阅读时间: 约 39 分钟
+                    </span>
+                    
+                        <span class="post-category">
+                    分类:
+                            
+                                <a href="/categories/%E6%B8%B8%E6%88%8F/">游戏</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="插件背景"><a href="#插件背景" class="headerlink" title="插件背景"></a>插件背景</h2><p>一直就喜欢暴雪默认风格，配合几个简单第三方功能插件，就可以实现非常满意的魔兽世界 UI 布局。</p>
+<p>常年混迹于 NGA 插件板块，对于”暴雪风格”情有独钟，经常使用论坛网友的插件包，基于自己的特殊需求，面向”ChatGPT”开始写插件！</p>
+<p>在尝试多个暴雪风格插件后，觉得使用”SUI”作为基础插件，因为其材质和布局对于我来说非常友好，基本上满足 80%+的布局需求。</p>
+<p><a target="_blank" rel="noopener" href="https://www.curseforge.com/wow/addons/sui">SUI</a></p>
+<p><a target="_blank" rel="noopener" href="https://bbs.nga.cn/read.php?tid=43005012">SUI 汉化文件</a></p>
+<p><a href="https://kakarrot.com/posts/be10087/">我的插件列表</a></p>
+<h2 id="插件功能"><a href="#插件功能" class="headerlink" title="插件功能"></a>插件功能</h2><h3 id="界面-UI-截图"><a href="#界面-UI-截图" class="headerlink" title="界面 UI 截图"></a>界面 UI 截图</h3><p><img src="https://s2.loli.net/2025/03/06/xabL2ZY8UJg9Ice.jpg" alt="_20250306173144.png"></p>
+<h3 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h3><ul>
+<li>后续需要添加新功能可直接创建对于的<code>lua</code>文件</li>
+<li><code>KUI.lua</code>为空文档，文件内可添加一些更为简单的<code>lua</code>代码</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">## Interface: 30403</span><br><span class="line">## Author: KAKARROT</span><br><span class="line">## Version: 1.0</span><br><span class="line">## Title: |cffedf30fK|r|cff009cffUI|r Classic</span><br><span class="line">## Notes: 自定义暴雪框体</span><br><span class="line"></span><br><span class="line">KUI.lua</span><br><span class="line">UnitFrames.lua</span><br><span class="line">RaidFrames.lua</span><br><span class="line">ActionBar.lua</span><br><span class="line">SetCVars.lua</span><br></pre></td></tr></table></figure>
+
+<h3 id="头像框体"><a href="#头像框体" class="headerlink" title="头像框体"></a>头像框体</h3><ul>
+<li>设置框体位置定位(根据职业不同位置不同)</li>
+<li>设置框体文字大小</li>
+<li>设置框体整体缩放</li>
+</ul>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 定义职业的头像定位和缩放配置</span></span><br><span class="line"><span class="keyword">local</span> playerFrameConfig = &#123;</span><br><span class="line">    [<span class="string">&quot;PRIEST&quot;</span>] = &#123;</span><br><span class="line">        player = &#123; x = <span class="number">-495</span>, y = <span class="number">320</span> &#125;, <span class="comment">-- 牧师玩家框体位置和缩放</span></span><br><span class="line">        target = &#123; x = <span class="number">-265</span>, y = <span class="number">320</span> &#125;  <span class="comment">-- 牧师目标框体位置和缩放</span></span><br><span class="line">    &#125;,</span><br><span class="line">    [<span class="string">&quot;ROGUE&quot;</span>] = &#123;</span><br><span class="line">        player = &#123; x = <span class="number">-350</span>, y = <span class="number">100</span> &#125;, <span class="comment">-- 盗贼玩家框体位置和缩放</span></span><br><span class="line">        target = &#123; x = <span class="number">-200</span>, y = <span class="number">50</span> &#125;   <span class="comment">-- 盗贼目标框体位置和缩放</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 设置字体大小</span></span><br><span class="line"><span class="keyword">local</span> <span class="function"><span class="keyword">function</span> <span class="title">SetFontSize</span><span class="params">(frame, size)</span></span></span><br><span class="line">    <span class="keyword">local</span> font, _, flags = frame:GetFont()</span><br><span class="line">    frame:SetFont(font, size, flags)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 初始化框体位置和缩放</span></span><br><span class="line"><span class="keyword">local</span> <span class="function"><span class="keyword">function</span> <span class="title">InitializeFrames</span><span class="params">()</span></span></span><br><span class="line">    <span class="keyword">local</span> _, playerClass = UnitClass(<span class="string">&quot;player&quot;</span>) <span class="comment">-- 获取玩家职业</span></span><br><span class="line">    <span class="keyword">local</span> <span class="built_in">config</span> = playerFrameConfig[playerClass]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">config</span> <span class="keyword">then</span></span><br><span class="line">        <span class="comment">-- 玩家框体设置</span></span><br><span class="line">        PlayerFrame:ClearAllPoints()</span><br><span class="line">        PlayerFrame:SetPoint(<span class="string">&quot;CENTER&quot;</span>, UIParent, <span class="string">&quot;CENTER&quot;</span>, <span class="built_in">config</span>.player.x, <span class="built_in">config</span>.player.y)</span><br><span class="line"></span><br><span class="line">        <span class="comment">-- 目标框体设置</span></span><br><span class="line">        TargetFrame:ClearAllPoints()</span><br><span class="line">        TargetFrame:SetPoint(<span class="string">&quot;CENTER&quot;</span>, UIParent, <span class="string">&quot;CENTER&quot;</span>, <span class="built_in">config</span>.target.x, <span class="built_in">config</span>.target.y)</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 动态调整状态文字（数值、百分比、同时显示）</span></span><br><span class="line"><span class="keyword">local</span> <span class="function"><span class="keyword">function</span> <span class="title">UpdateTextDisplay</span><span class="params">()</span></span></span><br><span class="line">    <span class="keyword">local</span> showStatusText = GetCVar(<span class="string">&quot;statusTextDisplay&quot;</span>)</span><br><span class="line">    <span class="keyword">local</span> fontSize = <span class="number">10</span>   <span class="comment">-- 玩家名字字体大小</span></span><br><span class="line">    <span class="keyword">local</span> barFontSize = <span class="number">8</span> <span class="comment">-- 血量和能量字体大小</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">-- 玩家框体字体设置</span></span><br><span class="line">    SetFontSize(PlayerName, fontSize)</span><br><span class="line">    SetFontSize(PlayerFrameHealthBarText, barFontSize)</span><br><span class="line">    SetFontSize(PlayerFrameHealthBarTextLeft, barFontSize)</span><br><span class="line">    SetFontSize(PlayerFrameHealthBarTextRight, barFontSize)</span><br><span class="line">    SetFontSize(PlayerFrameManaBarText, barFontSize)</span><br><span class="line">    SetFontSize(PlayerFrameManaBarTextLeft, barFontSize)</span><br><span class="line">    SetFontSize(PlayerFrameManaBarTextRight, barFontSize)</span><br><span class="line"></span><br><span class="line">    <span class="comment">-- 目标框体字体设置</span></span><br><span class="line">    SetFontSize(TargetFrameTextureFrameName, fontSize)</span><br><span class="line">    SetFontSize(TargetFrameTextureFrame.HealthBarText, barFontSize)</span><br><span class="line">    SetFontSize(TargetFrameTextureFrame.HealthBarTextLeft, barFontSize)</span><br><span class="line">    SetFontSize(TargetFrameTextureFrame.HealthBarTextRight, barFontSize)</span><br><span class="line">    SetFontSize(TargetFrameTextureFrame.ManaBarText, barFontSize)</span><br><span class="line">    SetFontSize(TargetFrameTextureFrame.ManaBarTextLeft, barFontSize)</span><br><span class="line">    SetFontSize(TargetFrameTextureFrame.ManaBarTextRight, barFontSize)</span><br><span class="line"></span><br><span class="line">    <span class="comment">-- 根据游戏内设置显示状态文字</span></span><br><span class="line">    <span class="keyword">if</span> showStatusText == <span class="string">&quot;0&quot;</span> <span class="keyword">then</span></span><br><span class="line">        PlayerFrameHealthBarText:Hide()</span><br><span class="line">        PlayerFrameManaBarText:Hide()</span><br><span class="line">        TargetFrameTextureFrame.HealthBarText:Hide()</span><br><span class="line">        TargetFrameTextureFrame.ManaBarText:Hide()</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        PlayerFrameHealthBarText:Show()</span><br><span class="line">        PlayerFrameManaBarText:Show()</span><br><span class="line">        TargetFrameTextureFrame.HealthBarText:Show()</span><br><span class="line">        TargetFrameTextureFrame.ManaBarText:Show()</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 注册事件监听</span></span><br><span class="line"><span class="keyword">local</span> <span class="function"><span class="keyword">function</span> <span class="title">OnEvent</span><span class="params">(self, event, ...)</span></span></span><br><span class="line">    <span class="keyword">if</span> event == <span class="string">&quot;PLAYER_ENTERING_WORLD&quot;</span> <span class="keyword">or</span> event == <span class="string">&quot;PLAYER_LOGIN&quot;</span> <span class="keyword">then</span></span><br><span class="line">        InitializeFrames()</span><br><span class="line">        UpdateTextDisplay()</span><br><span class="line">    <span class="keyword">elseif</span> event == <span class="string">&quot;CVAR_UPDATE&quot;</span> <span class="keyword">then</span></span><br><span class="line">        UpdateTextDisplay()</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 创建框架和事件监听器</span></span><br><span class="line"><span class="keyword">local</span> frame = CreateFrame(<span class="string">&quot;Frame&quot;</span>)</span><br><span class="line">frame:RegisterEvent(<span class="string">&quot;PLAYER_ENTERING_WORLD&quot;</span>)</span><br><span class="line">frame:RegisterEvent(<span class="string">&quot;PLAYER_LOGIN&quot;</span>)</span><br><span class="line">frame:RegisterEvent(<span class="string">&quot;CVAR_UPDATE&quot;</span>)</span><br><span class="line">frame:SetScript(<span class="string">&quot;OnEvent&quot;</span>, OnEvent)</span><br></pre></td></tr></table></figure>
+
+<h3 id="动作条"><a href="#动作条" class="headerlink" title="动作条"></a>动作条</h3><ul>
+<li>设置动作条按键字体大小</li>
+<li>设置动作条宏字体大小</li>
+<li>设置动作条按键简化显示</li>
+</ul>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 初始化函数：设置动作条快捷键和宏命令字体大小</span></span><br><span class="line"><span class="keyword">local</span> <span class="function"><span class="keyword">function</span> <span class="title">SetActionBarFont</span><span class="params">()</span></span></span><br><span class="line">    <span class="comment">-- 动作条列表</span></span><br><span class="line">    <span class="keyword">local</span> actionBars = &#123;</span><br><span class="line">        <span class="string">&quot;ActionButton&quot;</span>,              <span class="comment">-- 主动作条</span></span><br><span class="line">        <span class="string">&quot;MultiBarBottomLeftButton&quot;</span>,  <span class="comment">-- 左下动作条</span></span><br><span class="line">        <span class="string">&quot;MultiBarBottomRightButton&quot;</span>, <span class="comment">-- 右下动作条</span></span><br><span class="line">        <span class="string">&quot;MultiBarRightButton&quot;</span>,       <span class="comment">-- 右侧动作条</span></span><br><span class="line">        <span class="string">&quot;MultiBarLeftButton&quot;</span>,        <span class="comment">-- 左侧动作条</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">-- 设置字体大小</span></span><br><span class="line">    <span class="keyword">local</span> hotkeyFontSize = <span class="number">8</span> <span class="comment">-- 快捷键字体大小</span></span><br><span class="line">    <span class="keyword">local</span> macroFontSize = <span class="number">8</span>  <span class="comment">-- 宏命令字体大小</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">-- 遍历每个动作条和按钮</span></span><br><span class="line">    <span class="keyword">for</span> _, barName <span class="keyword">in</span> <span class="built_in">ipairs</span>(actionBars) <span class="keyword">do</span></span><br><span class="line">        <span class="keyword">for</span> i = <span class="number">1</span>, <span class="number">12</span> <span class="keyword">do</span></span><br><span class="line">            <span class="comment">-- 快捷键字体设置</span></span><br><span class="line">            <span class="keyword">local</span> hotkeyFrame = <span class="built_in">_G</span>[barName .. i .. <span class="string">&quot;HotKey&quot;</span>]</span><br><span class="line">            <span class="keyword">if</span> hotkeyFrame <span class="keyword">then</span></span><br><span class="line">                hotkeyFrame:SetFont(STANDARD_TEXT_FONT, hotkeyFontSize, <span class="string">&quot;OUTLINE&quot;</span>)</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">            <span class="comment">-- 宏命令字体设置</span></span><br><span class="line">            <span class="keyword">local</span> macroFrame = <span class="built_in">_G</span>[barName .. i .. <span class="string">&quot;Name&quot;</span>]</span><br><span class="line">            <span class="keyword">if</span> macroFrame <span class="keyword">then</span></span><br><span class="line">                macroFrame:SetFont(STANDARD_TEXT_FONT, macroFontSize, <span class="string">&quot;OUTLINE&quot;</span>)</span><br><span class="line">            <span class="keyword">end</span></span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 替换快捷键文字为简化格式</span></span><br><span class="line"><span class="keyword">local</span> <span class="function"><span class="keyword">function</span> <span class="title">SimplifyHotkeyText</span><span class="params">(hotkey)</span></span></span><br><span class="line">    <span class="keyword">if</span> hotkey <span class="keyword">and</span> hotkey:GetText() <span class="keyword">then</span></span><br><span class="line">        <span class="keyword">local</span> replace = <span class="built_in">string</span>.<span class="built_in">gsub</span></span><br><span class="line">        <span class="keyword">local</span> text = hotkey:GetText()</span><br><span class="line"></span><br><span class="line">        <span class="comment">-- 替换规则：简化复杂的按键名称</span></span><br><span class="line">        text = replace(text, <span class="string">&quot;(s%-)&quot;</span>, <span class="string">&quot;S&quot;</span>)</span><br><span class="line">        text = replace(text, <span class="string">&quot;(a%-)&quot;</span>, <span class="string">&quot;A&quot;</span>)</span><br><span class="line">        text = replace(text, <span class="string">&quot;(c%-)&quot;</span>, <span class="string">&quot;C&quot;</span>)</span><br><span class="line">        text = replace(text, <span class="string">&quot;(Mouse Button )&quot;</span>, <span class="string">&quot;M&quot;</span>)</span><br><span class="line">        text = replace(text, <span class="string">&quot;(鼠标中键)&quot;</span>, <span class="string">&quot;M3&quot;</span>)</span><br><span class="line">        text = replace(text, <span class="string">&quot;(鼠标按键4)&quot;</span>, <span class="string">&quot;M4&quot;</span>)</span><br><span class="line">        text = replace(text, <span class="string">&quot;(鼠标按键5)&quot;</span>, <span class="string">&quot;M5&quot;</span>)</span><br><span class="line">        text = replace(text, <span class="string">&quot;(鼠标滚轮向上滚动)&quot;</span>, <span class="string">&quot;MU&quot;</span>)</span><br><span class="line">        text = replace(text, <span class="string">&quot;(鼠标滚轮向下滚动)&quot;</span>, <span class="string">&quot;MD&quot;</span>)</span><br><span class="line">        text = replace(text, <span class="string">&quot;(数字键盘)&quot;</span>, <span class="string">&quot;N&quot;</span>)</span><br><span class="line">        text = replace(text, <span class="string">&quot;Capslock&quot;</span>, <span class="string">&quot;CK&quot;</span>)</span><br><span class="line">        text = replace(text, <span class="string">&quot;(Page Up)&quot;</span>, <span class="string">&quot;PU&quot;</span>)</span><br><span class="line">        text = replace(text, <span class="string">&quot;(Page Down)&quot;</span>, <span class="string">&quot;PD&quot;</span>)</span><br><span class="line">        text = replace(text, <span class="string">&quot;(空格键)&quot;</span>, <span class="string">&quot;SpB&quot;</span>)</span><br><span class="line">        text = replace(text, <span class="string">&quot;(Insert)&quot;</span>, <span class="string">&quot;Ins&quot;</span>)</span><br><span class="line">        text = replace(text, <span class="string">&quot;(Home)&quot;</span>, <span class="string">&quot;Hm&quot;</span>)</span><br><span class="line">        text = replace(text, <span class="string">&quot;(Delete)&quot;</span>, <span class="string">&quot;Del&quot;</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment">-- 更新快捷键文本</span></span><br><span class="line">        hotkey:SetText(text)</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 更新动作条快捷键文字</span></span><br><span class="line"><span class="keyword">local</span> <span class="function"><span class="keyword">function</span> <span class="title">UpdateHotkeys</span><span class="params">(self)</span></span></span><br><span class="line">    <span class="keyword">local</span> hotkey = <span class="built_in">_G</span>[<span class="built_in">self</span>:GetName() .. <span class="string">&quot;HotKey&quot;</span>]</span><br><span class="line">    SimplifyHotkeyText(hotkey)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 隐藏动作条两边装饰图案的函数</span></span><br><span class="line"><span class="keyword">local</span> <span class="function"><span class="keyword">function</span> <span class="title">HideActionBarArt</span><span class="params">()</span></span></span><br><span class="line">    <span class="comment">-- 直接通过全局变量隐藏两侧装饰</span></span><br><span class="line">    <span class="keyword">if</span> MainMenuBarLeftEndCap <span class="keyword">then</span></span><br><span class="line">        MainMenuBarLeftEndCap:Hide()</span><br><span class="line">        MainMenuBarLeftEndCap.Show = <span class="function"><span class="keyword">function</span><span class="params">()</span></span> <span class="keyword">end</span> <span class="comment">-- 防止其他插件再次显示</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">if</span> MainMenuBarRightEndCap <span class="keyword">then</span></span><br><span class="line">        MainMenuBarRightEndCap:Hide()</span><br><span class="line">        MainMenuBarRightEndCap.Show = <span class="function"><span class="keyword">function</span><span class="params">()</span></span> <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">-- 解除界面更新锁定</span></span><br><span class="line">    MainMenuBar:SetScript(<span class="string">&quot;OnUpdate&quot;</span>, <span class="literal">nil</span>)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 注册事件：加载设置并隐藏装饰</span></span><br><span class="line"><span class="keyword">local</span> Event = CreateFrame(<span class="string">&quot;Frame&quot;</span>, <span class="literal">nil</span>, UIParent)</span><br><span class="line">Event:RegisterEvent(<span class="string">&quot;PLAYER_LOGIN&quot;</span>)</span><br><span class="line">Event:SetScript(<span class="string">&quot;OnEvent&quot;</span>, <span class="function"><span class="keyword">function</span><span class="params">(self, event, ...)</span></span></span><br><span class="line">    <span class="keyword">if</span> event == <span class="string">&quot;PLAYER_LOGIN&quot;</span> <span class="keyword">then</span></span><br><span class="line">        <span class="comment">-- 设置动作条字体大小</span></span><br><span class="line">        SetActionBarFont()</span><br><span class="line"></span><br><span class="line">        <span class="comment">-- 钩子函数：简化快捷键文字</span></span><br><span class="line">        hooksecurefunc(<span class="string">&quot;ActionButton_UpdateHotkeys&quot;</span>, UpdateHotkeys)</span><br><span class="line"></span><br><span class="line">        <span class="comment">-- 隐藏动作条两边的装饰图案</span></span><br><span class="line">        HideActionBarArt()</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="团队框架"><a href="#团队框架" class="headerlink" title="团队框架"></a>团队框架</h3><ul>
+<li>设置团队框架整体缩放</li>
+<li>设置团队框架名字字体大小</li>
+<li>设置团队框架状态文字大小</li>
+</ul>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 插件初始化</span></span><br><span class="line"><span class="keyword">local</span> <span class="function"><span class="keyword">function</span> <span class="title">InitializeRaidFrame</span><span class="params">()</span></span></span><br><span class="line"></span><br><span class="line">    <span class="comment">-- 隐藏团队框架标题</span></span><br><span class="line">    hooksecurefunc(<span class="string">&quot;CompactRaidGroup_GenerateForGroup&quot;</span>, <span class="function"><span class="keyword">function</span><span class="params">(groupIndex)</span></span></span><br><span class="line">        <span class="keyword">local</span> frame = <span class="built_in">_G</span>[<span class="string">&quot;CompactRaidGroup&quot;</span>..groupIndex]</span><br><span class="line">        <span class="keyword">if</span> frame <span class="keyword">then</span></span><br><span class="line">            frame.title:SetText(<span class="string">&quot;&quot;</span>)</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment">-- 设置团队框架的缩放比例</span></span><br><span class="line">    CompactRaidFrameContainer:SetScale(<span class="number">1</span>) <span class="comment">-- 修改缩放比例为 1.2，可根据需求调整</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">-- 遍历每个团队框架成员</span></span><br><span class="line">    <span class="keyword">for</span> i = <span class="number">1</span>, <span class="number">40</span> <span class="keyword">do</span></span><br><span class="line">        <span class="keyword">local</span> nameFrame = <span class="built_in">_G</span>[<span class="string">&quot;CompactRaidFrame&quot;</span> .. i .. <span class="string">&quot;Name&quot;</span>]</span><br><span class="line">        <span class="keyword">local</span> statusFrame = <span class="built_in">_G</span>[<span class="string">&quot;CompactRaidFrame&quot;</span> .. i .. <span class="string">&quot;StatusText&quot;</span>]</span><br><span class="line"></span><br><span class="line">        <span class="comment">-- 设置名字字体大小为 10</span></span><br><span class="line">        <span class="keyword">if</span> nameFrame <span class="keyword">then</span></span><br><span class="line">            nameFrame:SetFont(STANDARD_TEXT_FONT, <span class="number">8</span>, <span class="string">&quot;OUTLINE&quot;</span>)</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">-- 设置状态字体大小为 8</span></span><br><span class="line">        <span class="keyword">if</span> statusFrame <span class="keyword">then</span></span><br><span class="line">            statusFrame:SetFont(STANDARD_TEXT_FONT, <span class="number">8</span>, <span class="string">&quot;OUTLINE&quot;</span>)</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 注册事件：确保在玩家进入世界后执行</span></span><br><span class="line"><span class="keyword">local</span> frame = CreateFrame(<span class="string">&quot;Frame&quot;</span>)</span><br><span class="line">frame:RegisterEvent(<span class="string">&quot;PLAYER_ENTERING_WORLD&quot;</span>)</span><br><span class="line">frame:SetScript(<span class="string">&quot;OnEvent&quot;</span>, <span class="function"><span class="keyword">function</span><span class="params">(self, event, ...)</span></span></span><br><span class="line">    <span class="keyword">if</span> event == <span class="string">&quot;PLAYER_ENTERING_WORLD&quot;</span> <span class="keyword">then</span></span><br><span class="line">        InitializeRaidFrame()</span><br><span class="line">        <span class="built_in">self</span>:UnregisterEvent(<span class="string">&quot;PLAYER_ENTERING_WORLD&quot;</span>) <span class="comment">-- 取消注册，避免多次调用</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="CVars-参数"><a href="#CVars-参数" class="headerlink" title="CVars 参数"></a>CVars 参数</h3><blockquote>
+<p>CVars 是基于魔兽世界系统设置的配置参数</p>
+</blockquote>
+<ul>
+<li>姓名板相关设置</li>
+<li>战斗和目标设置</li>
+<li>界面优化设置</li>
+<li>聊天与社交设置</li>
+<li>镜头和视角设置</li>
+<li>图形和性能优化设置</li>
+<li>其他设置</li>
+</ul>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">local</span> addonName, addon = ...</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 插件初始化函数</span></span><br><span class="line"><span class="keyword">local</span> <span class="function"><span class="keyword">function</span> <span class="title">InitializeAddon</span><span class="params">()</span></span></span><br><span class="line">    <span class="comment">-- 姓名板相关设置</span></span><br><span class="line">    SetCVar(<span class="string">&quot;ShowClassColorInFriendlyNameplate&quot;</span>, <span class="number">1</span>) <span class="comment">-- 显示友方姓名板职业颜色</span></span><br><span class="line">    SetCVar(<span class="string">&quot;nameplateShowOnlyNames&quot;</span>, <span class="number">0</span>)            <span class="comment">-- 姓名板显示完整信息（不仅仅是名字）</span></span><br><span class="line">    SetCVar(<span class="string">&quot;nameplateMaxDistance&quot;</span>, <span class="number">41</span>)             <span class="comment">-- 调整姓名板的最大可视距离（默认是20，可以调到40）</span></span><br><span class="line">    SetCVar(<span class="string">&quot;nameplateShowFriends&quot;</span>, <span class="number">0</span>)              <span class="comment">-- 禁用友方单位姓名板（仅显示敌对单位）</span></span><br><span class="line">    SetCVar(<span class="string">&quot;nameplateShowEnemies&quot;</span>, <span class="number">1</span>)              <span class="comment">-- 启用敌对姓名板</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">-- 战斗和目标设置</span></span><br><span class="line">    SetCVar(<span class="string">&quot;autoAttack&quot;</span>, <span class="number">1</span>)                <span class="comment">-- 自动攻击开始时自动切换目标</span></span><br><span class="line">    SetCVar(<span class="string">&quot;ShowClassColorInNameplate&quot;</span>, <span class="number">1</span>) <span class="comment">-- 显示敌方玩家职业颜色</span></span><br><span class="line">    SetCVar(<span class="string">&quot;threatShowNumeric&quot;</span>, <span class="number">1</span>)         <span class="comment">-- 显示目标的仇恨状态</span></span><br><span class="line">    SetCVar(<span class="string">&quot;assistAttack&quot;</span>, <span class="number">0</span>)              <span class="comment">-- 禁用目标框架上的 &quot;点击自动攻击&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">-- 界面优化</span></span><br><span class="line">    SetCVar(<span class="string">&quot;enableFloatingCombatText&quot;</span>, <span class="number">1</span>)        <span class="comment">-- 显示界面上数值</span></span><br><span class="line">    SetCVar(<span class="string">&quot;statusTextDisplay&quot;</span>, <span class="string">&quot;BOTH&quot;</span>)       <span class="comment">-- 显示状态文本百分比（可选值：NONE / NUMERIC / PERCENT / BOTH）</span></span><br><span class="line">    SetCVar(<span class="string">&quot;ffx&quot;</span>, <span class="number">0</span>)                             <span class="comment">-- 禁用画面模糊（例如传送门特效）</span></span><br><span class="line">    SetCVar(<span class="string">&quot;uiscale&quot;</span>, <span class="number">1</span>)                         <span class="comment">-- 增加界面缩放范围（可在系统设置中进一步调整）</span></span><br><span class="line">    SetCVar(<span class="string">&quot;floatingCombatTextCombatDamage&quot;</span>, <span class="number">1</span>)  <span class="comment">-- 禁用浮动文本动画（如法术治疗、伤害数值）</span></span><br><span class="line">    SetCVar(<span class="string">&quot;floatingCombatTextCombatHealing&quot;</span>, <span class="number">1</span>) <span class="comment">-- 禁用浮动文本动画（如法术治疗、伤害数值）</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">-- 聊天与社交</span></span><br><span class="line">    SetCVar(<span class="string">&quot;profanityFilter&quot;</span>, <span class="number">0</span>)     <span class="comment">-- 禁用聊天过滤器</span></span><br><span class="line">    SetCVar(<span class="string">&quot;showTimestamps&quot;</span>, <span class="string">&quot;none&quot;</span>) <span class="comment">-- 始终显示聊天时间戳</span></span><br><span class="line">    SetCVar(<span class="string">&quot;CombatLogRetention&quot;</span>, <span class="number">30</span>) <span class="comment">-- 设置战斗日志保存时间</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">-- 镜头和视角</span></span><br><span class="line">    SetCVar(<span class="string">&quot;cameraSmoothStyle&quot;</span>, <span class="number">0</span>)             <span class="comment">-- 禁用镜头缩放动画</span></span><br><span class="line">    SetCVar(<span class="string">&quot;cameraDistanceMaxZoomFactor&quot;</span>, <span class="number">2.6</span>) <span class="comment">-- 设置镜头最大视距</span></span><br><span class="line">    SetCVar(<span class="string">&quot;cameraBobbing&quot;</span>, <span class="number">0</span>)                 <span class="comment">-- 禁用镜头晃动效果（如骑马时）</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">-- 图形和性能优化</span></span><br><span class="line">    SetCVar(<span class="string">&quot;weatherDensity&quot;</span>, <span class="number">0</span>)    <span class="comment">-- 禁用天气密度</span></span><br><span class="line">    SetCVar(<span class="string">&quot;graphicsSunshafts&quot;</span>, <span class="number">0</span>) <span class="comment">-- 禁用阳光射线</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">-- 其他设置</span></span><br><span class="line">    SetCVar(<span class="string">&quot;chatClassColorOverride&quot;</span>, <span class="number">0</span>) <span class="comment">-- 禁用聊天职业颜色覆盖</span></span><br><span class="line">    SetCVar(<span class="string">&quot;audioLocale&quot;</span>, <span class="string">&quot;zhCN&quot;</span>)       <span class="comment">-- 设置音频语言为简体中文</span></span><br><span class="line">    SetCVar(<span class="string">&quot;textLocale&quot;</span>, <span class="string">&quot;zhCN&quot;</span>)        <span class="comment">-- 设置文本语言为简体中文</span></span><br><span class="line">    SetCVar(<span class="string">&quot;mouseSpeed&quot;</span>, <span class="number">1</span>)             <span class="comment">-- 设置鼠标速度</span></span><br><span class="line">    SetCVar(<span class="string">&quot;ffxGlow&quot;</span>, <span class="number">0</span>)                <span class="comment">-- 禁用发光效果</span></span><br><span class="line">    SetCVar(<span class="string">&quot;ffxDeath&quot;</span>, <span class="number">0</span>)               <span class="comment">-- 禁用死亡效果</span></span><br><span class="line">    SetCVar(<span class="string">&quot;ffxNether&quot;</span>, <span class="number">0</span>)              <span class="comment">-- 禁用虚空效果</span></span><br><span class="line">    SetCVar(<span class="string">&quot;overrideArchive&quot;</span>, <span class="number">0</span>)        <span class="comment">-- 反骷髅和谐</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 注册事件，在玩家登录时初始化插件</span></span><br><span class="line"><span class="keyword">local</span> eventFrame = CreateFrame(<span class="string">&quot;Frame&quot;</span>)</span><br><span class="line">eventFrame:RegisterEvent(<span class="string">&quot;PLAYER_LOGIN&quot;</span>) <span class="comment">-- 注册 PLAYER_LOGIN 事件</span></span><br><span class="line">eventFrame:SetScript(<span class="string">&quot;OnEvent&quot;</span>, <span class="function"><span class="keyword">function</span><span class="params">(self, event, ...)</span></span></span><br><span class="line">    <span class="keyword">if</span> event == <span class="string">&quot;PLAYER_LOGIN&quot;</span> <span class="keyword">then</span></span><br><span class="line">        InitializeAddon() <span class="comment">-- 玩家登录后执行初始化</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span>)</span><br></pre></td></tr></table></figure>
+
+        </div>
+
+        
+        <section class="post-tags">
+            <div>
+                <span>标签:</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E7%BD%91%E7%BB%9C%E6%B8%B8%E6%88%8F/"># 网络游戏</a>
+                    
+                        <a href="/tags/%E9%AD%94%E5%85%BD%E4%B8%96%E7%95%8C/"># 魔兽世界</a>
+                    
+                        
+                </span>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/posts/5781cb/">GitHub Pages 自定义域名被劫持与恢复记录</a>
+            
+            
+            <a class="next" rel="next" href="/posts/be10087/">魔兽世界WotLK备份</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© KAKARROT | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>
