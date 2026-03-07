@@ -37,7 +37,7 @@ date: 2024-06-06 00:00:00
 
 **系统工具**
 
-- Clash\UU 加速器
+- Clash\UU
 - Chrome\Edge
 - MacType
 - Logitech Options
@@ -59,108 +59,12 @@ date: 2024-06-06 00:00:00
 
 **生活软件**
 
-- 微信\QQ\钉钉\腾讯会议：聊天软件
-- Spotify\QQ 音乐：听歌软件
-- 115 网盘\百度网盘：网盘软件
-- Eagle：图片软件
-- NeatReader：读书软件
-- PotPlayer：视频软件
-- High-Logic FontCreator 13：字体软件
-- Internet Download Manager：下载软件
+- 微信\QQ\钉钉\腾讯会议
+- Spotify\QQ 音乐
+- 115 网盘\百度网盘
+- Eagle
+- NeatReader
+- PotPlayer
+- High-Logic FontCreator 13
+- Internet Download Manager
 - Battle\Steam\完美世界对战平台\5E 对战平台：游戏平台
-
----
-
-**Cursor Setting**
-
-```json settings.json
-// Cursor 编辑器核心配置文件
-// 维护者: KAKARROT
-// 包含视觉体验、代码规范及语言特定设置
-{
-  // 编辑器体验
-  "editor.fontSize": 14,
-  "editor.fontFamily": "'JetBrains Mono', 'Fira Code', Menlo, monospace",
-  "editor.fontLigatures": true,
-  "editor.lineHeight": 24,
-  "editor.cursorBlinking": "smooth",
-  "editor.cursorSmoothCaretAnimation": "on",
-  "editor.smoothScrolling": true,
-  "editor.minimap.enabled": false,
-  "editor.renderWhitespace": "selection",
-  "editor.indentSize": "tabSize",
-
-  // 文件与格式化
-  "files.autoSave": "onFocusChange",
-  "editor.formatOnSave": true,
-  "editor.formatOnPaste": true,
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-
-  // 语言配置
-  "[vue]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.tabSize": 2,
-    "editor.codeActionsOnSave": { "source.fixAll.eslint": "explicit" }
-  },
-  "[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.tabSize": 2
-  },
-  "[python]": {
-    "editor.defaultFormatter": "ms-python.black-formatter",
-    "editor.tabSize": 4,
-    "editor.formatOnType": true
-  },
-  "[markdown]": {
-    "editor.wordWrap": "on",
-    "editor.quickSuggestions": {
-      "comments": "off",
-      "strings": "off",
-      "other": "off"
-    },
-    "editor.fontSize": 15
-  },
-  "[plaintext]": {
-    "editor.wordWrap": "on",
-    "editor.fontSize": 15
-  },
-
-  // Python
-  "python.languageServer": "Pylance",
-  "python.analysis.typeCheckingMode": "basic",
-  "python.analysis.autoImportCompletions": true,
-  "python.terminal.activateEnvironment": true,
-
-  // Emmet
-  "emmet.includeLanguages": { "vue-html": "html", "vue": "html" },
-
-  // 终端
-  "terminal.integrated.fontFamily": "'JetBrains Mono', monospace",
-  "terminal.integrated.fontSize": 13,
-  "terminal.integrated.cursorBlinking": true,
-
-  // 文件排除
-  "files.exclude": {
-    "**/.git": true,
-    "**/.DS_Store": true,
-    "**/__pycache__": true,
-    "**/*.pyc": true
-  },
-  "search.exclude": {
-    "**/node_modules": true,
-    "**/dist": true,
-    "**/.venv": true
-  },
-
-  // 工作区
-  "workbench.startupEditor": "newUntitledFile",
-  "workbench.colorTheme": "Cursor Light",
-  "explorer.confirmDelete": false,
-  "git.enableSmartCommit": true,
-  "git.confirmSync": false,
-
-  // Claude Code
-  "claudeCode.preferredLocation": "panel",
-  "claudeCode.selectedModel": "opus"
-}
-```

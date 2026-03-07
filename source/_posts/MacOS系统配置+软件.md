@@ -16,7 +16,7 @@ date: 2024-06-06 00:00:00
 
 ## 系统配置
 
-> 操作系统：macOS Sequoia
+> 操作系统：macOS Tahoe 26.3.1
 
 **桌面设置**
 
@@ -49,9 +49,9 @@ date: 2024-06-06 00:00:00
 
 **系统工具**
 
-- Shadowrocket：代理工具
-- Chrome：浏览器
-- AppCleaner：软件卸载
+- Shadowrocket
+- Chrome
+- AppCleaner
 
 ---
 
@@ -61,17 +61,19 @@ date: 2024-06-06 00:00:00
 - Typora
 - Cursor
 - Git\Node.js\Hexo
-- Homebrew：包管理器
-- Ghostty：终端工具
+- Homebrew
+- Ghostty
+- Cherry Studio
+- Obsidian
 
 ---
 
 **生活软件**
 
-- 微信\QQ\钉钉\腾讯会议：聊天软件
-- Spotify\Apple Music：听歌软件
-- 115 网盘\百度网盘：网盘软件
-- Eagle：图片管理软件
+- 微信\QQ\钉钉\腾讯会议
+- Spotify\Apple Music
+- 115 网盘\百度网盘
+- Eagle
 
 ---
 
