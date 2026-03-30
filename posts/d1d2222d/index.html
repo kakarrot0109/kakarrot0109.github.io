@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="KAKARROT">
+
+
+    <meta name="subtitle" content="Heaven helps those who help themselves.">
+
+
+    <meta name="description" content="I just want things to be what they are supposed to be.">
+
+
+    <meta name="keywords" content="产品,哲学,历史,魔兽,音乐">
+
+
+<title>产品架构那些事 | KAKARROT&#39;S BLOG</title>
+
+
+
+    <link rel="icon" href="/image/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+<body>
+    <!-- 阅读进度条 -->
+    <div class="reading-progress" id="reading-progress"></div>
+
+    <script>
+        // 主题检测：优先用户设置，其次系统偏好
+        (() => {
+            const stored = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const isDark = stored ? stored === 'dark' : prefersDark;
+            const pagebody = document.body;
+
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Kakarrot&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">归档</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Kakarrot&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">归档</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">展开目录</a>
+        <a onclick="go_top()">回到顶部</a>
+        <a onclick="go_bottom()">跳到底部</a>
+    </div>
+</div>
+
+<!-- 移动端TOC悬浮按钮 -->
+<div class="mobile-toc-btn" id="mobile-toc-btn">
+    <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2" fill="none">
+        <line x1="4" y1="6" x2="20" y2="6"></line>
+        <line x1="4" y1="12" x2="20" y2="12"></line>
+        <line x1="4" y1="18" x2="14" y2="18"></line>
+    </svg>
+</div>
+
+<!-- 移动端TOC抽屉 -->
+<div class="mobile-toc-drawer" id="mobile-toc-drawer">
+    <div class="drawer-header">
+        <span class="drawer-title">目录</span>
+        <span class="drawer-close" id="drawer-close">&times;</span>
+    </div>
+    <div class="drawer-content js-toc-mobile"></div>
+</div>
+
+<!-- 遮罩层 -->
+<div class="drawer-overlay" id="drawer-overlay"></div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    // 移动端TOC配置
+    var tocbot_mobile_config = {
+        tocSelector: '.js-toc-mobile',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        collapseDepth: 6,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+
+        // 初始化移动端TOC
+        if (window.innerWidth < 1280) {
+            tocbot.init(tocbot_mobile_config);
+        }
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? '展开目录' : '收起目录';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">产品架构那些事</h1>
+            
+                <div class="post-meta">
+                    
+                        作者: <a itemprop="author" rel="author" href="/">KAKARROT</a>
+                    
+
+                    
+                        <span class="post-time">
+                        日期: <a href="#">2016年09月26日</a>
+                        </span>
+                    
+                    
+                    <span class="reading-time">
+                        阅读时间: 约 7 分钟
+                    </span>
+                    
+                        <span class="post-category">
+                    分类:
+                            
+                                <a href="/categories/%E4%BA%A7%E5%93%81/">产品</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="产品架构定义"><a href="#产品架构定义" class="headerlink" title="产品架构定义"></a>产品架构定义</h2><p>互联网上没有真正的定义，但是在知乎看到了一个回答，其中一句话我觉得和我的理念相似：</p>
+<blockquote>
+<p>在充分理解产品用户需求基础上对产品数据流转的逻辑梳理。</p>
+</blockquote>
+<p>个人举例理解产品架构定义：产品架构就设计水渠的流向、宽窄、深浅等以满足水渠沿岸的用水需求。</p>
+<table>
+<thead>
+<tr>
+<th>产品术语</th>
+<th>举例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>产品定位</td>
+<td>解决贫困山区吃水困难</td>
+</tr>
+<tr>
+<td>用户需求</td>
+<td>日常用水</td>
+</tr>
+<tr>
+<td>产品数据</td>
+<td>用户、水源、水厂</td>
+</tr>
+<tr>
+<td>数据库</td>
+<td>水库、江、河、湖、海</td>
+</tr>
+<tr>
+<td>业务流</td>
+<td>水渠、人工的（江、河、湖）、水管</td>
+</tr>
+<tr>
+<td>产品后台</td>
+<td>大坝</td>
+</tr>
+<tr>
+<td>产品终端</td>
+<td>水龙头、花洒、马桶</td>
+</tr>
+<tr>
+<td>数据属性</td>
+<td>黄河水、长江水、黄沙水、井水</td>
+</tr>
+<tr>
+<td>后台模块</td>
+<td>水渠的流向、宽窄、深浅、水量、水质</td>
+</tr>
+<tr>
+<td>前后台数据交互体系</td>
+<td>水和水渠、水管的流向体系</td>
+</tr>
+</tbody></table>
+<ol>
+<li>数据库 &#x3D; 水库，数据表单的长度、数据类型等相当于水库的大小；</li>
+<li>业务流 &#x3D; 水渠，业务表单数据增加、保存、提交相当于水渠哪里转弯、入水，出水；</li>
+<li>产品后台 &#x3D; 大坝，控制数据流转节点开关相当于大坝何时开闸、关闸、开闸时长、关闸时长；</li>
+</ol>
+<blockquote>
+<p>产品前后端业务数据流转交互 &#x3D; 水从水源-水渠-水库-水管物理交互</p>
+</blockquote>
+<h2 id="产品架构层面"><a href="#产品架构层面" class="headerlink" title="产品架构层面"></a>产品架构层面</h2><h3 id="战略层"><a href="#战略层" class="headerlink" title="战略层"></a>战略层</h3><ol>
+<li>产品定位：我们通过产品得到什么？</li>
+<li>用户需求：用户通过产品得到什么？<ol>
+<li>用户是谁？</li>
+<li>需求是啥？</li>
+</ol>
+</li>
+</ol>
+<h3 id="范围层"><a href="#范围层" class="headerlink" title="范围层"></a>范围层</h3><ol>
+<li>功能性：产品功能规格</li>
+<li>信息性：产品内容需求</li>
+</ol>
+<h3 id="结构层"><a href="#结构层" class="headerlink" title="结构层"></a>结构层</h3><p>抽象转变具象的过程，通过“战略层”+“范围层”的积累，结合理解用户业务场景、业务习惯</p>
+<ol>
+<li>用户需求 -&gt; 产品需求</li>
+<li>底层数据架构需求设计，建立数据库</li>
+<li>底层数据流转需求设计，建立业务流程图</li>
+<li>底层数据展现需求设计，建立业务表</li>
+</ol>
+<h3 id="框架层"><a href="#框架层" class="headerlink" title="框架层"></a>框架层</h3><p>通过“结构层”的积累，结合用户体验设计具体界面操作功能，将产品需求合理的展示在产品原型上。</p>
+<ol>
+<li>数据交互</li>
+<li>功能交互</li>
+<li>“人机”交互</li>
+</ol>
+<h3 id="表现层"><a href="#表现层" class="headerlink" title="表现层"></a>表现层</h3><p>通过“框架层”的积累，结合视觉(听觉、触觉等)体验设计，将产品原型更好的展现到用户面前。</p>
+<ol>
+<li>视觉设计</li>
+<li>体验设计</li>
+</ol>
+<h2 id="产品架构图（UML模型）"><a href="#产品架构图（UML模型）" class="headerlink" title="产品架构图（UML模型）"></a>产品架构图（UML模型）</h2><h3 id="UML介绍"><a href="#UML介绍" class="headerlink" title="UML介绍"></a>UML介绍</h3><p>1997 年，OMG 组织（Object Management Group 对象管理组织）发布了<strong>统一建模语言</strong>（ <strong>U</strong>nified <strong>M</strong>odeling <strong>L</strong>anguage，UML）。UML 是一种编制软件蓝图的标准化语言，它的目标之一就是为开发团队提供标准通用的设计语言来开发和构建计算机应用。</p>
+<p>UML 提出了一套 IT 专业人员期待多年的统一的标准建模符号。通过使用 UML，这些人员能够阅读和交流系统架构和设计规划。UML 支持面向对象的技术，能够准确的方便地表达面向对像的概念，体现面向对象的分析和设计风格。</p>
+<p>UML 构成：</p>
+<ul>
+<li>事物 (Things)：UML 模型中最基本的构成元素，是具有代表性的成分的抽象</li>
+<li>关系 (Relationships)：关系把事物紧密联系在一起</li>
+<li>图 (Diagrams)：图是事物和关系的可视化表示</li>
+</ul>
+<p>UML特点</p>
+<ul>
+<li>面向对象</li>
+<li>可视化，表达能力强</li>
+<li>独立于过程</li>
+<li>独立于程序设计</li>
+<li>容易掌握使用</li>
+</ul>
+<h3 id="UML基本元素"><a href="#UML基本元素" class="headerlink" title="UML基本元素"></a>UML基本元素</h3><ul>
+<li>三个基本模块：事务，关系，图。</li>
+<li>四种事务　　　<ol>
+<li>结构事务：类，接口，协作，用例，活动类，组件，节点。</li>
+<li>行为事务：交互，状态机。</li>
+<li>分组事务：包</li>
+<li>注释事务：注释。</li>
+</ol>
+</li>
+<li>四种关系<ol>
+<li>依赖</li>
+<li>关联</li>
+<li>实现</li>
+<li>泛化</li>
+</ol>
+</li>
+<li>九种图<ol>
+<li>用例图：用例图从用户的角度出发描述系统的功能、需求，展示系统外部的各类角色与系统内部的各种用例之间的关系；</li>
+<li>类图：类图描述系统所包含的类、类的内部结构及类之间的关系；</li>
+<li>对象图：对象图是类图的一个具体实例；</li>
+<li>部署图：部署关系图定义系统中软硬件的物理体系结构；</li>
+<li>活动图：活动图描述系统中各种活动的执行顺序。</li>
+<li>状态图：状态图描述一类对象的所有可能的状态以及事件发生时状态的转移条件；</li>
+<li>序列图：顺序图表示对象之间动态合作的关系；</li>
+<li>协作图：协作图描述对象之间的协作关系；</li>
+<li>组件图：组件图描述代码部件的物理结构以及各部件之间的依赖关系；</li>
+</ol>
+</li>
+</ul>
+<h3 id="UML架构"><a href="#UML架构" class="headerlink" title="UML架构"></a>UML架构</h3><p>UML 是由视图（View）、图（Diagrams）、模型元素（Model elements）和通用机制等几个部分构成。</p>
+<h4 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h4><p>用来表示被建模系统的各个方面。由多个图构成，它不是一个图片，而是在某一个抽象层上，对系统的抽象表示。如果要为系统建立一个完整的模型图，只需定义一定数量的视图，每个视图表示系统的一个特殊方面就可以了。视图还把建模语言和系统开发时选择的方法或过程连接起来。</p>
+<h4 id="图"><a href="#图" class="headerlink" title="图"></a>图</h4><p>由各种图片构成，用来描述一个视图的内容。UML 语言定了 9 中不同的图的类型，把它们有机地结合起来就可以描述系统的所有视图。</p>
+<h4 id="模型元素"><a href="#模型元素" class="headerlink" title="模型元素"></a>模型元素</h4><p>代表面向对象中的类、对象、消息和关系等概念，是构成图的最基本的常用概念。</p>
+<h4 id="通用机制"><a href="#通用机制" class="headerlink" title="通用机制"></a>通用机制</h4><p>用于表示其他信息，比如注释、模型元素的语义等。它还提供扩展机制，使 UML 语言能够适应一个特殊的方法（或过程）、或扩充至一个组织或用户。</p>
+
+        </div>
+
+        
+        <section class="post-tags">
+            <div>
+                <span>标签:</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E4%BA%A7%E5%93%81%E7%BB%8F%E7%90%86/"># 产品经理</a>
+                    
+                        <a href="/tags/%E4%BA%A7%E5%93%81%E6%9E%B6%E6%9E%84/"># 产品架构</a>
+                    
+                        
+                </span>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/posts/11c47c28/">Hexo+Chic主题二次开发</a>
+            
+            
+            <a class="next" rel="next" href="/posts/891ec2eb/">数据分析那些事</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© KAKARROT | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>

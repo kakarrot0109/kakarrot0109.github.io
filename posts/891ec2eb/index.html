@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="KAKARROT">
+
+
+    <meta name="subtitle" content="Heaven helps those who help themselves.">
+
+
+    <meta name="description" content="I just want things to be what they are supposed to be.">
+
+
+    <meta name="keywords" content="产品,哲学,历史,魔兽,音乐">
+
+
+<title>数据分析那些事 | KAKARROT&#39;S BLOG</title>
+
+
+
+    <link rel="icon" href="/image/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+<body>
+    <!-- 阅读进度条 -->
+    <div class="reading-progress" id="reading-progress"></div>
+
+    <script>
+        // 主题检测：优先用户设置，其次系统偏好
+        (() => {
+            const stored = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const isDark = stored ? stored === 'dark' : prefersDark;
+            const pagebody = document.body;
+
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Kakarrot&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">归档</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Kakarrot&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">归档</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">展开目录</a>
+        <a onclick="go_top()">回到顶部</a>
+        <a onclick="go_bottom()">跳到底部</a>
+    </div>
+</div>
+
+<!-- 移动端TOC悬浮按钮 -->
+<div class="mobile-toc-btn" id="mobile-toc-btn">
+    <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2" fill="none">
+        <line x1="4" y1="6" x2="20" y2="6"></line>
+        <line x1="4" y1="12" x2="20" y2="12"></line>
+        <line x1="4" y1="18" x2="14" y2="18"></line>
+    </svg>
+</div>
+
+<!-- 移动端TOC抽屉 -->
+<div class="mobile-toc-drawer" id="mobile-toc-drawer">
+    <div class="drawer-header">
+        <span class="drawer-title">目录</span>
+        <span class="drawer-close" id="drawer-close">&times;</span>
+    </div>
+    <div class="drawer-content js-toc-mobile"></div>
+</div>
+
+<!-- 遮罩层 -->
+<div class="drawer-overlay" id="drawer-overlay"></div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    // 移动端TOC配置
+    var tocbot_mobile_config = {
+        tocSelector: '.js-toc-mobile',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        collapseDepth: 6,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+
+        // 初始化移动端TOC
+        if (window.innerWidth < 1280) {
+            tocbot.init(tocbot_mobile_config);
+        }
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? '展开目录' : '收起目录';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">数据分析那些事</h1>
+            
+                <div class="post-meta">
+                    
+                        作者: <a itemprop="author" rel="author" href="/">KAKARROT</a>
+                    
+
+                    
+                        <span class="post-time">
+                        日期: <a href="#">2016年08月01日</a>
+                        </span>
+                    
+                    
+                    <span class="reading-time">
+                        阅读时间: 约 15 分钟
+                    </span>
+                    
+                        <span class="post-category">
+                    分类:
+                            
+                                <a href="/categories/%E4%BA%A7%E5%93%81/">产品</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="什么是数据分析"><a href="#什么是数据分析" class="headerlink" title="什么是数据分析"></a>什么是数据分析</h2><p>根据业务场景，通过对产品底层数据库内各个库、各个表的数据统计，进行业务分析，寻找发生事情的本质原因。</p>
+<h2 id="什么是数据库"><a href="#什么是数据库" class="headerlink" title="什么是数据库"></a>什么是数据库</h2><p>按照数据结构来组织、存储和管理数据的仓库</p>
+<h2 id="什么是数据分析库"><a href="#什么是数据分析库" class="headerlink" title="什么是数据分析库"></a>什么是数据分析库</h2><p>根据业务场景、分析目标，对各个数据库的字段进行抽取、关联、聚合为全新的数据表结构，用于数据分析日常工作，保证其完整性、准确性、时效性。</p>
+<h2 id="数据分析步骤"><a href="#数据分析步骤" class="headerlink" title="数据分析步骤"></a>数据分析步骤</h2><ol>
+<li><p>收集问题</p>
+</li>
+<li><p>整理数据</p>
+</li>
+<li><p>提出假设</p>
+</li>
+<li><p>验证假设</p>
+</li>
+<li><p>找出问题</p>
+</li>
+<li><p>提出方案</p>
+<blockquote>
+<p>提出假设-验证问题-找出问题 这一步骤或许需要重复N次，直到趋向于真相水落石出。</p>
+</blockquote>
+</li>
+</ol>
+<h4 id="步骤1-收集问题"><a href="#步骤1-收集问题" class="headerlink" title="步骤1.收集问题"></a>步骤1.收集问题</h4><p>根据日常产品运营中，对于产品不满意的地方，可内部发起、也可以通过用户反馈、市场反馈以及竞品分析来寻找并收集问题。</p>
+<h4 id="步骤2-整理数据"><a href="#步骤2-整理数据" class="headerlink" title="步骤2.整理数据"></a>步骤2.整理数据</h4><ul>
+<li>熟悉产品底层架构，数据库表结构，根据问题来确定分析目标</li>
+<li>确定分析时需要的数据库表以及相应重要字段</li>
+<li>确定分析时需要的数据维度和数据质量</li>
+<li>将各个数据库表内重要分析字段聚合在数据分析库中</li>
+<li>将数据分析库中每条数据重要字段进行检查其完整性、异常性，保证数据准确、完整。</li>
+</ul>
+<h4 id="步骤3-提出假设"><a href="#步骤3-提出假设" class="headerlink" title="步骤3.提出假设"></a>步骤3.提出假设</h4><p>根据经验判断问题的原因，可假设多个原因，并对各个原因分析需要的数据字段、维度进行整理。</p>
+<h4 id="步骤4-验证假设"><a href="#步骤4-验证假设" class="headerlink" title="步骤4.验证假设"></a>步骤4.验证假设</h4><ul>
+<li>根据提出的假设，对应建立多个数据分析模型</li>
+<li>将数据分析库中每条数据各跑一遍分析模型</li>
+<li>得出多个数据分析模型的结果</li>
+<li>根据提出的假设，分析结果内容</li>
+</ul>
+<h4 id="步骤5-找出问题"><a href="#步骤5-找出问题" class="headerlink" title="步骤5.找出问题"></a>步骤5.找出问题</h4><p>根据分析结果内容，对标假设，寻找出问题原因，有时会有多个，再根据优先级&#x2F;重要程度进行排序，得出事情根本问题</p>
+<h4 id="步骤6-提出方案"><a href="#步骤6-提出方案" class="headerlink" title="步骤6.提出方案"></a>步骤6.提出方案</h4><p>将数据分析结果与运营部门进行沟通，制定解决方案</p>
+<h2 id="Python-聚合数据"><a href="#Python-聚合数据" class="headerlink" title="Python 聚合数据"></a>Python 聚合数据</h2><p>以下代码通过对用户表、充值表、消费表进行聚合并创建新的数据分析表，使用PyMongo高级聚合方法</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 实例化用户表</span></span><br><span class="line">user = connection_db.get_user()</span><br><span class="line"><span class="comment"># 实例化充值表</span></span><br><span class="line">recharge = connection_db.get_recharge()</span><br><span class="line"><span class="comment"># 实例化消费表</span></span><br><span class="line">consume = connection_db.get_consume()</span><br><span class="line"><span class="comment"># 链接数据库</span></span><br><span class="line">client = MongoClient(<span class="string">&#x27;localhost&#x27;</span>, <span class="number">27017</span>)</span><br><span class="line"><span class="comment"># 实例化统计表</span></span><br><span class="line">db_statistical = client.statistical</span><br><span class="line">statistical = db_statistical.statistical</span><br><span class="line"><span class="comment"># lookup 关联表匹配uid</span></span><br><span class="line">lookup_recharge = &#123;<span class="string">&#x27;$lookup&#x27;</span>: &#123;</span><br><span class="line">        <span class="string">&#x27;from&#x27;</span>: <span class="string">&#x27;recharge&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;localField&#x27;</span>: <span class="string">&#x27;_id&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;foreignField&#x27;</span>: <span class="string">&#x27;uid&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;as&#x27;</span>: <span class="string">&#x27;recharge&#x27;</span></span><br><span class="line">&#125;&#125;</span><br><span class="line">lookup_consume = &#123;<span class="string">&#x27;$lookup&#x27;</span>: &#123;</span><br><span class="line">        <span class="string">&#x27;from&#x27;</span>: <span class="string">&#x27;consume&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;localField&#x27;</span>: <span class="string">&#x27;_id&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;foreignField&#x27;</span>: <span class="string">&#x27;uid&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;as&#x27;</span>: <span class="string">&#x27;consume&#x27;</span></span><br><span class="line">&#125;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># replaceRoot 提升到顶级并替换所有其他字段</span></span><br><span class="line"><span class="comment"># mergeObjects 将多个文档合并为一个文档</span></span><br><span class="line"><span class="comment"># arrayElemAt 返回指定数组索引处的元素</span></span><br><span class="line">replaceRoot_recharge = &#123;<span class="string">&#x27;$replaceRoot&#x27;</span>: &#123;<span class="string">&#x27;newRoot&#x27;</span>: &#123;<span class="string">&#x27;$mergeObjects&#x27;</span>: [&#123;<span class="string">&#x27;$arrayElemAt&#x27;</span>: [<span class="string">&#x27;$recharge&#x27;</span>, <span class="number">0</span>]&#125;, <span class="string">&#x27;$$ROOT&#x27;</span>]&#125;&#125;&#125;</span><br><span class="line">replaceRoot_consume = &#123;<span class="string">&#x27;$replaceRoot&#x27;</span>: &#123;<span class="string">&#x27;newRoot&#x27;</span>: &#123;<span class="string">&#x27;$mergeObjects&#x27;</span>: [&#123;<span class="string">&#x27;$arrayElemAt&#x27;</span>: [<span class="string">&#x27;$consume&#x27;</span>, <span class="number">0</span>]&#125;, <span class="string">&#x27;$$ROOT&#x27;</span>]&#125;&#125;&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># project 筛选需要保留字段</span></span><br><span class="line">project = &#123;<span class="string">&#x27;$project&#x27;</span>: &#123;</span><br><span class="line">        <span class="comment"># 用户</span></span><br><span class="line">        <span class="string">&#x27;_id&#x27;</span>: <span class="number">1</span>,</span><br><span class="line">        <span class="string">&#x27;phone&#x27;</span>: <span class="number">1</span>,</span><br><span class="line">        <span class="string">&#x27;nickname&#x27;</span>: <span class="number">1</span>,</span><br><span class="line">        <span class="string">&#x27;regDate&#x27;</span>: <span class="number">1</span>,</span><br><span class="line">        <span class="string">&#x27;lastLogin&#x27;</span>: <span class="number">1</span>,</span><br><span class="line">        <span class="string">&#x27;clastLogin&#x27;</span>: <span class="number">1</span>,</span><br><span class="line">        <span class="string">&#x27;balance&#x27;</span>: <span class="number">1</span>,</span><br><span class="line">        <span class="string">&#x27;jBalance&#x27;</span>: <span class="number">1</span>,</span><br><span class="line">        <span class="string">&#x27;rBalance&#x27;</span>: <span class="number">1</span>,</span><br><span class="line">        <span class="string">&#x27;totalRecharge&#x27;</span>: <span class="number">1</span>,</span><br><span class="line">        <span class="string">&#x27;jcode&#x27;</span>: <span class="number">1</span>,</span><br><span class="line">        <span class="comment"># 消费</span></span><br><span class="line">        <span class="string">&#x27;consume.amount&#x27;</span>: <span class="number">1</span>,</span><br><span class="line">        <span class="string">&#x27;consume.consumeDate&#x27;</span>: <span class="number">1</span>,</span><br><span class="line">        <span class="comment"># 充值</span></span><br><span class="line">        <span class="string">&#x27;recharge.real&#x27;</span>: <span class="number">1</span>,</span><br><span class="line">        <span class="string">&#x27;recharge.amount&#x27;</span>: <span class="number">1</span>,</span><br><span class="line">        <span class="string">&#x27;recharge.from&#x27;</span>: <span class="number">1</span>,</span><br><span class="line">        <span class="string">&#x27;recharge.rechargeDate&#x27;</span>: <span class="number">1</span>,</span><br><span class="line">        <span class="string">&#x27;recharge.tradeNo&#x27;</span>: <span class="number">1</span>,</span><br><span class="line">    &#125;&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">pipeline = [lookup_recharge, lookup_consume, replaceRoot_recharge, replaceRoot_consume, project]</span><br><span class="line">result = user.aggregate(pipeline)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Python-整理数据"><a href="#Python-整理数据" class="headerlink" title="Python 整理数据"></a>Python 整理数据</h2><p>以下代码通过对数据分析表中重要字段进行清洗和修复，使用Python基本循环+判断方法</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 实例化统计表</span></span><br><span class="line">user = connection_db.get_statistical()</span><br><span class="line">users = [u <span class="keyword">for</span> u <span class="keyword">in</span> user.find(&#123;&#125;)]</span><br><span class="line"><span class="comment"># 实例化订单表</span></span><br><span class="line">job = connection_db.get_job()</span><br><span class="line">jobs = [j <span class="keyword">for</span> j <span class="keyword">in</span> job.find(&#123;&#125;)]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 修复最后登录日期错误的文档</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">update_last_login</span>():</span><br><span class="line">    date = datetime.datetime(<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>)</span><br><span class="line">    <span class="keyword">for</span> u <span class="keyword">in</span> users:</span><br><span class="line">        <span class="keyword">if</span> u.get(<span class="string">&#x27;lastLogin&#x27;</span>) == date:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;正在修复最后登录日期...&#x27;</span> + u.get(<span class="string">&#x27;lastLogin&#x27;</span>) + <span class="string">&#x27;--&gt;&#x27;</span> + u.get(<span class="string">&#x27;regDate&#x27;</span>))</span><br><span class="line">            user.update_many(</span><br><span class="line">                &#123;<span class="string">&#x27;lastLogin&#x27;</span>: date&#125;,</span><br><span class="line">                &#123;<span class="string">&#x27;$set&#x27;</span>: &#123;<span class="string">&#x27;lastLogin&#x27;</span>: u.get(<span class="string">&#x27;regDate&#x27;</span>)&#125;&#125;</span><br><span class="line">            )</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;没有可修复的文档！&#x27;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;最后登录日期已全部修复！&#x27;</span>)</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 修复任务表内无效文档</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">update_error_jobs</span>():</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> jobs:</span><br><span class="line">        <span class="keyword">if</span> j.get(<span class="string">&#x27;Status&#x27;</span>) <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;正在修复任务表错误文档...&#x27;</span>)</span><br><span class="line">            <span class="built_in">print</span>(j)</span><br><span class="line">            job.delete_one(j)</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">start_time = datetime.datetime.now()</span><br><span class="line">update_last_login()</span><br><span class="line">update_error_jobs()</span><br><span class="line">end_time = datetime.datetime.now()</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;修复文档完成，耗时:&#x27;</span> + <span class="built_in">str</span>((end_time-start_time).seconds) + <span class="string">&#x27;秒&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+
+        </div>
+
+        
+        <section class="post-tags">
+            <div>
+                <span>标签:</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E4%BA%A7%E5%93%81%E7%BB%8F%E7%90%86/"># 产品经理</a>
+                    
+                        <a href="/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/"># 数据分析</a>
+                    
+                        <a href="/tags/Python/"># Python</a>
+                    
+                        
+                </span>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/posts/d1d2222d/">产品架构那些事</a>
+            
+            
+            <a class="next" rel="next" href="/posts/6727c243/">产品营销那些事</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© KAKARROT | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>

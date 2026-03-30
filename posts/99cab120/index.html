@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="KAKARROT">
+
+
+    <meta name="subtitle" content="Heaven helps those who help themselves.">
+
+
+    <meta name="description" content="I just want things to be what they are supposed to be.">
+
+
+    <meta name="keywords" content="产品,哲学,历史,魔兽,音乐">
+
+
+<title>用户留存那些事 | KAKARROT&#39;S BLOG</title>
+
+
+
+    <link rel="icon" href="/image/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+<body>
+    <!-- 阅读进度条 -->
+    <div class="reading-progress" id="reading-progress"></div>
+
+    <script>
+        // 主题检测：优先用户设置，其次系统偏好
+        (() => {
+            const stored = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const isDark = stored ? stored === 'dark' : prefersDark;
+            const pagebody = document.body;
+
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Kakarrot&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">归档</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Kakarrot&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">归档</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">展开目录</a>
+        <a onclick="go_top()">回到顶部</a>
+        <a onclick="go_bottom()">跳到底部</a>
+    </div>
+</div>
+
+<!-- 移动端TOC悬浮按钮 -->
+<div class="mobile-toc-btn" id="mobile-toc-btn">
+    <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2" fill="none">
+        <line x1="4" y1="6" x2="20" y2="6"></line>
+        <line x1="4" y1="12" x2="20" y2="12"></line>
+        <line x1="4" y1="18" x2="14" y2="18"></line>
+    </svg>
+</div>
+
+<!-- 移动端TOC抽屉 -->
+<div class="mobile-toc-drawer" id="mobile-toc-drawer">
+    <div class="drawer-header">
+        <span class="drawer-title">目录</span>
+        <span class="drawer-close" id="drawer-close">&times;</span>
+    </div>
+    <div class="drawer-content js-toc-mobile"></div>
+</div>
+
+<!-- 遮罩层 -->
+<div class="drawer-overlay" id="drawer-overlay"></div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    // 移动端TOC配置
+    var tocbot_mobile_config = {
+        tocSelector: '.js-toc-mobile',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        collapseDepth: 6,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+
+        // 初始化移动端TOC
+        if (window.innerWidth < 1280) {
+            tocbot.init(tocbot_mobile_config);
+        }
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? '展开目录' : '收起目录';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">用户留存那些事</h1>
+            
+                <div class="post-meta">
+                    
+                        作者: <a itemprop="author" rel="author" href="/">KAKARROT</a>
+                    
+
+                    
+                        <span class="post-time">
+                        日期: <a href="#">2016年07月03日</a>
+                        </span>
+                    
+                    
+                    <span class="reading-time">
+                        阅读时间: 约 5 分钟
+                    </span>
+                    
+                        <span class="post-category">
+                    分类:
+                            
+                                <a href="/categories/%E4%BA%A7%E5%93%81/">产品</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>在互联网行业当中，因为拉新或推广的活动把客户引过来，用户开始访问公司网站、使用产品，但是经过一段时间可能就会有一部分客户逐渐流失了。那些留下来的人或者是经常回访我们公司网站、使用产品的人就称为留存。</p>
+<p>现在大家经常会用到所谓的“日活”（编者注：日活跃用户量，DAU）来监测我们的网站，有的时候会看到我们的“日活”在一段时期内都是逐渐地增加的，这是一个非常好的现象。但是如果我们忽略了留存分析的话，这个结果很可能是一个错误。</p>
+<p>比如某公司做了很多拉新、推广的活动，人是带来了很多，但是留下来或经常返回来的客户不一定增长，他们有可能是在减少，只不过是拉新过来的人太多了而掩盖了流失率居高不下的问题，实际上客户的留存是在逐渐降低的。这个时候留存分析就很重要！</p>
+<h2 id="数据模型"><a href="#数据模型" class="headerlink" title="数据模型"></a>数据模型</h2><p><img src="https://i.loli.net/2019/07/03/5d1c11fa4d03811003.png" alt="留存图.png"><br><img src="https://i.loli.net/2019/07/03/5d1c11fa77bbc89312.png" alt="留存表.png"></p>
+<p>在活动开始的第一天记录用户数量，随着时间的推移，用户数量的变化来分析用户对于产品的留存情况。</p>
+<p>根据自身产品的用户使用周期，指定不同的指标来进行分析。</p>
+<p>有些产品可能每天都会用到，比如音乐APP,社交APP等；但是也有些工具型产品的使用频率不高，比如在线图表制作、下载工具等。</p>
+<p><img src="https://i.loli.net/2019/07/03/5d1c149242ba744419.png" alt="留存趋势.png"></p>
+<ul>
+<li><p>振荡期</p>
+<blockquote>
+<p>用户留存率从第一天开始剧烈下滑</p>
+</blockquote>
+</li>
+<li><p>选择期</p>
+<blockquote>
+<p>用户熟悉产品功能，对比竞品并作出选择</p>
+</blockquote>
+</li>
+<li><p>平稳期</p>
+<blockquote>
+<p>用户转化为核心用户</p>
+</blockquote>
+</li>
+</ul>
+<ol>
+<li>在震荡期内，不要因为用户数量下滑而焦虑</li>
+<li>在选择期内，分析自身产品的独特之处</li>
+<li>在平稳期内，将自身产品的独特之处做到极致</li>
+</ol>
+<h2 id="提高留存"><a href="#提高留存" class="headerlink" title="提高留存"></a>提高留存</h2><p>任何产品初次上线、接触的第一批新用户想要提高留存是非常难的，因为没有数据作为依据。</p>
+<ul>
+<li><p>在”振荡期”内，大量的用户涌入，可以为我们提供较大的用户基数数据来分析。</p>
+</li>
+<li><p>在”选择期”内，查看这些用户的操作行为，可以分析出我们产品吸引用户的点。</p>
+</li>
+<li><p>在”平稳期”内，将我们的核心优势做到极致，并开发辅助的功能。</p>
+<blockquote>
+<p>说不定这次的辅助功能，在下一个留存周期里成为次核心功能，更好的提高用户留存率。</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="数据分析准备"><a href="#数据分析准备" class="headerlink" title="数据分析准备"></a>数据分析准备</h2><p><img src="https://i.loli.net/2019/07/03/5d1c23d8a5e5845238.png" alt="自制数据图.png"></p>
+<p><strong>准备步骤</strong></p>
+<ol>
+<li>用户参与网站活动</li>
+<li>用户访问网站记录</li>
+<li>数据分析用户留存</li>
+<li>优化产品提高留存</li>
+</ol>
+<p><strong>基础数据</strong></p>
+<ul>
+<li>当天用户量</li>
+<li>每日用户量</li>
+<li>一周用户量</li>
+<li>一月用户量</li>
+<li>一季用户量</li>
+<li>功能热度</li>
+</ul>
+<p><strong>延伸数据</strong></p>
+<blockquote>
+<p>Day1-Day3为动荡期，Day3-Day7为选择期，Day7之后为平稳期。</p>
+</blockquote>
+<ul>
+<li>动荡期内用户行为共性</li>
+<li>选择期内用户行为共性</li>
+<li>平稳期内用户行为共性</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>周期&#x2F;热度</th>
+<th>人数</th>
+<th>功能A</th>
+<th>功能B</th>
+<th>功能C</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>动荡期</td>
+<td>9000</td>
+<td>6</td>
+<td>2</td>
+<td>9</td>
+</tr>
+<tr>
+<td>选择期</td>
+<td>3000</td>
+<td>5</td>
+<td>2</td>
+<td>9</td>
+</tr>
+<tr>
+<td>平稳期</td>
+<td>500</td>
+<td>6</td>
+<td>3</td>
+<td>8</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>热度评分 1-10分 根据热度不同，评分越高热度越高</p>
+</blockquote>
+<p><strong>用户留存、产品功能、产品盈利的关系</strong></p>
+<p>产品和网站想要盈利，必须有忠诚、稳定的核心用户，当然临时性、冲动性用户也越多越好，但是还是不够稳定。</p>
+<p>产品和网站的盈利与产品周期密不可分。</p>
+<p>用户稳定长期使用、付费，对于产品来说有用户数据来分析产品，提供产品更新迭代的必要依据。这样产品才会越做越好，用户才会越来越活跃、稳定。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>分析用户留存需要锁定一个时间段&#x2F;活动周期。</p>
+<p>抓住留存周期内各个期间，分析用户行为，找到用户留存原因。</p>
+<p>使用户留下来的功能做到极致，使用户离开的功能完成迭代修复。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a target="_blank" rel="noopener" href="https://blog.growingio.com/courses/18">https://blog.growingio.com/courses/18</a></p>
+
+        </div>
+
+        
+        <section class="post-tags">
+            <div>
+                <span>标签:</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E4%BA%A7%E5%93%81%E7%BB%8F%E7%90%86/"># 产品经理</a>
+                    
+                        <a href="/tags/%E4%BA%A7%E5%93%81/"># 产品</a>
+                    
+                        <a href="/tags/%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1/"># 产品设计</a>
+                    
+                        
+                </span>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/posts/70f22acb/">用户转化那些事</a>
+            
+            
+            <a class="next" rel="next" href="/posts/4480440d/">用户注册那些事</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© KAKARROT | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>

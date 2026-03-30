@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="KAKARROT">
+
+
+    <meta name="subtitle" content="Heaven helps those who help themselves.">
+
+
+    <meta name="description" content="I just want things to be what they are supposed to be.">
+
+
+    <meta name="keywords" content="产品,哲学,历史,魔兽,音乐">
+
+
+<title>Hexo+Chic主题二次开发 | KAKARROT&#39;S BLOG</title>
+
+
+
+    <link rel="icon" href="/image/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+<body>
+    <!-- 阅读进度条 -->
+    <div class="reading-progress" id="reading-progress"></div>
+
+    <script>
+        // 主题检测：优先用户设置，其次系统偏好
+        (() => {
+            const stored = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const isDark = stored ? stored === 'dark' : prefersDark;
+            const pagebody = document.body;
+
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Kakarrot&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">归档</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Kakarrot&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">归档</a>
+                
+                    <a class="menu-item" href="/category">分类</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">展开目录</a>
+        <a onclick="go_top()">回到顶部</a>
+        <a onclick="go_bottom()">跳到底部</a>
+    </div>
+</div>
+
+<!-- 移动端TOC悬浮按钮 -->
+<div class="mobile-toc-btn" id="mobile-toc-btn">
+    <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2" fill="none">
+        <line x1="4" y1="6" x2="20" y2="6"></line>
+        <line x1="4" y1="12" x2="20" y2="12"></line>
+        <line x1="4" y1="18" x2="14" y2="18"></line>
+    </svg>
+</div>
+
+<!-- 移动端TOC抽屉 -->
+<div class="mobile-toc-drawer" id="mobile-toc-drawer">
+    <div class="drawer-header">
+        <span class="drawer-title">目录</span>
+        <span class="drawer-close" id="drawer-close">&times;</span>
+    </div>
+    <div class="drawer-content js-toc-mobile"></div>
+</div>
+
+<!-- 遮罩层 -->
+<div class="drawer-overlay" id="drawer-overlay"></div>
+
+<script>
+    var tocbot_timer;
+    var DEPTH_MAX = 6; // 为 6 时展开所有
+    var tocbot_default_config = {
+        tocSelector: '.tocbot-list',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        onClick: extend_click,
+    };
+
+    // 移动端TOC配置
+    var tocbot_mobile_config = {
+        tocSelector: '.js-toc-mobile',
+        contentSelector: '.post-content',
+        headingSelector: 'h1, h2, h3, h4, h5',
+        orderedList: false,
+        scrollSmooth: true,
+        collapseDepth: 6,
+    };
+
+    function extend_click() {
+        clearTimeout(tocbot_timer);
+        tocbot_timer = setTimeout(function() {
+            tocbot.refresh(obj_merge(tocbot_default_config, {
+                hasInnerContainers: true
+            }));
+        }, 420); // 这个值是由 tocbot 源码里定义的 scrollSmoothDuration 得来的
+    }
+
+    document.ready(function() {
+        tocbot.init(obj_merge(tocbot_default_config, {
+            collapseDepth: 1
+        }));
+
+        // 初始化移动端TOC
+        if (window.innerWidth < 1280) {
+            tocbot.init(tocbot_mobile_config);
+        }
+    });
+
+    function expand_toc() {
+        var b = document.querySelector('.tocbot-toc-expand');
+        var expanded = b.getAttribute('data-expanded');
+        expanded ? b.removeAttribute('data-expanded') : b.setAttribute('data-expanded', true);
+        tocbot.refresh(obj_merge(tocbot_default_config, {
+            collapseDepth: expanded ? 1 : DEPTH_MAX
+        }));
+        b.innerText = expanded ? '展开目录' : '收起目录';
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function obj_merge(target, source) {
+        for (var item in source) {
+            if (source.hasOwnProperty(item)) {
+                target[item] = source[item];
+            }
+        }
+        return target;
+    }
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Hexo+Chic主题二次开发</h1>
+            
+                <div class="post-meta">
+                    
+                        作者: <a itemprop="author" rel="author" href="/">KAKARROT</a>
+                    
+
+                    
+                        <span class="post-time">
+                        日期: <a href="#">2022年06月07日</a>
+                        </span>
+                    
+                    
+                    <span class="reading-time">
+                        阅读时间: 约 20 分钟
+                    </span>
+                    
+                        <span class="post-category">
+                    分类:
+                            
+                                <a href="/categories/Hexo/">Hexo</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="Chic-theme-介绍"><a href="#Chic-theme-介绍" class="headerlink" title="Chic theme 介绍"></a>Chic theme 介绍</h2><ul>
+<li>主题介绍：优雅、功能全面、阅读友好的 hexo 主题。</li>
+<li>主题地址：<a target="_blank" rel="noopener" href="https://github.com/Siricee/hexo-theme-Chic">GitHub 仓库地址</a></li>
+</ul>
+<h4 id="下载主题"><a href="#下载主题" class="headerlink" title="下载主题"></a>下载主题</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd your-blog/themes</span><br><span class="line">git clone https://github.com/Siricee/hexo-theme-Chic.git Chic</span><br></pre></td></tr></table></figure>
+
+<p>其中 <code>your-blog</code> 为你的博客目录。</p>
+<p>如果你已经有了主题，那么可以使用 <code>git pull</code> 命令更新主题。</p>
+<h4 id="启用主题"><a href="#启用主题" class="headerlink" title="启用主题"></a>启用主题</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd your-blog</span><br><span class="line">vim _config.yml</span><br></pre></td></tr></table></figure>
+
+<p>找到 <code>theme</code> 字段，修改为 <code>Chic</code><br>然后保存并退出。</p>
+<h4 id="本地测试"><a href="#本地测试" class="headerlink" title="本地测试"></a>本地测试</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo s</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Chic-theme-自定义配置"><a href="#Chic-theme-自定义配置" class="headerlink" title="Chic theme 自定义配置"></a>Chic theme 自定义配置</h2><h4 id="主题配置文件"><a href="#主题配置文件" class="headerlink" title="主题配置文件"></a>主题配置文件</h4><p>配置文件修改为自己的信息。首页部分基本已经完成自定义了。</p>
+<figure class="highlight yml"><figcaption><span>_config.yml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 头部</span></span><br><span class="line"><span class="attr">navname:</span> <span class="string">Kakarrot&#x27;s</span> <span class="string">Blog</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 导航栏项目</span></span><br><span class="line"><span class="attr">nav:</span></span><br><span class="line">  <span class="string">归档:</span> <span class="string">/archives</span></span><br><span class="line">  <span class="comment"># 分类: /category</span></span><br><span class="line">  <span class="comment"># 标签: /tag</span></span><br><span class="line">  <span class="string">关于:</span> <span class="string">/about</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 网站图标</span></span><br><span class="line"><span class="attr">favicon:</span> <span class="string">/favicon.ico</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 个人资料</span></span><br><span class="line"><span class="attr">nickname:</span> <span class="string">Kakarrot</span></span><br><span class="line"></span><br><span class="line"><span class="comment">### 这个变量是 MarkDown 格式。</span></span><br><span class="line"><span class="attr">description:</span> <span class="string">我只想事情是它本来该有的那个样子</span> <span class="string">&lt;br&gt;**I</span> <span class="string">just</span> <span class="string">want</span> <span class="string">things</span> <span class="string">to</span> <span class="string">be</span> <span class="string">what</span> <span class="string">they</span> <span class="string">are</span> <span class="string">supposed</span> <span class="string">to</span> <span class="string">be**</span></span><br><span class="line"></span><br><span class="line"><span class="comment">### 头像</span></span><br><span class="line"><span class="attr">avatar:</span> <span class="string">/image/avatar.jpg</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 主菜单导航</span></span><br><span class="line"><span class="comment">## 链接关键词不应该被更改。</span></span><br><span class="line"><span class="comment">## 关键词后接完整的 URL。</span></span><br><span class="line"><span class="comment">## 未使用的关键词可以被注释掉。</span></span><br><span class="line"><span class="attr">links:</span></span><br><span class="line">  <span class="comment"># 博客:</span></span><br><span class="line">  <span class="comment"># 分类:</span></span><br><span class="line">  <span class="comment"># 标签:</span></span><br><span class="line">  <span class="comment"># 链接:</span></span><br><span class="line">  <span class="comment"># 简历:</span></span><br><span class="line">  <span class="comment"># 发布:</span></span><br><span class="line">  <span class="comment"># 奖杯:</span></span><br><span class="line">  <span class="comment"># 画廊:</span></span><br><span class="line">  <span class="comment"># RSS:</span></span><br><span class="line">  <span class="comment"># 支付宝:</span></span><br><span class="line">  <span class="comment"># 知乎:</span></span><br><span class="line">  <span class="comment"># LinkedIn:</span></span><br><span class="line">  <span class="comment"># FaceBook:</span></span><br><span class="line">  <span class="comment"># Twitter:</span></span><br><span class="line">  <span class="comment"># Skype:</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 如何显示链接：你有 2 个选择--文本或图标。</span></span><br><span class="line"><span class="attr">links_text_enable:</span> <span class="literal">True</span></span><br><span class="line"><span class="attr">links_icon_enable:</span> <span class="literal">True</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 文章页面</span></span><br><span class="line"><span class="comment">## 文章元数据</span></span><br><span class="line"><span class="attr">post_meta_enable:</span> <span class="literal">True</span></span><br><span class="line"><span class="attr">post_author_enable:</span> <span class="literal">True</span></span><br><span class="line"><span class="attr">post_date_enable:</span> <span class="literal">True</span></span><br><span class="line"><span class="attr">post_category_enable:</span> <span class="literal">True</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 文章版权</span></span><br><span class="line"><span class="attr">post_copyright_enable:</span> <span class="literal">False</span></span><br><span class="line"><span class="attr">post_copyright_author_enable:</span> <span class="literal">False</span></span><br><span class="line"><span class="attr">post_copyright_permalink_enable:</span> <span class="literal">False</span></span><br><span class="line"><span class="attr">post_copyright_license_enable:</span> <span class="literal">False</span></span><br><span class="line"><span class="attr">post_copyright_license_text:</span> <span class="string">Copyright</span> <span class="string">(c)</span> <span class="number">2019</span> <span class="string">&lt;a</span> <span class="string">href=&quot;http://creativecommons.org/licenses/by-nc/4.0/&quot;&gt;CC-BY-NC-4.0&lt;/a&gt;</span> <span class="string">LICENSE</span></span><br><span class="line"><span class="attr">post_copyright_slogan_enable:</span> <span class="literal">False</span></span><br><span class="line"><span class="attr">post_copyright_slogan_text:</span> <span class="string">Do</span> <span class="string">you</span> <span class="string">believe</span> <span class="string">in</span> <span class="string">&lt;strong&gt;DESTINY&lt;/strong&gt;?</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 目录</span></span><br><span class="line"><span class="attr">post_toc_enable:</span> <span class="literal">True</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 页面</span></span><br><span class="line"><span class="attr">page_title_enable:</span> <span class="literal">True</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 日期/时间格式</span></span><br><span class="line"><span class="comment">## Hexo 使用 Moment.js 来解析和显示日期</span></span><br><span class="line"><span class="comment">## 你可以自定义日期格式，定义在</span></span><br><span class="line"><span class="comment">## http://momentjs.com/docs/#/displaying/format/</span></span><br><span class="line"><span class="attr">date_format:</span> <span class="string">YYYY年MM月DD日</span></span><br><span class="line"><span class="comment"># time_format:</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 样式表加载在 &lt;head&gt; 中</span></span><br><span class="line"><span class="attr">stylesheets:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">/css/style.css</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 脚本加载在 body 末尾</span></span><br><span class="line"><span class="attr">scripts:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">/js/script.js</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">/js/tocbot.min.js</span></span><br><span class="line">    <span class="comment"># tscanlin/tocbot: Build a table of contents from headings in an HTML document.</span></span><br><span class="line">    <span class="comment"># https://github.com/tscanlin/tocbot</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 插件功能</span></span><br><span class="line"><span class="comment">## Mathjax：数学公式支持</span></span><br><span class="line"><span class="comment">## https://www.mathjax.org</span></span><br><span class="line"><span class="attr">mathjax:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">import:</span> <span class="string">demand</span> <span class="comment"># global or demand</span></span><br><span class="line">  <span class="comment">## global: all pages will load mathjax,this will degrade performance and some grammers may be parsed wrong.</span></span><br><span class="line">  <span class="comment">## demand: Recommend option,if your post need fomula, you can declare &#x27;mathjax: true&#x27; in Front-matter</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="主题颜色"><a href="#主题颜色" class="headerlink" title="主题颜色"></a>主题颜色</h4><p>页面颜色配置,修改首页 Dark Mode 背景色。</p>
+<figure class="highlight css"><figcaption><span>_partial\variable.styl</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$dark-<span class="attribute">background-color</span> = <span class="selector-id">#363636</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="主题汉化"><a href="#主题汉化" class="headerlink" title="主题汉化"></a>主题汉化</h4><p>文章页面的作者、日期、分类等信息已经汉化了，并且将日期里的时间给隐藏了。</p>
+<figure class="highlight html"><figcaption><span>post.ejs</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;post-meta&quot;</span>&gt;</span></span><br><span class="line">  &lt;% if(theme.post_author_enable &amp;&amp; config.author)&#123; %&gt; 作者:</span><br><span class="line">  <span class="tag">&lt;<span class="name">a</span> <span class="attr">itemprop</span>=<span class="string">&quot;author&quot;</span> <span class="attr">rel</span>=<span class="string">&quot;author&quot;</span> <span class="attr">href</span>=<span class="string">&quot;/&quot;</span></span></span><br><span class="line"><span class="tag">    &gt;</span>&lt;%- config.author %&gt;<span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span>&lt;/a</span><br><span class="line">  &gt;</span><br><span class="line">  &lt;% &#125; %&gt; &lt;% if(page.date &amp;&amp; theme.post_date_enable)&#123; %&gt;</span><br><span class="line">  <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;post-time&quot;</span>&gt;</span></span><br><span class="line">    日期: <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;#&quot;</span>&gt;</span>&lt;%- date(page.date, theme.date_format) %&gt;<span class="symbol">&amp;nbsp;</span><span class="symbol">&amp;nbsp;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">  &lt;% &#125; %&gt; &lt;% if(page.categories.length!==0 &amp;&amp; theme.post_category_enable)&#123; %&gt;</span><br><span class="line">  <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;post-category&quot;</span>&gt;</span></span><br><span class="line">    分类: &lt;% page.categories.forEach(item=&gt;&#123; %&gt;</span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;&lt;%- url_for(item.path) %&gt;&quot;</span>&gt;</span>&lt;%- item.name %&gt;<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">    &lt;% &#125;) %&gt;</span><br><span class="line">  <span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">  &lt;% &#125; %&gt;</span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>文章页面底部的标签和返回隐藏了。</p>
+<figure class="highlight html"><figcaption><span>post.ejs</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- &lt;section class=&quot;post-tags&quot;&gt;</span></span><br><span class="line"><span class="comment">  &lt;div&gt;</span></span><br><span class="line"><span class="comment">    &lt;span&gt;Tag(s):&lt;/span&gt;</span></span><br><span class="line"><span class="comment">    &lt;span class=&quot;tag&quot;&gt;</span></span><br><span class="line"><span class="comment">      &lt;% if(page.tags.length!==0)&#123;%&gt; &lt;% page.tags.forEach(item=&gt;&#123; %&gt;</span></span><br><span class="line"><span class="comment">      &lt;a href=&quot;&lt;%- url_for(item.path) %&gt;&quot;&gt;# &lt;%- item.name %&gt;&lt;/a&gt;</span></span><br><span class="line"><span class="comment">      &lt;% &#125;) %&gt; &lt;% &#125; %&gt;</span></span><br><span class="line"><span class="comment">    &lt;/span&gt;</span></span><br><span class="line"><span class="comment">  &lt;/div&gt;</span></span><br><span class="line"><span class="comment">  &lt;div&gt;</span></span><br><span class="line"><span class="comment">    &lt;a href=&quot;javascript:window.history.back();&quot;&gt;back&lt;/a&gt;</span></span><br><span class="line"><span class="comment">    &lt;span&gt;· &lt;/span&gt;</span></span><br><span class="line"><span class="comment">    &lt;a href=&quot;&lt;%- config.root %&gt;&quot;&gt;home&lt;/a&gt;</span></span><br><span class="line"><span class="comment">  &lt;/div&gt;</span></span><br><span class="line"><span class="comment">&lt;/section&gt; --&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>文章页面边栏快捷按钮汉化</p>
+<figure class="highlight js"><figcaption><span>toc.ejs</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;div <span class="keyword">class</span>=<span class="string">&quot;post-toc&quot;</span>&gt;</span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;tocbot-list&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;tocbot-list-menu&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">class</span>=<span class="string">&quot;tocbot-toc-expand&quot;</span> <span class="attr">onclick</span>=<span class="string">&quot;expand_toc()&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      展开全部</span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">a</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">onclick</span>=<span class="string">&quot;go_top()&quot;</span>&gt;</span>返回顶部<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">onclick</span>=<span class="string">&quot;go_bottom()&quot;</span>&gt;</span>降至底部<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;/div&gt;;</span><br><span class="line"></span><br><span class="line">b.<span class="property">innerText</span> = expanded ? <span class="string">&quot;展开全部&quot;</span> : <span class="string">&quot;收起全部&quot;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>分类页面&amp;标签页面汉化</p>
+<figure class="highlight html"><figcaption><span>_page\category.ejs</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;container&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;post-wrap categories&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h2</span> <span class="attr">class</span>=<span class="string">&quot;post-title&quot;</span>&gt;</span>-<span class="symbol">&amp;nbsp;</span>分类<span class="symbol">&amp;nbsp;</span>·<span class="symbol">&amp;nbsp;</span>&lt;%-page.category%&gt;-<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  &lt;%- partial(&#x27;archive&#x27;, &#123;pagination: config.category, index: true&#125;) %&gt;</span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight html"><figcaption><span>_page\tag.ejs</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;%# single tag page%&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;container&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;post-wrap tags&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h2</span> <span class="attr">class</span>=<span class="string">&quot;post-title&quot;</span>&gt;</span>-<span class="symbol">&amp;nbsp;</span>标签<span class="symbol">&amp;nbsp;</span>·<span class="symbol">&amp;nbsp;</span>&lt;%-page.tag%&gt;-<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  &lt;%- partial(&#x27;archive&#x27;, &#123;pagination: config.tag, index: true&#125;) %&gt;</span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="主题自定义CSS"><a href="#主题自定义CSS" class="headerlink" title="主题自定义CSS"></a>主题自定义CSS</h4><figure class="highlight css"><figcaption><span>_partial\custom.styl</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">// 深色模式代码块</span><br><span class="line"><span class="selector-class">.dark-theme</span> <span class="selector-class">.post-content</span> <span class="selector-tag">figure</span>,</span><br><span class="line"><span class="selector-class">.dark-theme</span> <span class="selector-class">.post-content</span> <span class="selector-tag">figure</span><span class="selector-class">.highlight</span> <span class="selector-class">.code</span> pre &#123;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#23241f</span>;</span><br><span class="line">    <span class="attribute">color</span>: <span class="number">#f8f8f2</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 深色模式代码块行号</span><br><span class="line"><span class="selector-class">.dark-theme</span> <span class="selector-class">.post-content</span> <span class="selector-tag">figure</span><span class="selector-class">.highlight</span> <span class="selector-class">.gutter</span> pre &#123;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#23241f</span>;</span><br><span class="line">    <span class="attribute">color</span>: $dark-mode-pre-line-number-foreground-color;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 深色模式引用模式</span><br><span class="line">$dark-post-<span class="selector-tag">blockquote</span>-<span class="attribute">background-color</span> = <span class="selector-id">#23241f</span></span><br></pre></td></tr></table></figure>
+        </div>
+
+        
+        <section class="post-tags">
+            <div>
+                <span>标签:</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/Hexo/"># Hexo</a>
+                    
+                        <a href="/tags/Blog/"># Blog</a>
+                    
+                        
+                </span>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/posts/efab4cb0/">Hexo更新升级</a>
+            
+            
+            <a class="next" rel="next" href="/posts/d1d2222d/">产品架构那些事</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© KAKARROT | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>
