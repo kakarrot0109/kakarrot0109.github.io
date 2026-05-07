@@ -13,15 +13,15 @@ html::-webkit-scrollbar {
   height: 8px;
 }
 html::-webkit-scrollbar-track {
-  background: #f5f5f7;
+  background: #fffbeb;
 }
 html::-webkit-scrollbar-thumb {
   height: 40px;
-  background-color: #d2d2d7;
+  background-color: #faeee1;
   border-radius: 4px;
 }
 html::-webkit-scrollbar-thumb:hover {
-  background-color: #86868b;
+  background-color: #78716c;
 }
 body {
   font-size: 15px;

@@ -1,4 +1,44 @@
 /**
- * 字体配置 - 东方人文风格
- * 标题使用衬线体传达人文气息，正文使用无衬线体确保可读性
+ * 字体配置 - Editorial · 琥珀
+ *
+ * 设计原则：
+ * 1. CJK 走系统字体（不引网络中文，避免 5MB+ 首屏成本）
+ * 2. Latin 自托管 WOFF2（避开 Google Fonts CDN 在 GFW 下的不稳定）
+ * 3. 代码字体走系统等宽（SF Mono / Menlo / Consolas / Liberation Mono）
+ * 4. 每个角色都有完整跨平台 fallback 链
  **/
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("../fonts/latin/cormorant-garamond-600.woff2") format('woff2');
+}
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("../fonts/latin/cormorant-garamond-700.woff2") format('woff2');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/latin/inter-400.woff2") format('woff2');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("../fonts/latin/inter-500.woff2") format('woff2');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("../fonts/latin/inter-600.woff2") format('woff2');
+}

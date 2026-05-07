@@ -157,26 +157,26 @@
     right: 24px;
     width: 52px;
     height: 52px;
-    background: #0071e3;
+    background: #b45309;
     color: #fff;
     border-radius: 50%;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 16px rgba(0,113,227,0.4);
+    box-shadow: 0 4px 16px rgba(180,83,9,0.4);
     z-index: 1000;
     cursor: pointer;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
   .mobile-toc-btn:hover {
     transform: scale(1.05);
-    box-shadow: 0 6px 20px rgba(0,113,227,0.5);
+    box-shadow: 0 6px 20px rgba(180,83,9,0.5);
   }
   .mobile-toc-btn:active {
     transform: scale(0.95);
   }
   .dark-theme .mobile-toc-btn {
-    background: #2997ff;
-    box-shadow: 0 4px 16px rgba(41,151,255,0.4);
+    background: #e8b765;
+    box-shadow: 0 4px 16px rgba(232,183,101,0.4);
   }
   .mobile-toc-drawer {
     position: fixed;
