@@ -109,5 +109,5 @@ theme: Chic
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: https://github.com/kakarrot0109/kakarrot0109.github.io
+  repo: git@github.com:kakarrot0109/kakarrot0109.github.io.git
   branch: master

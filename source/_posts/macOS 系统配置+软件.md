@@ -1,12 +1,13 @@
 ---
 title: macOS 系统配置+软件
-date: 2026-03-30 16:45:57
 categories:
   - 技术
 tags:
   - macOS
   - 开发环境
   - Homebrew
+abbrlink: 42597ae8
+date: 2026-03-30 16:45:57
 ---
 
 # macOS 系统配置+软件
