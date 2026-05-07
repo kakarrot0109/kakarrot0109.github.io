@@ -1,6 +1,9 @@
 # Dependencies
 node_modules/
 
+# Superpowers brainstorming workspace
+.superpowers/
+
 # Generated files
 public/
 db.json

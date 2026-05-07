@@ -1,13 +1,61 @@
 /**
- * 字体配置 - 东方人文风格
- * 标题使用衬线体传达人文气息，正文使用无衬线体确保可读性
+ * 字体配置 - Editorial · 琥珀
+ *
+ * 设计原则：
+ * 1. CJK 走系统字体（不引网络中文，避免 5MB+ 首屏成本）
+ * 2. Latin 自托管 WOFF2（避开 Google Fonts CDN 在 GFW 下的不稳定）
+ * 3. 代码字体走系统等宽（SF Mono / Menlo / Consolas / Liberation Mono）
+ * 4. 每个角色都有完整跨平台 fallback 链
  **/
 
-// 标题字体 - 衬线体（用于标题，传达人文气息）
-$font-family-serif = 'Noto Serif SC', 'Source Han Serif SC', 'Songti SC', STSong, SimSun, serif
+// ==============================
+// Latin 自托管字体声明
+// ==============================
 
-// 正文字体 - 无衬线体（确保可读性）
-$font-family = 'Noto Sans SC', 'Source Han Sans SC', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif
+@font-face
+  font-family 'Cormorant Garamond'
+  font-style normal
+  font-weight 600
+  font-display swap
+  src url('../fonts/latin/cormorant-garamond-600.woff2') format('woff2')
 
-// 代码字体 - 等宽字体
-$font-family-mono = 'JetBrains Mono', 'Fira Code', Menlo, Monaco, Consolas, 'Courier New', monospace
+@font-face
+  font-family 'Cormorant Garamond'
+  font-style normal
+  font-weight 700
+  font-display swap
+  src url('../fonts/latin/cormorant-garamond-700.woff2') format('woff2')
+
+@font-face
+  font-family 'Inter'
+  font-style normal
+  font-weight 400
+  font-display swap
+  src url('../fonts/latin/inter-400.woff2') format('woff2')
+
+@font-face
+  font-family 'Inter'
+  font-style normal
+  font-weight 500
+  font-display swap
+  src url('../fonts/latin/inter-500.woff2') format('woff2')
+
+@font-face
+  font-family 'Inter'
+  font-style normal
+  font-weight 600
+  font-display swap
+  src url('../fonts/latin/inter-600.woff2') format('woff2')
+
+// ==============================
+// 字体栈
+// ==============================
+
+// 标题（衬线，人文气）
+$font-family-serif = 'Cormorant Garamond', Georgia, 'Times New Roman', Times, 'Source Han Serif SC', 'Noto Serif SC', 'Songti SC', STSong, STZhongsong, SimSun, NSimSun, serif
+
+// 正文（无衬线，长文友好）
+$font-family = 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Helvetica, Arial, 'Source Han Sans SC', 'Noto Sans SC', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'WenQuanYi Micro Hei', sans-serif
+
+// 代码（等宽，不引网络字体）
+$font-family-mono = 'JetBrains Mono', 'Fira Code', 'SF Mono', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace

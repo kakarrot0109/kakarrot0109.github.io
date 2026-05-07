@@ -1,8 +1,8 @@
 // ==============================
-// Custom style - Apple 风格配色
+// Custom style - Editorial · 琥珀
 // ==============================
-// 温暖灰白 + Apple Blue + 活力橙点缀
-// 精致的灰度层次，不是冰冷的黑白
+// 米黄宣纸 + 墨色字 + 琥珀强调
+// 配合衬线标题（Cormorant Garamond + Noto Serif SC），人文阅读感
 
 // 优化字体渲染
 body
@@ -18,13 +18,13 @@ body
   top 0
   left 0
   height 2px
-  background linear-gradient(90deg, #0071E3, #2997FF)
+  background linear-gradient(90deg, #B45309, #D97706)
   width 0
   z-index 9999
   transition width 0.05s linear
 
   .dark-theme &
-    background linear-gradient(90deg, #2997FF, #64B5FF)
+    background linear-gradient(90deg, #E8B765, #F5C97D)
 
 // ==============================
 // 浅色模式样式
@@ -36,12 +36,12 @@ html
     width 8px
     height 8px
   &::-webkit-scrollbar-track
-    background #F5F5F7
+    background #FFFBEB
   &::-webkit-scrollbar-thumb
-    background-color #D2D2D7
+    background-color #FAEEE1
     border-radius 4px
     &:hover
-      background-color #86868B
+      background-color #78716C
 
 // 文章内容样式 - 优化排版
 .post-content
@@ -61,61 +61,61 @@ html
     font-weight 600
     margin 1.5em 0 0.8em
     letter-spacing 0.03em
-    color #1D1D1F
+    color #0F172A
 
-  // 标题前缀使用 Apple Blue
+  // 标题前缀使用琥珀
   h1::before, h2::before
-    color #0071E3 !important
+    color #B45309 !important
   h3::before, h4::before
-    color #0071E3 !important
+    color #B45309 !important
 
   strong
     font-weight 600
-    color #1D1D1F
+    color #0F172A
 
   li
     margin 0.4em 0
 
-  // 链接 - Apple Blue
+  // 链接 - 琥珀
   a
-    color #0071E3
+    color #B45309
     text-decoration none
     transition color 0.12s ease-out
 
     &:hover
-      color #0077ED
+      color #92400E
 
   // 代码块样式 - 紫色
   code
     font-family $font-family-mono
     background #FFFFFF
-    color #BF5AF2
+    color #92400E
     border-radius 6px
     padding 2px 6px
     font-size 0.9em
-    border 1px solid #D2D2D7
+    border 1px solid #FAEEE1
 
   // 引用块样式
   blockquote
     background #FFFFFF
-    border-left 4px solid #0071E3
+    border-left 4px solid #B45309
     border-radius 0 12px 12px 0
     padding 1em 1.5em
     margin 1.5em 0
     box-shadow 0 2px 8px rgba(0, 0, 0, 0.04)
     p
       margin 0
-      color #1D1D1F
+      color #0F172A
 
   // 表格样式
   table
     border-radius 12px
     overflow hidden
-    border 1px solid #D2D2D7
+    border 1px solid #FAEEE1
     thead
       background #FFFFFF
     th, td
-      border-color #D2D2D7
+      border-color #FAEEE1
 
   // 图片样式
   img
@@ -125,7 +125,7 @@ html
   // 水平分割线
   hr
     border none
-    border-top 1px solid #D2D2D7
+    border-top 1px solid #FAEEE1
     margin 2em 0
 
 // 文章标题样式
@@ -133,23 +133,23 @@ html
   font-family $font-family-serif
   font-weight 600 !important
   letter-spacing 0.03em
-  color #1D1D1F
+  color #0F172A
 
 // 文章元信息
 .post-meta
   font-weight 400
   font-size 14px
-  color #86868B
+  color #78716C
 
 // 归档页日期
 .archive-item-date
-  color #86868B
+  color #78716C
 
 // 导航样式 - 粘性导航 + 毛玻璃
 .navbar
   position sticky
   top 0
-  background rgba(245, 245, 247, 0.8)
+  background rgba(255, 251, 235, 0.85)
   backdrop-filter saturate(180%) blur(20px)
   -webkit-backdrop-filter saturate(180%) blur(20px)
   border-bottom 1px solid rgba(0, 0, 0, 0.1)
@@ -160,7 +160,7 @@ html
     box-shadow 0 1px 3px rgba(0, 0, 0, 0.08)
 
 .navbar .menu .active
-  color #0071E3
+  color #B45309
   font-weight 600
 
 .nav-title
@@ -170,52 +170,52 @@ html
 
 // 页脚样式
 .footer
-  border-top 1px solid #D2D2D7
-  color #86868B
+  border-top 1px solid #FAEEE1
+  color #78716C
 
 // 分页样式
 .paginator a
-  color #0071E3
+  color #B45309
   transition color 0.1s ease-out
   &:hover
-    color #0077ED
+    color #92400E
 
 // 头像阴影
 .intro .avatar img
   box-shadow 0 4px 16px rgba(0, 0, 0, 0.12)
 
-// 标签样式 - Apple 风格胶囊
+// 标签样式 - 琥珀胶囊
 .post-tag
   background #FFFFFF
-  color #0071E3
+  color #B45309
   border-radius 20px
   padding 4px 12px
   margin 2px
-  border 1px solid #D2D2D7
+  border 1px solid #FAEEE1
   font-size 13px
   transition all 0.15s ease-out
   &:hover
-    background #0071E3
+    background #B45309
     color #FFFFFF
-    border-color #0071E3
-    box-shadow 0 2px 8px rgba(0, 113, 227, 0.3)
+    border-color #B45309
+    box-shadow 0 2px 8px rgba(180, 83, 9, 0.3)
   &:active
     transform scale(0.97)
 
 // 选中文字样式 - 活力橙
 ::selection
-  background #FF9500
+  background #B45309
   color #FFFFFF
 
 ::-moz-selection
-  background #FF9500
+  background #B45309
   color #FFFFFF
 
 // 焦点样式 - 无障碍
 a:focus-visible,
 button:focus-visible,
 input:focus-visible
-  outline 3px solid rgba(0, 113, 227, 0.5)
+  outline 3px solid rgba(180, 83, 9, 0.5)
   outline-offset 2px
   border-radius 4px
 
@@ -226,29 +226,29 @@ input:focus-visible
 .dark-theme
   // 滚动条
   &::-webkit-scrollbar-track
-    background #1D1D1F
+    background #1A1816
   &::-webkit-scrollbar-thumb
-    background-color #424245
+    background-color #3A352F
     &:hover
-      background-color #86868B
+      background-color #A89E88
 
   // 选中文字 - 亮橙
   ::selection
-    background #FF9F0A
-    color #1D1D1F
+    background #E8B765
+    color #1A1816
   ::-moz-selection
-    background #FF9F0A
-    color #1D1D1F
+    background #E8B765
+    color #1A1816
 
   // 焦点样式
   a:focus-visible,
   button:focus-visible,
   input:focus-visible
-    outline-color rgba(41, 151, 255, 0.5)
+    outline-color rgba(232, 183, 101, 0.5)
 
 // 深色模式 - 导航栏
 .dark-theme .navbar
-  background rgba(29, 29, 31, 0.8)
+  background rgba(26, 24, 22, 0.85)
   border-bottom-color rgba(255, 255, 255, 0.1)
 
   &.scrolled
@@ -257,72 +257,72 @@ input:focus-visible
 // 深色模式 - 文章内容
 .dark-theme .post-content
   h1, h2, h3, h4, h5, h6
-    color #F5F5F7
+    color #F0E9DC
 
   h1::before, h2::before
-    color #2997FF !important
+    color #E8B765 !important
   h3::before, h4::before
-    color #2997FF !important
+    color #E8B765 !important
 
   strong
-    color #F5F5F7
+    color #F0E9DC
 
   a
-    color #2997FF
+    color #E8B765
     &:hover
-      color #64B5FF
+      color #F5C97D
 
   code
-    background #2C2C2E
-    color #BF5AF2
-    border-color #424245
+    background #2A2622
+    color #E8B765
+    border-color #3A352F
 
   blockquote
-    background #2C2C2E
-    border-left-color #2997FF
+    background #2A2622
+    border-left-color #E8B765
     box-shadow none
     p
-      color #F5F5F7
+      color #F0E9DC
 
   table
-    border-color #424245
+    border-color #3A352F
     thead
-      background #2C2C2E
+      background #2A2622
     th, td
-      border-color #424245
+      border-color #3A352F
 
   img
     box-shadow 0 4px 12px rgba(0, 0, 0, 0.3)
 
   hr
-    border-top-color #424245
+    border-top-color #3A352F
 
 // 深色模式 - 文章标题
 .dark-theme .post-title
-  color #F5F5F7
+  color #F0E9DC
 
 // 深色模式 - 元信息
 .dark-theme .post-meta
-  color #86868B
+  color #A89E88
 
 // 深色模式 - 归档日期
 .dark-theme .archive-item-date
-  color #86868B
+  color #A89E88
 
 // 深色模式 - 导航
 .dark-theme .navbar .menu .active
-  color #2997FF
+  color #E8B765
 
 // 深色模式 - 页脚
 .dark-theme .footer
-  border-top-color #424245
-  color #86868B
+  border-top-color #3A352F
+  color #A89E88
 
 // 深色模式 - 分页
 .dark-theme .paginator a
-  color #2997FF
+  color #E8B765
   &:hover
-    color #64B5FF
+    color #F5C97D
 
 // 深色模式 - 头像
 .dark-theme .intro .avatar img
@@ -330,20 +330,20 @@ input:focus-visible
 
 // 深色模式 - 标签
 .dark-theme .post-tag
-  background #2C2C2E
-  color #2997FF
-  border-color #424245
+  background #2A2622
+  color #E8B765
+  border-color #3A352F
   &:hover
-    background #2997FF
-    color #1D1D1F
-    border-color #2997FF
-    box-shadow 0 2px 8px rgba(41, 151, 255, 0.3)
+    background #E8B765
+    color #1A1816
+    border-color #E8B765
+    box-shadow 0 2px 8px rgba(232, 183, 101, 0.3)
 
 // ==============================
 // 阅读时间样式
 // ==============================
 .reading-time
-  color #86868B
+  color #78716C
   font-size 14px
   margin-left 8px
   &::before
@@ -366,7 +366,7 @@ input:focus-visible
   transition all 0.2s cubic-bezier(0.4, 0, 0.2, 1)
   &:hover
     transform translateY(-2px)
-    box-shadow 0 4px 12px rgba(0, 113, 227, 0.25)
+    box-shadow 0 4px 12px rgba(180, 83, 9, 0.25)
 
 // 归档项hover效果
 .archive-item
@@ -376,7 +376,7 @@ input:focus-visible
   border-radius 8px
   &:hover
     transform translateX(4px)
-    background rgba(0, 113, 227, 0.05)
+    background rgba(180, 83, 9, 0.05)
 
 // 分类卡片hover效果
 .category-card
@@ -410,7 +410,7 @@ button,
 // 深色模式 - 归档项hover
 .dark-theme .archive-item
   &:hover
-    background rgba(41, 151, 255, 0.1)
+    background rgba(232, 183, 101, 0.1)
 
 // ==============================
 // 图片灯箱样式
